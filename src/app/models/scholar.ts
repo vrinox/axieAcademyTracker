@@ -1,3 +1,4 @@
+import {scholarOfficialData} from './interfaces';
 export class Scholar {
    id!            : number;
    roninAddress!  : string;
@@ -9,13 +10,23 @@ export class Scholar {
    inGameSLP!     : number;
    inRoninSLP!    : number;
    averageSLP!    : number;
+   PVPRank!       : number;
    mounthlyRank!  : number;
    monthSLP!      : number;
    lastMonthSLP!  : number; 
+   WinRate!       : string;
 
    constructor(values: Object = {}) {
         Object.assign(this, values);
    }
+  parse(unParsedData: scholarOfficialData) {
+    this.inRoninSLP = unParsedData.ronin_slp,
+    this.totalSLP = unParsedData.total_slp,
+    this.inGameSLP = unParsedData.in_game_slp,
+    this.PVPRank = unParsedData.rank,
+    this.MMR = unParsedData.mmr,
+    this.WinRate = unParsedData.win_rate
+  }
   getValues(){
     return {
       id          : this.id,

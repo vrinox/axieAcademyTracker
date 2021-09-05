@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Scholar } from '../models/scholar'
-
+import { Scholar } from '../models/scholar';
+import { ScholarDataService } from '../scholar-data.service';
+import { DatabaseService } from '../database.service';
+import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 
 @Component({
   selector: 'app-scholars',
@@ -9,17 +11,40 @@ import { Scholar } from '../models/scholar'
 })
 export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
-  displayedColumns: string[] = ['name', 'todaySLP', 'yesterdaySLP'];
-  constructor() { 
+  displayedColumns: string[] = ['name', 'totalSLP', 'MMR'];
+  constructor(
+    private schDataService: ScholarDataService,
+    private dbService: DatabaseService
+  ) { 
 
   }
 
   ngOnInit(): void {
-    this.scholars.push(new Scholar({
-      name: 'victor leon',
-      todaySLP: 20,
-      yesterdaySLP: 50
-    }))
+    this.cargarDatos();
   }
-
+  cargarDatos() {
+    this.dbService
+      .getAllData()
+      .subscribe((scholarData:scholarFirebaseI[])=> {
+        console.log(scholarData);
+        this.scholars = scholarData
+          .map((scholar)=>{
+            return new Scholar(scholar)
+          });
+        this.obtenerDatos();
+      })
+    
+  }
+  obtenerDatos() {
+      this.scholars.map( (scholar: Scholar)=> {
+        this.actualizarDatos(scholar);
+      })
+  }
+  actualizarDatos(scholar: Scholar) {
+    return this.schDataService
+      .get(scholar.roninAddress)
+      .subscribe((scholarData: scholarOfficialData)=>{
+        scholar.parse(scholarData);
+      });
+  }
 }

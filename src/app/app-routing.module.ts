@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ScholarsComponent } from './scholars/scholars.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/jugadores', pathMatch: 'full' },
+  { path: '', redirectTo: '/scholars', pathMatch: 'full' },
   { path: 'scholars' , component: ScholarsComponent },
 ];
 
