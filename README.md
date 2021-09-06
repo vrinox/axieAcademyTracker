@@ -13,7 +13,7 @@
 
 ## Acuerdos de trabajo
 
-nunca trabajar directamente sobre la rama master del repo, al agregar alguna funcionabilidad se debe crear una rama apartir de master siguiendo el formato "[autor]-funcionabilidad"
+nunca trabajar directamente sobre la rama main del repo, al agregar alguna funcionabilidad se debe crear una rama apartir de master siguiendo el formato "[autor]-funcionabilidad"
 
 ejemplo: "[victorLeon]-formulario_de_creacion_de_usuario"
 
