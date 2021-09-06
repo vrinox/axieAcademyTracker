@@ -13,7 +13,7 @@
 
 ## Acuerdos de trabajo
 
-nunca trabajar directamente sobre la rama main del repo, al agregar alguna funcionabilidad se debe crear una rama apartir de master siguiendo el formato "[autor]-funcionabilidad"
+nunca trabajar directamente sobre la rama main del repo, al agregar alguna funcionabilidad se debe crear una rama apartir de main siguiendo el formato "[autor]-funcionabilidad"
 
 ejemplo: "[victorLeon]-formulario_de_creacion_de_usuario"
 
@@ -27,4 +27,4 @@ git checkout -b [victorLeon]-formulario_de_creacion_de_usuario
 ```
 y ya ahi tendrias tu rama para trabajar.
 
-luego a la hora de subir los cambios a la rama principal(master) se hace una pullr request de tu rama a master desde github 
+luego a la hora de subir los cambios a la rama principal(master) se hace una pullr request de tu rama a main desde github 
