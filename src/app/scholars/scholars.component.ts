@@ -15,13 +15,12 @@ export class ScholarsComponent implements OnInit {
   constructor(
     private schDataService: ScholarDataService,
     private dbService: DatabaseService
-  ) { 
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.cargarDatos();
   }
+  
   cargarDatos() {
     this.dbService
       .getAllData()
