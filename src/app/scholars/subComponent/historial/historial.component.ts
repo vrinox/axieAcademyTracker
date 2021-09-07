@@ -8,20 +8,27 @@ import { ScholarsComponent } from '../../scholars.component';
 })
 export class HistorialComponent implements OnInit {
   bestPvp: number = 0;
+  nameBestPvp: String = '';
+  earned: number = 0;
+  claimed: number = 0;
 
   constructor(private scholarC: ScholarsComponent) {}
 
   ngOnInit(): void {
     this.getBestPvp();
+    this.calHistorialData();
   }
 
   getBestPvp(): void{
-    console.log(this.scholarC.scholars)
-    console.log(this.bestPvp)
+    console.log(this.scholarC.scholars);
     this.bestPvp = Math.max(...this.scholarC.scholars.map(element => element.PVPRank));
-    console.log(this.bestPvp)
   }
 
-
+  calHistorialData(): void{
+    this.scholarC.scholars.forEach(scholar=>{
+      this.earned += scholar.totalSLP;
+      this.claimed += scholar.inRoninSLP;
+    });
+  }
 
 }
