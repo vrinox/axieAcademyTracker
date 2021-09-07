@@ -12,6 +12,7 @@ import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
   displayedColumns: string[] = ['name', 'totalSLP', 'MMR'];
+  historialView: boolean = false;
   constructor(
     private schDataService: ScholarDataService,
     private dbService: DatabaseService
@@ -31,14 +32,16 @@ export class ScholarsComponent implements OnInit {
             return new Scholar(scholar)
           });
         this.obtenerDatos();
+        this.historialView = true;
       })
-    
   }
+
   obtenerDatos() {
       this.scholars.map( (scholar: Scholar)=> {
         this.actualizarDatos(scholar);
       })
   }
+
   actualizarDatos(scholar: Scholar) {
     return this.schDataService
       .get(scholar.roninAddress)

@@ -8,12 +8,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
+import { HistorialComponent } from './scholars/subComponent/historial/historial.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ScholarsComponent
+    ScholarsComponent,
+    HistorialComponent
   ],
   imports: [
     BrowserModule,
