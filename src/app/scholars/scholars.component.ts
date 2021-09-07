@@ -32,21 +32,24 @@ export class ScholarsComponent implements OnInit {
             return new Scholar(scholar)
           });
         this.obtenerDatos();
-        this.historialView = true;
       })
   }
 
-  obtenerDatos() {
+  async obtenerDatos() {
+    await Promise.all(
       this.scholars.map( (scholar: Scholar)=> {
-        this.actualizarDatos(scholar);
-      })
+        return this.actualizarDatos(scholar);
+      }));
+    this.historialView = true;
   }
 
   actualizarDatos(scholar: Scholar) {
     return this.schDataService
       .get(scholar.roninAddress)
-      .subscribe((scholarData: scholarOfficialData)=>{
+      .toPromise()
+      .then((scholarData: scholarOfficialData)=>{
         scholar.parse(scholarData);
+        return Promise.resolve();
       });
   }
 }
