@@ -33,6 +33,16 @@ export class ScholarsComponent implements OnInit {
         this.obtenerDatos(scholarsFirebase);
       })
   }
+  calcularRankMensual() {
+    let rank = 1;
+    this.scholars = this.scholars.sort((a:Scholar, b:Scholar)=>{
+      return b.monthSLP -a.monthSLP;
+    }).map((scholar:Scholar)=>{
+      scholar.mounthlyRank = rank;
+      rank++;
+      return scholar;
+    });
+  }
   async obtenerDatos(scholarFirebase:Scholar[]) {
       let scholarsUpdated:Scholar[] = await Promise.all(scholarFirebase.map((scholar: Scholar)=> {
         return this.obtenerDataActualizada(scholar);
@@ -45,6 +55,7 @@ export class ScholarsComponent implements OnInit {
         return scholar;
       });
       this.historialView = true;
+      this.calcularRankMensual();
   }
   obtenerDataActualizada(scholar: Scholar) {
     return this.schDataService
