@@ -26,7 +26,7 @@ export class HistorialComponent implements OnInit {
   }
 
   getBestPvp(): void{
-    this.bestPvp = Math.max(...this.scholarC.scholars.map(element => element.PVPRank));
+    this.bestPvp = Math.min(...this.scholarC.scholars.map(element => element.PVPRank));
   }
 
   calHistorialData(): void{
