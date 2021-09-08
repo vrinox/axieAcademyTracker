@@ -11,7 +11,8 @@ import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 })
 export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
-  displayedColumns: string[] = ['name', 'totalSLP', 'MMR'];
+  displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
+  historialView: boolean = false;
   constructor(
     private schDataService: ScholarDataService,
     private dbService: DatabaseService
@@ -26,25 +27,34 @@ export class ScholarsComponent implements OnInit {
     this.dbService
       .getAllData()
       .subscribe((scholarData:scholarFirebaseI[])=> {
-        console.log(scholarData);
-        this.scholars = scholarData
+        let scholarsFirebase = scholarData
           .map((scholar)=>{
             return new Scholar(scholar)
           });
-        this.obtenerDatos();
+        this.obtenerDatos(scholarsFirebase);
       })
     
   }
-  obtenerDatos() {
-      this.scholars.map( (scholar: Scholar)=> {
-        this.actualizarDatos(scholar);
-      })
+  async obtenerDatos(scholarFirebase:Scholar[]) {
+      let scholarsUpdated:Scholar[] = await Promise.all(scholarFirebase.map((scholar: Scholar)=> {
+        return this.obtenerDataActualizada(scholar);
+      }))
+      this.scholars = scholarFirebase.map((scholar:Scholar)=>{
+        let scholarUpdated:Scholar = scholarsUpdated.find((updatedData:Scholar)=>{
+          return updatedData.roninAddress === scholar.roninAddress;
+        }) || new Scholar();
+        scholar.update(scholarUpdated);
+        return scholar;
+      });
   }
-  actualizarDatos(scholar: Scholar) {
+  obtenerDataActualizada(scholar: Scholar) {
     return this.schDataService
       .get(scholar.roninAddress)
-      .subscribe((scholarData: scholarOfficialData)=>{
-        scholar.parse(scholarData);
+      .toPromise()
+      .then((scholarData: scholarOfficialData)=>{
+        let newScholarData:Scholar = new Scholar();
+        newScholarData.parse(scholarData);
+        return Promise.resolve(newScholarData);
       });
   }
 }
