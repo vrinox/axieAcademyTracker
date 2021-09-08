@@ -6,7 +6,7 @@
         <img mat-card-sm-image src="https://miro.medium.com/max/1200/0*9Ol_5j2bLb1jc5Mh.png" >
       </mat-card-title-group>
       <mat-card-content class="historial__total">
-        1112.7$
+        {{ slpPrice * earned }}
       </mat-card-content>
     </mat-card>
     <mat-card class="historial__card">
@@ -32,11 +32,11 @@
     <mat-card class="historial__card">
       <mat-card-title-group>
         <mat-card-title class="historial__title">Total Unclaimed</mat-card-title>
-        <mat-card-subtitle class="historial__sub-title">{{ earned - claimed }}</mat-card-subtitle>
+        <mat-card-subtitle class="historial__sub-title">{{ unclaimed }}</mat-card-subtitle>
         <img mat-card-sm-image src="https://miro.medium.com/max/1200/0*9Ol_5j2bLb1jc5Mh.png" >
       </mat-card-title-group>
       <mat-card-content class="historial__total">
-        1112.7$
+        {{ slpPrice * unclaimed }}
       </mat-card-content>
     </mat-card>
     <mat-card class="historial__card">
@@ -46,7 +46,7 @@
         <img mat-card-sm-image src="https://miro.medium.com/max/1200/0*9Ol_5j2bLb1jc5Mh.png" >
       </mat-card-title-group>
       <mat-card-content class="historial__total">
-        1112.7$
+        {{ slpPrice * claimed }}
       </mat-card-content>
     </mat-card>
     <mat-card class="historial__card">
