@@ -11,7 +11,8 @@ import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 })
 export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
-  displayedColumns: string[] = ['name', 'totalSLP', 'MMR'];
+  displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
+  historialView: boolean = false;
   constructor(
     private schDataService: ScholarDataService,
     private dbService: DatabaseService
@@ -26,7 +27,6 @@ export class ScholarsComponent implements OnInit {
     this.dbService
       .getAllData()
       .subscribe((scholarData:scholarFirebaseI[])=> {
-        console.log(scholarData);
         this.scholars = scholarData
           .map((scholar)=>{
             return new Scholar(scholar)
@@ -44,7 +44,8 @@ export class ScholarsComponent implements OnInit {
     return this.schDataService
       .get(scholar.roninAddress)
       .subscribe((scholarData: scholarOfficialData)=>{
-        scholar.parse(scholarData);
+        const newScholarData = scholar.parse(scholarData);
+        scholar.update(newScholarData);
       });
   }
 }
