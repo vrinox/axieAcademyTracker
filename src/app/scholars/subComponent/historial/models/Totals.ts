@@ -37,7 +37,6 @@ class Totals{
         historial.forEach((element, index)=>{
             element.usd = parseFloat((element.subTitleNumber * slp).toFixed(2));
         });
-        console.log(historial)
     }
 }
 
