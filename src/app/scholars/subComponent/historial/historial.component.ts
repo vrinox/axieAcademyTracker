@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Scholar } from '../../../models/scholar';
+import { Component, OnInit } from '@angular/core';
 import { ScholarsComponent } from '../../scholars.component';
 import { GetPriceService } from 'src/app/services/getPriceCripto/get-price.service';
-import { Slp } from '../../modals/price-usd';
+
 
 @Component({
   selector: 'app-historial',
@@ -39,8 +38,8 @@ export class HistorialComponent implements OnInit {
   }
 
   async getPriceSlp(){
-    let slp: Slp = await this.getPrice.get('smooth-love-potion');
-    this.slpPrice = parseInt(slp['smooth-love-potion'].usd.toFixed(2));
+    let cryto = await this.getPrice.get('smooth-love-potion');
+    this.slpPrice = parseInt(cryto['smooth-love-potion'].usd.toFixed(2));
   }
 
 }
