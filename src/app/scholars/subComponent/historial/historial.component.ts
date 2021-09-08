@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ScholarsComponent } from '../../scholars.component';
 import { GetPriceService } from 'src/app/services/getPriceCripto/get-price.service';
-import { Historial } from './models/historial';
+import { Historial } from 'src/app/models/interfaces';
 import { totals } from './models/Totals';
 
 @Component({
