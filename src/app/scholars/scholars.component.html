@@ -1,3 +1,5 @@
+<app-historial *ngIf="historialView"></app-historial>
+
 <table mat-table [dataSource]="scholars" class="mat-elevation-z8" >  
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>

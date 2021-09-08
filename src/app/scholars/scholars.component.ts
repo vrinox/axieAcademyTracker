@@ -16,13 +16,12 @@ export class ScholarsComponent implements OnInit {
   constructor(
     private schDataService: ScholarDataService,
     private dbService: DatabaseService
-  ) { 
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.cargarDatos();
   }
+  
   cargarDatos() {
     this.dbService
       .getAllData()
@@ -33,7 +32,6 @@ export class ScholarsComponent implements OnInit {
           });
         this.obtenerDatos(scholarsFirebase);
       })
-    
   }
   async obtenerDatos(scholarFirebase:Scholar[]) {
       let scholarsUpdated:Scholar[] = await Promise.all(scholarFirebase.map((scholar: Scholar)=> {
@@ -46,6 +44,7 @@ export class ScholarsComponent implements OnInit {
         scholar.update(scholarUpdated);
         return scholar;
       });
+      this.historialView = true;
   }
   obtenerDataActualizada(scholar: Scholar) {
     return this.schDataService
