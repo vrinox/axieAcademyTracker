@@ -1,47 +1,61 @@
-import {scholarOfficialData} from './interfaces';
+import {scholarOfficialData} from "./interfaces";
 export class Scholar {
-   id!            : number;
-   roninAddress!  : string;
-   name!          : string;
-   todaySLP!      : number;
-   yesterdaySLP!  : number;
-   MMR!           : number;
-   totalSLP!      : number;
-   inGameSLP!     : number;
-   inRoninSLP!    : number;
-   averageSLP!    : number;
-   PVPRank!       : number;
-   mounthlyRank!  : number;
-   monthSLP!      : number;
-   lastMonthSLP!  : number; 
-   WinRate!       : string;
+  id!: number;
+  roninAddress: string = "";
+  name!: string;
+  todaySLP: number = 0;
+  yesterdaySLP: number = 0;
+  MMR: number = 0;
+  totalSLP: number = 0;
+  inGameSLP: number = 0;
+  inRoninSLP: number = 0;
+  averageSLP: number = 0;
+  PVPRank: number = 0;
+  mounthlyRank: number = 0;
+  monthSLP: number = 0;
+  lastMonthSLP: number = 0;
+  lastUpdate: Date = new Date;
+  WinRate!: string;
 
-   constructor(values: Object = {}) {
-        Object.assign(this, values);
-   }
-  parse(unParsedData: scholarOfficialData) {
-    this.inRoninSLP = unParsedData.ronin_slp,
-    this.totalSLP = unParsedData.total_slp,
-    this.inGameSLP = unParsedData.in_game_slp,
-    this.PVPRank = unParsedData.rank,
-    this.MMR = unParsedData.mmr,
-    this.WinRate = unParsedData.win_rate
+  constructor(values: Object = {}) {
+    Object.assign(this, values);
   }
-  getValues(){
+  parse(unParsedData: scholarOfficialData) {
+    this.roninAddress = unParsedData.ronin_address;
+    this.inRoninSLP = unParsedData.ronin_slp;
+    this.totalSLP = unParsedData.total_slp;
+    this.inGameSLP = unParsedData.in_game_slp;
+    this.PVPRank = unParsedData.rank;
+    this.MMR = unParsedData.mmr;
+    this.WinRate = unParsedData.win_rate;
+    return this;
+  }
+  getValues():object {
     return {
-      id          : this.id,
       roninAddress: this.roninAddress,
-      name        : this.name,
-      todaySLP    : this.todaySLP || 0,
+      name: this.name,
+      todaySLP: this.todaySLP || 0,
       yesterdaySLP: this.yesterdaySLP || 0,
-      MMR         : this.MMR || 0,
-      totalSLP    : this.totalSLP || 0,
-      inGameSLP   : this.inGameSLP || 0,
-      inRoninSLP  : this.inRoninSLP || 0,
-      averageSLP  : this.averageSLP || 0,
+      MMR: this.MMR || 0,
+      totalSLP: this.totalSLP || 0,
+      inGameSLP: this.inGameSLP || 0,
+      inRoninSLP: this.inRoninSLP || 0,
+      averageSLP: this.averageSLP || 0,
       mounthlyRank: this.mounthlyRank || 0,
-      monthSLP    : this.monthSLP || 0,
-      lastMonthSLP: this.lastMonthSLP
+      monthSLP: this.monthSLP || 0,
+      lastMonthSLP: this.lastMonthSLP || 0,
+      PVPRank: this.PVPRank || 0
     }
+  }
+  update(newData: Scholar):void {
+    console.log(newData.totalSLP, this.totalSLP, newData.totalSLP - this.totalSLP)
+    this.todaySLP = newData.totalSLP - this.totalSLP;
+    this.monthSLP = this.monthSLP + this.todaySLP;
+    this.yesterdaySLP = newData.yesterdaySLP;
+    this.MMR = newData.MMR;
+    this.PVPRank = newData.PVPRank;
+    this.inGameSLP = newData.inGameSLP;
+    this.inRoninSLP = newData.inRoninSLP;
+    this.totalSLP = newData.totalSLP;
   }
 }

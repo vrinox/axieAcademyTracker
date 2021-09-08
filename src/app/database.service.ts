@@ -4,7 +4,6 @@ import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, child, get } from 'firebase/database';
 import { Observable, Subject } from 'rxjs';
 import { scholarFirebaseI} from './models/interfaces'
-import { Scholar } from './models/scholar';
 const app = initializeApp(environment.firebase);
 
 @Injectable({
@@ -18,7 +17,6 @@ export class DatabaseService {
   }
   getAllData():Observable<scholarFirebaseI[]>{
     get(child(this.db, `scholars/`)).then((snapshot) => {
-      console.log(snapshot);
       if (snapshot.exists()) {
         this.sub.next(snapshot.val());
       } else {

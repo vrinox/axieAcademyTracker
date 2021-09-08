@@ -11,7 +11,11 @@ import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 })
 export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
+<<<<<<< HEAD
   displayedColumns: string[] = ['name', 'totalSLP', 'MMR'];
+=======
+  displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
+>>>>>>> 43a85defc7e53ef7717cada81f2bd515858907d7
   historialView: boolean = false;
   constructor(
     private schDataService: ScholarDataService,
@@ -26,14 +30,14 @@ export class ScholarsComponent implements OnInit {
     this.dbService
       .getAllData()
       .subscribe((scholarData:scholarFirebaseI[])=> {
-        console.log(scholarData);
-        this.scholars = scholarData
+        let scholarsFirebase = scholarData
           .map((scholar)=>{
             return new Scholar(scholar)
           });
-        this.obtenerDatos();
+        this.obtenerDatos(scholarsFirebase);
       })
   }
+<<<<<<< HEAD
 
   async obtenerDatos() {
     await Promise.all(
@@ -44,12 +48,33 @@ export class ScholarsComponent implements OnInit {
   }
 
   actualizarDatos(scholar: Scholar) {
+=======
+  async obtenerDatos(scholarFirebase:Scholar[]) {
+      let scholarsUpdated:Scholar[] = await Promise.all(scholarFirebase.map((scholar: Scholar)=> {
+        return this.obtenerDataActualizada(scholar);
+      }))
+      this.scholars = scholarFirebase.map((scholar:Scholar)=>{
+        let scholarUpdated:Scholar = scholarsUpdated.find((updatedData:Scholar)=>{
+          return updatedData.roninAddress === scholar.roninAddress;
+        }) || new Scholar();
+        scholar.update(scholarUpdated);
+        return scholar;
+      });
+  }
+  obtenerDataActualizada(scholar: Scholar) {
+>>>>>>> 43a85defc7e53ef7717cada81f2bd515858907d7
     return this.schDataService
       .get(scholar.roninAddress)
       .toPromise()
       .then((scholarData: scholarOfficialData)=>{
+<<<<<<< HEAD
         scholar.parse(scholarData);
         return Promise.resolve();
+=======
+        let newScholarData:Scholar = new Scholar();
+        newScholarData.parse(scholarData);
+        return Promise.resolve(newScholarData);
+>>>>>>> 43a85defc7e53ef7717cada81f2bd515858907d7
       });
   }
 }
