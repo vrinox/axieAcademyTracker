@@ -15,3 +15,9 @@ export interface scholarFirebaseI {
     roninAddress: string,
     name: string;
 }
+
+export interface Historial {
+    title: string,
+    subTitleNumber:  number,
+    usd: number
+}
