@@ -48,6 +48,7 @@ export class Scholar {
     }
   }
   update(newData: Scholar):void {
+    console.log(newData.totalSLP, this.totalSLP, newData.totalSLP - this.totalSLP)
     this.todaySLP = newData.totalSLP - this.totalSLP;
     this.monthSLP = this.monthSLP + this.todaySLP;
     this.yesterdaySLP = newData.yesterdaySLP;
