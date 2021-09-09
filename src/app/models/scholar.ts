@@ -50,7 +50,6 @@ export class Scholar {
   update(newData: Scholar):void {
     this.todaySLP = newData.totalSLP - this.totalSLP;
     this.monthSLP = this.monthSLP + this.todaySLP;
-    this.yesterdaySLP = newData.yesterdaySLP;
     this.MMR = newData.MMR;
     this.PVPRank = newData.PVPRank;
     this.inGameSLP = newData.inGameSLP;
