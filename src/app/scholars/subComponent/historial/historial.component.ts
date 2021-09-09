@@ -10,7 +10,9 @@ import { totals } from './models/Totals';
   styleUrls: ['./historial.component.sass']
 })
 export class HistorialComponent implements OnInit {
-  historial: Historial[] = []
+  historial: Historial[] = [];
+  imageSrc: string = 'assets/img/SLP.png';
+  imageAlt: string = 'SLP';
 
   constructor(private scholarC: ScholarsComponent,
               private getPrice: GetPriceService) {}
