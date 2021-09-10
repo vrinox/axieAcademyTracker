@@ -1,5 +1,11 @@
 .container
     background: #dedede
-
     &__menu-horizontal
         padding: 10px
+
+@media screen and (max-width: 500px)
+    .container
+        &__menu-horizontal
+            width: 100%
+        &__btn
+            width: 100%

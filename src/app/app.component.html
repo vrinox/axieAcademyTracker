@@ -16,7 +16,7 @@
   <mat-drawer #drawer class="container__menu-horizontal" mode="side">
     <p>Auto-resizing sidenav</p>
     <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-    <button (click)="showFiller = !showFiller" mat-raised-button>
+    <button class="container__btn" (click)="showFiller = !showFiller" mat-raised-button>
       Toggle extra text
     </button>
   </mat-drawer>

@@ -1,14 +1,41 @@
 @use '@angular/material' as mat
+
 .historial
     width: 90%
+    margin-left: 5%
     display: flex
     flex-wrap: wrap
-    justify-content: space-evenly
-    margin-left: 5%
-    padding: 10px
-    box-sizing: border-box
     &__card
-        width: 16.25rem
+        flex: 2
         margin: 5px
-        //box-shadow: 0px 6px 6px rgba(46, 45, 45, 0.507)
-        box-sizing: border-box
+        &:nth-child(0n+1)
+            flex: 3
+
+
+// .historial
+//     width: 100%
+//     padding: 5px
+//     box-sizing: border-box
+//     &__card
+//         width: calc(100%- 10px)
+//         margin: 10px 0px
+
+
+// @media screen and (min-width: 500px)
+//     .historial
+//         width: 100%
+//         display: flex
+//         font-size: 13px
+//         justify-content: space-between
+//         flex-wrap: wrap
+//         &__card
+//             width: 16.25em
+//             margin: 5px
+//             box-sizing: border-box
+//         &__title
+//             font-size: 1.25em
+//         &__img
+//             width: 5em
+//             height: 5em
+
+
