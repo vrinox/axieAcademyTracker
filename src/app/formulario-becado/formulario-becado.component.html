@@ -1,34 +1,35 @@
-<form class="form-becado">
-    <mat-form-field appearance="outline" class="form-becado__nombre">
-        <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Victor">
-        <mat-icon matSuffix class="form-becado__check">check_circle_outline</mat-icon>
-        <mat-icon matSuffix class="form-becado__off">highlight_off</mat-icon>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="form-becado__nombre">
-        <mat-label>Apellido</mat-label>
-        <input matInput placeholder="Leon">
-        <mat-icon matSuffix class="form-becado__check">check_circle_outline</mat-icon>
-        <mat-icon matSuffix class="form-becado__off">highlight_off</mat-icon>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="form-becado__adress">
-        <mat-label>Rongin Adress</mat-label>
-        <input matInput placeholder="Leon">
-        <mat-icon matSuffix class="form-becado__check">check_circle_outline</mat-icon>
-        <mat-icon matSuffix class="form-becado__off">highlight_off</mat-icon>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="form-becado__adress">
-        <mat-label>Rongin Adress Personal</mat-label>
-        <input matInput placeholder="Leon">
-        <mat-icon matSuffix class="form-becado__check">check_circle_outline</mat-icon>
-        <mat-icon matSuffix class="form-becado__off">highlight_off</mat-icon>
-    </mat-form-field>
-    <mat-form-field appearance="outline" class="form-becado__ganancia">
-        <mat-label>Granancia</mat-label>
-        <input matInput placeholder="50%">
-        <mat-icon matSuffix class="form-becado__check">check_circle_outline</mat-icon>
-        <mat-icon matSuffix class="form-becado__off">highlight_off</mat-icon>
-    </mat-form-field>
-    <button mat-raised-button color="primary">Enviar</button>
-    <button mat-raised-button>Cancelar</button>
-</form>
+<div class="modal-form">
+    <form class="form-becado">
+        <div class="form-becado__title">
+            <h1>Registro de Becados</h1>
+            <img src="../../assets/img/becado.png" alt="">
+        </div>
+        <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Victor">
+            <mat-icon matSuffix class="form-becado__off">highlight_off</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
+            <mat-label>Apellido</mat-label>
+            <input matInput placeholder="Leon">
+            <mat-icon matSuffix class="form-becado__off">highlight_off</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
+            <mat-label>Rongin Adress</mat-label>
+            <input matInput placeholder="Leon">
+            <mat-icon matSuffix class="form-becado__off">highlight_off</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
+            <mat-label>Rongin Adress Personal</mat-label>
+            <input matInput placeholder="Leon">
+            <mat-icon matSuffix class="form-becado__off">highlight_off</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
+            <mat-label>Procentaje de Ganancia</mat-label>
+            <input matInput placeholder="50%">
+            <mat-icon matSuffix class="form-becado__off">highlight_off</mat-icon>
+        </mat-form-field>
+        <button class="form-becado__btn" mat-raised-button color="primary">Enviar</button>
+        <button class="form-becado__btn" mat-raised-button>Cancelar</button>
+    </form>
+</div>
