@@ -30,7 +30,8 @@ class Totals{
     }
 
     private setBestpvp(scholar: Scholar[], historial: Historial[]): void{
-        historial[1].subTitleNumber = Math.min(...scholar.map(element => element.PVPRank));
+        let newScholar: Scholar[] = [...scholar].filter(e => e.PVPRank != 0);
+        historial[1].subTitleNumber = Math.min(...newScholar.map(element => element.PVPRank));
         this.setNameyMmrBestpvp(scholar, historial);
     }
 

@@ -15,7 +15,8 @@ export class DatabaseService {
   constructor() { 
     
   }
-  getAllData():Observable<scholarFirebaseI[]>{
+  
+  getAllData(): Observable<scholarFirebaseI[]>{
     get(child(this.db, `scholars/`)).then((snapshot) => {
       if (snapshot.exists()) {
         this.sub.next(snapshot.val());
@@ -27,4 +28,6 @@ export class DatabaseService {
     });
     return this.sub
   }
+
+
 }

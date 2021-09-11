@@ -35,7 +35,6 @@ export class ScholarsComponent implements OnInit {
         this.obtenerDatos(scholarsFirebase);
       })
   }
-
   calcularRankMensual() {
     let rank = 1;
     this.scholars = this.scholars.sort((a:Scholar, b:Scholar)=>{

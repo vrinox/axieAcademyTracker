@@ -22,11 +22,11 @@ export class Scholar {
   }
   parse(unParsedData: scholarOfficialData) {
     this.roninAddress = unParsedData.ronin_address;
-    this.inRoninSLP = unParsedData.ronin_slp;
-    this.totalSLP = unParsedData.total_slp;
-    this.inGameSLP = unParsedData.in_game_slp;
-    this.PVPRank = unParsedData.rank;
-    this.MMR = unParsedData.mmr;
+    this.inRoninSLP = (isNaN(unParsedData.ronin_slp)) ? 0 : unParsedData.ronin_slp;
+    this.totalSLP = (isNaN(unParsedData.total_slp)) ? 0 : unParsedData.total_slp;
+    this.inGameSLP = (isNaN(unParsedData.in_game_slp)) ? 0 : unParsedData.in_game_slp;
+    this.PVPRank = (isNaN(unParsedData.rank)) ? 0 : unParsedData.rank;
+    this.MMR = (isNaN(unParsedData.mmr)) ? 0 : unParsedData.mmr;
     return this;
   }
   getValues():object {
