@@ -30,6 +30,8 @@ export class ScholarsComponent implements OnInit {
           .map((scholar)=>{
             return new Scholar(scholar)
           });
+        this.scholars = scholarsFirebase;
+        this.historialView = true;
         this.obtenerDatos(scholarsFirebase);
       })
   }
@@ -55,8 +57,8 @@ export class ScholarsComponent implements OnInit {
         scholar.update(scholarUpdated);
         return scholar;
       });
-      this.historialView = true;
       this.calcularRankMensual();
+
   }
   obtenerDataActualizada(scholar: Scholar) {
     return this.schDataService
