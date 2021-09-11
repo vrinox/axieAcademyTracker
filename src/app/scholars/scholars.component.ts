@@ -60,7 +60,6 @@ export class ScholarsComponent implements OnInit {
   obtenerDataActualizada(scholar: Scholar) {
     return this.schDataService
       .get(scholar.roninAddress)
-      .toPromise()
       .then((scholarData: scholarOfficialData)=>{
         let newScholarData:Scholar = new Scholar();
         newScholarData.parse(scholarData);

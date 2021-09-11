@@ -27,7 +27,6 @@ export class Scholar {
     this.inGameSLP = unParsedData.in_game_slp;
     this.PVPRank = unParsedData.rank;
     this.MMR = unParsedData.mmr;
-    this.WinRate = unParsedData.win_rate;
     return this;
   }
   getValues():object {
