@@ -21,16 +21,26 @@ class Totals{
     };
 
     private calculoTotales(scholar: Scholar, historial: Historial[]):void{
-        historial[0].subTitleNumber += scholar.totalSLP;
+        if(!isNaN(scholar.totalSLP)) historial[0].subTitleNumber += scholar.totalSLP;
         historial[2].subTitleNumber += scholar.inRoninSLP;
         historial[3].subTitleNumber += scholar.inGameSLP;
         historial[4].subTitleNumber += scholar.yesterdaySLP;
-        historial[5].subTitleNumber += scholar.todaySLP;
-        historial[6].subTitleNumber += scholar.averageSLP;
+        if(!isNaN(scholar.todaySLP)) historial[5].subTitleNumber += scholar.todaySLP;
+        if(!isNaN(scholar.averageSLP)) historial[6].subTitleNumber += scholar.averageSLP;
     }
 
     private setBestpvp(scholar: Scholar[], historial: Historial[]): void{
         historial[1].subTitleNumber = Math.min(...scholar.map(element => element.PVPRank));
+        this.setNameyMmrBestpvp(scholar, historial);
+    }
+
+    private setNameyMmrBestpvp(scholar: Scholar[], historial: Historial[]): void{
+        scholar.forEach(element => {
+            if(element.PVPRank === historial[1].subTitleNumber){
+                historial[1].nombre = element.name.toUpperCase();
+                historial[1].mmr = element.MMR
+            }
+        })
     }
 
     private slpToUsd(historial: Historial[], slp: number){

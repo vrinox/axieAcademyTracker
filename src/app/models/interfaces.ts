@@ -36,5 +36,7 @@ export interface scholarFirebaseI {
 export interface Historial {
     title: string,
     subTitleNumber:  number,
-    usd: number
+    usd?: number,
+    nombre?: string,
+    mmr?: number
 }

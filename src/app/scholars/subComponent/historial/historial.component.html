@@ -5,8 +5,11 @@
         <mat-card-subtitle class="historial__sub-title">{{ hist.subTitleNumber }}</mat-card-subtitle>
         <img class="historial__img" mat-card-sm-image src="{{imageSrc}}" alt="{{imageAlt}}" >
       </mat-card-title-group>
-      <mat-card-content class="historial__total">
+      <mat-card-content class="historial__total" *ngIf="hist.nombre === undefined">
         {{ hist.usd }}$
+      </mat-card-content>
+      <mat-card-content class="historial__name" *ngIf="hist.nombre != undefined">
+        {{ hist.nombre }} {{ hist.mmr }}
       </mat-card-content>
     </mat-card>
 </div>
