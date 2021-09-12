@@ -1,4 +1,4 @@
-<div class="modal-form">
+<div class="modal-form" [class.view-modal]="!viewModal">
     <form [formGroup]="formBecado" class="form-becado">
         <div class="form-becado__title">
             <h1>Registro de Becados</h1>
@@ -62,7 +62,7 @@
             <mat-error *ngIf="formBecado.controls.ganancia.hasError('required')">El campo no puede estar vacio</mat-error>
             <mat-error *ngIf="formBecado.controls.ganancia.hasError('pattern')">Solo se permiten numeros y el simbolo %</mat-error>
         </mat-form-field>
-        <button (click)="test()" class="form-becado__btn" mat-raised-button color="primary">Enviar</button>
-        <button class="form-becado__btn" mat-raised-button>Cancelar</button>
+        <button (click)="revisarValido()" class="form-becado__btn" mat-raised-button color="primary">Enviar</button>
+        <button class="form-becado__btn" (click)="closeModal()" mat-raised-button>Cancelar</button>
     </form>
 </div>

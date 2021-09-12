@@ -10,13 +10,13 @@ export class ScholarDataService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public async get(roninAddres: string):Promise<any>{
+  public async get(roninAddress: string):Promise<any>{
     let earnings, stats;
     [stats, earnings] = await Promise.all(
-      [this.getStats(roninAddres),
-      this.getEarnings(roninAddres)]
+      [this.getStats(roninAddress),
+      this.getEarnings(roninAddress)]
     );
-    let apiData: scholarOfficialData = this.parseData(earnings, stats, roninAddres);
+    let apiData: scholarOfficialData = this.parseData(earnings, stats, roninAddress);
     return apiData;
   }
   private getStats(roninAddres: string):Promise<any>{

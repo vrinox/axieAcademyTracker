@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { FormGroup } from '@angular/forms';
+import { Scholar } from 'src/app/models/scholar';
 
 @Injectable({
   providedIn: 'root'
@@ -8,17 +10,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class InsertScholarsService {
   private urlApiDb = 'https://us-central1-axieacademytracker.cloudfunctions.net';
 
-  private httpOptions = {
-    headers: new HttpHeaders({ 
-      "key": "Access-Control-Allow-Origin",
-      "value": "*"
-    })
-  };
-  
   constructor(private http: HttpClient) { }
 
-  insertNewScholar(newScholars: Object){
-    this.http.post(`${this.urlApiDb}/addNewScholar`, newScholars, this.httpOptions ).subscribe(res=>{
+  insertNewScholar(newScholars: FormGroup){
+    this.http.post(`${this.urlApiDb}/addNewScholar`, newScholars ).subscribe(res=>{
       console.log(res);
     });
   }

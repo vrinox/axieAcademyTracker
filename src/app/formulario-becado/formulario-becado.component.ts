@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { InsertScholarsService } from '../services/insertScholars/insert-scholars.service';
 @Component({
@@ -7,6 +7,9 @@ import { InsertScholarsService } from '../services/insertScholars/insert-scholar
   styleUrls: ['./formulario-becado.component.sass']
 })
 export class FormularioBecadoComponent implements OnInit {
+  @Input('ViewModal') viewModal!: boolean;
+  @Output() OffModal = new EventEmitter<boolean>();
+
   formBecado: FormGroup = new FormGroup({
     name: new FormControl('',[
       Validators.required,
@@ -27,13 +30,34 @@ export class FormularioBecadoComponent implements OnInit {
       Validators.pattern('^[0-9-% ]+$')
     ])
   })
+
   constructor(private insertNewScholar: InsertScholarsService) { }
 
   ngOnInit(): void {
   }
 
-  test(){
-    console.log(this.formBecado.value)
-    this.insertNewScholar.insertNewScholar(this.formBecado.value);
+  revisarValido(): void{
+    if(this.formBecado.valid){
+      this.formBecado.controls.name
+      .setValue(`${this.formBecado.controls.name.value} ${this.formBecado.controls.apellido.value}`);
+      this.enviarDatos();
+      this.limpiarFormulario();
+    }
+  }
+
+  enviarDatos(){
+    this.insertNewScholar.insertNewScholar({...this.formBecado.value});
+  }
+
+  limpiarFormulario(): void{
+    this.formBecado.reset();
+    Object.keys(this.formBecado.controls).forEach(keys => {
+      this.formBecado.get(keys)?.setErrors(null);
+    });
+  }
+
+  closeModal(): void{
+    this.OffModal.emit(false);
+    this.limpiarFormulario();
   }
 }

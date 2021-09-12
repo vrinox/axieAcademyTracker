@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, child, get } from 'firebase/database';
+import { getFirestore, collection, getDocs} from 'firebase/firestore';
 import { scholarFirebaseI} from './models/interfaces'
 import { Observable, Subject } from 'rxjs';
 
@@ -11,23 +11,16 @@ const app = initializeApp(environment.firebase);
   providedIn: 'root'
 })
 export class DatabaseService {
-  public db = ref(getDatabase(app));
+  public db = getFirestore(app);
   public sub: Subject<scholarFirebaseI[]> = new Subject();
   constructor() { 
     
   }
-  
-  getAllData(): Observable<scholarFirebaseI[]>{
-    get(child(this.db, `scholars/`)).then((snapshot) => {
-      if (snapshot.exists()) {
-        this.sub.next(snapshot.val());
-      } else {
-        console.log("No data available");
-      }
-    }).catch((error) => {
-      console.error(error);
+  async getAllData():Promise<any[]>{
+    const querySnapshot = await getDocs(collection(this.db, 'scholars'))
+    return querySnapshot.docs.map((doc)=>{
+      return doc.data();
     });
-    return this.sub
   }
 
 
