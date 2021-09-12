@@ -25,7 +25,8 @@ export class ScholarsComponent implements OnInit {
   cargarDatos() {
     this.dbService
       .getAllData()
-      .subscribe((scholarData:scholarFirebaseI[])=> {
+      .then((scholarData:scholarFirebaseI[])=> {
+        console.log(scholarData);
         let scholarsFirebase = scholarData
           .map((scholar)=>{
             return new Scholar(scholar)
