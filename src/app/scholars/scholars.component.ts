@@ -3,6 +3,7 @@ import { Scholar } from '../models/scholar';
 import { ScholarDataService } from '../scholar-data.service';
 import { DatabaseService } from '../database.service';
 import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-scholars',
@@ -11,8 +12,8 @@ import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 })
 export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
+  scholars$: Subject<Scholar[]> = new Subject();
   displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
-  historialView: boolean = false;
   constructor(
     private schDataService: ScholarDataService,
     private dbService: DatabaseService
@@ -32,6 +33,7 @@ export class ScholarsComponent implements OnInit {
             return new Scholar(scholar)
           });
         this.scholars = scholarsFirebase;
+        this.scholars$.next(this.scholars);
         this.obtenerDatos(scholarsFirebase);
       })
   }
@@ -58,8 +60,8 @@ export class ScholarsComponent implements OnInit {
       scholar.update(scholarUpdated);
       return scholar;
     });
+    this.scholars$.next(this.scholars);
     this.calcularRankMensual();
-    this.historialView = true;
   }
 
   obtenerDataActualizada(scholar: Scholar) {
@@ -71,4 +73,9 @@ export class ScholarsComponent implements OnInit {
         return Promise.resolve(newScholarData);
       });
   }
+
+  changeScholars(): Observable<Scholar[]>{
+    return this.scholars$
+  }
+
 }

@@ -13,19 +13,23 @@ export class HistorialComponent implements OnInit {
   historial: Historial[] = [];
   imageSrc: string = 'assets/img/SLP.png';
   imageAlt: string = 'SLP';
-
+  slpPrice: number = 0;
   constructor(private scholarC: ScholarsComponent,
               private getPrice: GetPriceService) {}
 
   ngOnInit(): void {
+    console.log('historial')
+    this.scholarC.changeScholars().subscribe(scholars => {
+      this.historial  = [];
+      totals.setHistorial(scholars, this.historial, this.slpPrice);
+    });
     this.getPriceSlp();
   }
 
 
   async getPriceSlp(){
     let cryto = await this.getPrice.get('smooth-love-potion');
-    let slpPrice: number = parseFloat(cryto['smooth-love-potion'].usd.toFixed(2));
-    totals.setHistorial(this.scholarC.scholars, this.historial, slpPrice);
+    this.slpPrice = parseFloat(cryto['smooth-love-potion'].usd.toFixed(2));
   }
 
 }
