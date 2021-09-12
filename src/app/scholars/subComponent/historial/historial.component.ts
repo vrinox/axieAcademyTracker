@@ -18,7 +18,6 @@ export class HistorialComponent implements OnInit {
               private getPrice: GetPriceService) {}
 
   ngOnInit(): void {
-    console.log('historial')
     this.scholarC.changeScholars().subscribe(scholars => {
       this.historial  = [];
       totals.setHistorial(scholars, this.historial, this.slpPrice);

@@ -27,7 +27,6 @@ export class ScholarsComponent implements OnInit {
     this.dbService
       .getAllData()
       .then((scholarData:scholarFirebaseI[])=> {
-        console.log(scholarData);
         let scholarsFirebase = scholarData
           .map((scholar)=>{
             return new Scholar(scholar)
