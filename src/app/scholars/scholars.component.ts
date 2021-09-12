@@ -32,10 +32,10 @@ export class ScholarsComponent implements OnInit {
             return new Scholar(scholar)
           });
         this.scholars = scholarsFirebase;
-        this.historialView = true;
         this.obtenerDatos(scholarsFirebase);
       })
   }
+  
   calcularRankMensual() {
     let rank = 1;
     this.scholars = this.scholars.sort((a:Scholar, b:Scholar)=>{
@@ -46,20 +46,22 @@ export class ScholarsComponent implements OnInit {
       return scholar;
     });
   }
-  async obtenerDatos(scholarFirebase:Scholar[]) {
-      let scholarsUpdated:Scholar[] = await Promise.all(scholarFirebase.map((scholar: Scholar)=> {
-        return this.obtenerDataActualizada(scholar);
-      }))
-      this.scholars = scholarFirebase.map((scholar:Scholar)=>{
-        let scholarUpdated:Scholar = scholarsUpdated.find((updatedData:Scholar)=>{
-          return updatedData.roninAddress === scholar.roninAddress;
-        }) || new Scholar();
-        scholar.update(scholarUpdated);
-        return scholar;
-      });
-      this.calcularRankMensual();
 
+  async obtenerDatos(scholarFirebase:Scholar[]) {
+    let scholarsUpdated:Scholar[] = await Promise.all(scholarFirebase.map((scholar: Scholar)=> {
+      return this.obtenerDataActualizada(scholar);
+    }))
+    this.scholars = scholarFirebase.map((scholar:Scholar)=>{
+      let scholarUpdated:Scholar = scholarsUpdated.find((updatedData:Scholar)=>{
+        return updatedData.roninAddress === scholar.roninAddress;
+      }) || new Scholar();
+      scholar.update(scholarUpdated);
+      return scholar;
+    });
+    this.calcularRankMensual();
+    this.historialView = true;
   }
+
   obtenerDataActualizada(scholar: Scholar) {
     return this.schDataService
       .get(scholar.roninAddress)
