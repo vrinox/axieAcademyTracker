@@ -15,13 +15,13 @@
 
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
             <mat-label>Nombre</mat-label>
-            <input formControlName="nombre" matInput placeholder="Victor">
+            <input formControlName="name" matInput placeholder="Victor">
             <mat-icon matSuffix class="form-becado__check"
-                        *ngIf="formBecado.controls.nombre.valid">check_circle_outline</mat-icon>
+                        *ngIf="formBecado.controls.name.valid">check_circle_outline</mat-icon>
             <mat-icon matSuffix class="form-becado__off" 
-                        *ngIf="!formBecado.controls.nombre.valid">highlight_off</mat-icon>
-            <mat-error *ngIf="formBecado.controls.nombre.hasError('required')">El campo no puede estar vacio</mat-error>
-            <mat-error *ngIf="formBecado.controls.nombre.hasError('pattern')">Solo se permiten letras</mat-error>
+                        *ngIf="!formBecado.controls.name.valid">highlight_off</mat-icon>
+            <mat-error *ngIf="formBecado.controls.name.hasError('required')">El campo no puede estar vacio</mat-error>
+            <mat-error *ngIf="formBecado.controls.name.hasError('pattern')">Solo se permiten letras</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
@@ -36,21 +36,21 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
             <mat-label>Rongin Adress</mat-label>
-            <input formControlName="roningAdress" matInput placeholder="Leon">
+            <input formControlName="roninAddress" matInput placeholder="Leon">
             <mat-icon matSuffix class="form-becado__check"
-                        *ngIf="formBecado.controls.roningAdress.valid">check_circle_outline</mat-icon>
+                        *ngIf="formBecado.controls.roninAddress.valid">check_circle_outline</mat-icon>
             <mat-icon matSuffix class="form-becado__off" 
-                        *ngIf="!formBecado.controls.roningAdress.valid">highlight_off</mat-icon>
-            <mat-error *ngIf="formBecado.controls.roningAdress.hasError('required')">El campo no puede estar vacio</mat-error>
+                        *ngIf="!formBecado.controls.roninAddress.valid">highlight_off</mat-icon>
+            <mat-error *ngIf="formBecado.controls.roninAddress.hasError('required')">El campo no puede estar vacio</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
             <mat-label>Rongin Adress Personal</mat-label>
-            <input formControlName="roningPersonal" matInput placeholder="Leon">
+            <input formControlName="personalAdress" matInput placeholder="Leon">
             <mat-icon matSuffix class="form-becado__check"
-                        *ngIf="formBecado.controls.roningPersonal.valid">check_circle_outline</mat-icon>
+                        *ngIf="formBecado.controls.personalAdress.valid">check_circle_outline</mat-icon>
             <mat-icon matSuffix class="form-becado__off" 
-                        *ngIf="!formBecado.controls.roningPersonal.valid">highlight_off</mat-icon>
-            <mat-error *ngIf="formBecado.controls.roningPersonal.hasError('required')">El campo no puede estar vacio</mat-error>
+                        *ngIf="!formBecado.controls.personalAdress.valid">highlight_off</mat-icon>
+            <mat-error *ngIf="formBecado.controls.personalAdress.hasError('required')">El campo no puede estar vacio</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
             <mat-label>Procentaje de Ganancia</mat-label>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { InsertScholarsService } from '../services/insertScholars/insert-scholars.service';
 @Component({
   selector: 'app-formulario-becado',
   templateUrl: './formulario-becado.component.html',
@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class FormularioBecadoComponent implements OnInit {
   formBecado: FormGroup = new FormGroup({
-    nombre: new FormControl('',[
+    name: new FormControl('',[
       Validators.required,
       Validators.pattern('^[a-zA-Z ]+$')
     ]),
@@ -16,10 +16,10 @@ export class FormularioBecadoComponent implements OnInit {
       Validators.required,
       Validators.pattern('^[a-zA-Z ]+$')
     ]),
-    roningAdress: new FormControl('',[
+    roninAddress: new FormControl('',[
       Validators.required
     ]),
-    roningPersonal: new FormControl('',[
+    personalAdress: new FormControl('',[
       Validators.required
     ]),
     ganancia: new FormControl('',[
@@ -27,12 +27,13 @@ export class FormularioBecadoComponent implements OnInit {
       Validators.pattern('^[0-9-% ]+$')
     ])
   })
-  constructor() { }
+  constructor(private insertNewScholar: InsertScholarsService) { }
 
   ngOnInit(): void {
   }
 
   test(){
-    console.log(this.formBecado.controls.nombre.valid)
+    console.log(this.formBecado.value)
+    this.insertNewScholar.insertNewScholar(this.formBecado.value);
   }
 }
