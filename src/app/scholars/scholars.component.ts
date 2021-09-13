@@ -4,6 +4,7 @@ import { ScholarDataService } from '../scholar-data.service';
 import { DatabaseService } from '../database.service';
 import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 import { Observable, Subject } from 'rxjs';
+import { AgregarNewBecadoService } from '../formulario-becado/class/agregarNewBecado/agregar-new-becado.service';
 
 @Component({
   selector: 'app-scholars',
@@ -16,11 +17,13 @@ export class ScholarsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
   constructor(
     private schDataService: ScholarDataService,
-    private dbService: DatabaseService
+    private dbService: DatabaseService,
+    private addNewBecado: AgregarNewBecadoService
   ) {}
 
   ngOnInit(): void {
     this.cargarDatos();
+    this.newBecado();
   }
   
   cargarDatos() {
@@ -71,6 +74,13 @@ export class ScholarsComponent implements OnInit {
         newScholarData.parse(scholarData);
         return Promise.resolve(newScholarData);
       });
+  }
+
+  newBecado(): void{
+    this.addNewBecado.getNewBecado().subscribe(scholar=>{
+      this.scholars.push(scholar);
+      console.log(this.scholars)
+    })
   }
 
   changeScholars(): Observable<Scholar[]>{
