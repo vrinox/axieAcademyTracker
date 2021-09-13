@@ -77,9 +77,13 @@ export class ScholarsComponent implements OnInit {
   }
 
   newBecado(): void{
-    this.addNewBecado.getNewBecado().subscribe(scholar=>{
-      this.scholars.push(scholar);
-      console.log(this.scholars)
+    this.addNewBecado.getNewBecado().subscribe((scholar:Scholar)=>{
+      let tempScholars = this.scholars
+      tempScholars.push(scholar);
+      this.scholars = [];
+      this.scholars = tempScholars.map((scholar)=>{
+        return scholar;
+      });
     })
   }
 
