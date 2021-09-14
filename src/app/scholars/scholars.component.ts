@@ -15,6 +15,7 @@ export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
   scholars$: Subject<Scholar[]> = new Subject();
   displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
+  
   constructor(
     private schDataService: ScholarDataService,
     private dbService: DatabaseService,

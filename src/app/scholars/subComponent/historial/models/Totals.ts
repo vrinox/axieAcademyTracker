@@ -27,6 +27,7 @@ class Totals{
         historial[4].subTitleNumber += scholar.yesterdaySLP;
         if(!isNaN(scholar.todaySLP)) historial[5].subTitleNumber += scholar.todaySLP;
         if(!isNaN(scholar.averageSLP)) historial[6].subTitleNumber += scholar.averageSLP;
+        // y dividir el avaregare entre la cantidad de becados
     }
 
     private setBestpvp(scholar: Scholar[], historial: Historial[]): void{
