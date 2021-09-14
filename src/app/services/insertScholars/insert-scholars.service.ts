@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DatosFormulario } from 'src/app/models/interfaces';
-import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
