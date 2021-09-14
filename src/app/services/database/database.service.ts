@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs} from 'firebase/firestore';
-import { scholarFirebaseI} from './models/interfaces'
+import { scholarFirebaseI } from 'src/app/models/interfaces';
 import { Observable, Subject } from 'rxjs';
 
 const app = initializeApp(environment.firebase);

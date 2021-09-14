@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { earningsData, scholarOfficialData, statsData } from './models/interfaces';
+import { earningsData, scholarOfficialData, statsData } from 'src/app/models/interfaces';
 
 @Injectable({
   providedIn: 'root'

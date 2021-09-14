@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Scholar } from '../models/scholar';
-import { ScholarDataService } from '../scholar-data.service';
-import { DatabaseService } from '../database.service';
+import { ScholarDataService } from 'src/app/services/scholarData/scholar-data.service';
+import { DatabaseService } from '../services/database/database.service';
 import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 import { Observable, Subject } from 'rxjs';
-import { AgregarNewBecadoService } from '../formulario-becado/class/agregarNewBecado/agregar-new-becado.service';
+import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
 
 @Component({
   selector: 'app-scholars',

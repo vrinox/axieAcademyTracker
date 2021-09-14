@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ScholarsComponent } from '../../scholars.component';
 import { GetPriceService } from 'src/app/services/getPriceCripto/get-price.service';
 import { Historial } from 'src/app/models/interfaces';
-import { totals } from './models/Totals';
+import { totals } from 'src/app/models/Totals';
 
 @Component({
   selector: 'app-historial',

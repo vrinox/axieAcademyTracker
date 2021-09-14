@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Scholar } from '../models/scholar';
 import { InsertScholarsService } from '../services/insertScholars/insert-scholars.service';
-import { AgregarNewBecadoService } from './class/agregarNewBecado/agregar-new-becado.service';
+import { AgregarNewBecadoService } from 'src/app/services/agregarNewBecado/agregar-new-becado.service';
 
 @Component({
   selector: 'app-formulario-becado',
