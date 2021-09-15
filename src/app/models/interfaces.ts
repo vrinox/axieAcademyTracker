@@ -46,6 +46,7 @@ export interface Historial {
 export interface DatosFormulario{
     id?: number,
     name: string,
+    apellido?: string,
     roninAddress: string,
     personalAdress?: string,
     ganancia?: string

@@ -16,7 +16,7 @@ class Totals{
         scholar.forEach(element =>{
             this.calculoTotales(element, historial);
         });
-        historial[6].subTitleNumber = historial[5].subTitleNumber / scholar.length
+        this.calcTotalAverage(historial, scholar);
         this.setBestpvp(scholar, historial);
     };
 
@@ -27,7 +27,10 @@ class Totals{
         historial[4].subTitleNumber += scholar.yesterdaySLP;
         if(!isNaN(scholar.todaySLP)) historial[5].subTitleNumber += scholar.todaySLP;
         if(!isNaN(scholar.averageSLP)) historial[6].subTitleNumber += scholar.averageSLP;
-        // y dividir el avaregare entre la cantidad de becados
+    }
+
+    private calcTotalAverage(historial: Historial[], scholar: Scholar[]){
+        historial[6].subTitleNumber = historial[6].subTitleNumber / scholar.length
     }
 
     private setBestpvp(scholar: Scholar[], historial: Historial[]): void{

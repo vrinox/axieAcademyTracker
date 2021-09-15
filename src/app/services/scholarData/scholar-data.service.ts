@@ -19,6 +19,7 @@ export class ScholarDataService {
     let apiData: scholarOfficialData = this.parseData(earnings, stats, roninAddress);
     return apiData;
   }
+  
   private getStats(roninAddres: string):Promise<any>{
     return this.httpClient
       .get(`${this.REST_API_SERVER}/_stats/${roninAddres}`)
@@ -27,6 +28,7 @@ export class ScholarDataService {
         return statsData.stats;
       })
   }
+
   private getEarnings(roninAddres: string):Promise<any>{
     return this.httpClient
       .get(`${this.REST_API_SERVER}/_earnings/${roninAddres}`)
@@ -35,6 +37,7 @@ export class ScholarDataService {
         return earningsData.earnings;
       })
   }
+
   private parseData(earnings: earningsData, stats: statsData, roninAddress: string){
     return {
       ronin_address: roninAddress,

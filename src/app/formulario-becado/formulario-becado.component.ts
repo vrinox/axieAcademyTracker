@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Scholar } from '../models/scholar';
 import { InsertScholarsService } from '../services/insertScholars/insert-scholars.service';
@@ -10,6 +10,7 @@ import { AgregarNewBecadoService } from 'src/app/services/agregarNewBecado/agreg
   styleUrls: ['./formulario-becado.component.sass']
 })
 export class FormularioBecadoComponent implements OnInit {
+  @ViewChild('modal', { static: true }) Modal!: ElementRef;
   @Input('ViewModal') viewModal!: boolean;
   @Output() OffModal = new EventEmitter<boolean>();
 
@@ -35,9 +36,13 @@ export class FormularioBecadoComponent implements OnInit {
   })
 
   constructor(private insertNewScholar: InsertScholarsService,
-              private agregarBecado: AgregarNewBecadoService) { }
+              private agregarBecado: AgregarNewBecadoService,
+              private render: Renderer2) { }
 
   ngOnInit(): void {
+    this.render.listen(this.Modal , 'onClick', (e: any)=>{
+      console.log(e)
+    })
   }
 
   revisarValido(): void{
@@ -45,7 +50,7 @@ export class FormularioBecadoComponent implements OnInit {
       this.formBecado.controls.name
       .setValue(`${this.formBecado.controls.name.value} ${this.formBecado.controls.apellido.value}`);
       this.enviarDatos();
-      this.limpiarFormulario();
+      this.closeModal();
     }
   }
 
@@ -54,16 +59,16 @@ export class FormularioBecadoComponent implements OnInit {
     this.agregarBecado.setNewBecado(new Scholar(newScholar));
   }
 
+  
+  closeModal(): void{
+    this.OffModal.emit(false);
+    this.limpiarFormulario();
+  }
+  
   limpiarFormulario(): void{
     this.formBecado.reset();
     Object.keys(this.formBecado.controls).forEach(keys => {
       this.formBecado.get(keys)?.setErrors(null);
     });
   }
-
-  closeModal(): void{
-    this.OffModal.emit(false);
-    this.limpiarFormulario();
-  }
-
 }
