@@ -38,10 +38,15 @@ export class FormularioBecadoComponent implements OnInit {
   constructor(private insertNewScholar: InsertScholarsService,
               private agregarBecado: AgregarNewBecadoService,
               private render: Renderer2) { }
-
+              
   ngOnInit(): void {
-    this.render.listen(this.Modal , 'onClick', (e: any)=>{
-      console.log(e)
+    this.cirreExteriorModal();
+  }
+  
+  cirreExteriorModal(): void{
+    let modal = this.Modal.nativeElement;
+    this.render.listen(modal, 'click', (e: Event)=>{
+      if(e.target === modal) this.closeModal();
     })
   }
 
