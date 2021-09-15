@@ -30,7 +30,9 @@ class Totals{
     }
 
     private calcTotalAverage(historial: Historial[], scholar: Scholar[]){
-        historial[6].subTitleNumber = historial[6].subTitleNumber / scholar.length
+        historial[6].subTitleNumber = parseFloat(
+            (historial[6].subTitleNumber / scholar.length).toFixed(2)
+            );
     }
 
     private setBestpvp(scholar: Scholar[], historial: Historial[]): void{

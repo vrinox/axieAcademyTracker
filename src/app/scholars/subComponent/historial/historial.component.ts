@@ -13,7 +13,10 @@ export class HistorialComponent implements OnInit {
   historial: Historial[] = [];
   imageSrc: string = 'assets/img/SLP.png';
   imageAlt: string = 'SLP';
+  trofeoImgSrc: string = 'assets/img/trofeo.jpg';
+  trofeoAlt: string = 'copas axie infinity';
   slpPrice: number = 0;
+
   constructor(private scholarC: ScholarsComponent,
               private getPrice: GetPriceService) {}
 

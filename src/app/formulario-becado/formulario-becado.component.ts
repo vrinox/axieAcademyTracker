@@ -47,7 +47,7 @@ export class FormularioBecadoComponent implements OnInit {
     let modal = this.Modal.nativeElement;
     this.render.listen(modal, 'click', (e: Event)=>{
       if(e.target === modal) this.closeModal();
-    })
+    });
   }
 
   revisarValido(): void{
