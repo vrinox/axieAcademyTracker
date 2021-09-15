@@ -35,6 +35,9 @@ export class ScholarsComponent implements OnInit {
             return new Scholar(scholar)
           });
         this.scholars = scholarsFirebase;
+        this.scholars.sort((a:Scholar,b:Scholar)=>{
+          return b.monthSLP - a.monthSLP
+        });
         this.scholars$.next(this.scholars);
         this.obtenerDatos(scholarsFirebase);
       })
