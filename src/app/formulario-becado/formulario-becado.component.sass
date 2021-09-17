@@ -1,0 +1,45 @@
+.modal-form
+    width: 100%
+    height: 100vh
+    display: flex
+    align-items: center
+    position: absolute
+    padding: 10px
+    background: #666565a8
+    justify-content: center
+    z-index: 20
+    box-sizing: border-box
+
+.view-modal
+    display: none
+
+.form-becado
+    width: 100%
+    padding: 10px
+    background: #ffffffef
+    border-radius: 15px 
+    box-sizing: border-box
+    z-index: 40
+    &__title
+        width: 100%
+        height: 80px
+        display: flex
+        justify-content: space-between
+        padding: 10px
+        box-sizing: border-box
+        img
+            width: 50px
+            height: 50px
+    &__contenedor-inputs
+        width: 100%
+    &__btn
+        width: calc(50% - 20px)
+        margin: 0px 10px
+    &__check
+        color: #056802
+    &__off
+        color: #9b1616
+
+@media screen and (min-width: 600px)
+    .form-becado
+        width: 70%

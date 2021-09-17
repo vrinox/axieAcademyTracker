@@ -11,6 +11,7 @@ export interface scholarOfficialData{
     ign: string,
     game_stats_success?: string
 }
+
 export interface statsData{
     client_id:string,
     win_total: number,
@@ -20,6 +21,7 @@ export interface statsData{
     rank: number,
     name: string
 }
+
 export interface earningsData {
     address: string,
     slp_holdings: number,
@@ -36,5 +38,16 @@ export interface scholarFirebaseI {
 export interface Historial {
     title: string,
     subTitleNumber:  number,
-    usd: number
+    usd?: number,
+    nombre?: string,
+    mmr?: number
+}
+
+export interface DatosFormulario{
+    id?: number,
+    name: string,
+    apellido?: string,
+    roninAddress: string,
+    personalAdress?: string,
+    ganancia?: string
 }

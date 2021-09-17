@@ -6,11 +6,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class GetPriceService {
   private API_RES_COINGECKO: String = 'https://api.coingecko.com/api/v3/simple';
+
   private httpOptions = {
     headers: new HttpHeaders({ 
       'Access-Control-Allow-Origin':'*'
     })
   };
+  
   constructor(private http: HttpClient) { }
 
   get(idCrypto: string): Promise<any>{

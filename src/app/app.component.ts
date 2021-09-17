@@ -8,4 +8,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'axie';
   showFiller = false;
+  viewModal: boolean = false;
+
+  offModal(event: boolean){
+    this.viewModal = event
+  }
 }

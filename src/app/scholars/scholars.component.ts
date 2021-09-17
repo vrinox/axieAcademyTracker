@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Scholar } from '../models/scholar';
-import { ScholarDataService } from '../scholar-data.service';
-import { DatabaseService } from '../database.service';
+import { ScholarDataService } from 'src/app/services/scholarData/scholar-data.service';
+import { DatabaseService } from '../services/database/database.service';
 import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
+import { Observable, Subject } from 'rxjs';
+import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
 
 @Component({
   selector: 'app-scholars',
@@ -11,31 +13,37 @@ import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 })
 export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
+  scholars$: Subject<Scholar[]> = new Subject();
   displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
-  historialView: boolean = false;
+  
   constructor(
     private schDataService: ScholarDataService,
-    private dbService: DatabaseService
+    private dbService: DatabaseService,
+    private addNewBecado: AgregarNewBecadoService
   ) {}
 
   ngOnInit(): void {
     this.cargarDatos();
+    this.newBecado();
   }
   
   cargarDatos() {
     this.dbService
       .getAllData()
       .then((scholarData:scholarFirebaseI[])=> {
-        console.log(scholarData);
         let scholarsFirebase = scholarData
           .map((scholar)=>{
             return new Scholar(scholar)
           });
         this.scholars = scholarsFirebase;
-        this.historialView = true;
+        this.scholars.sort((a:Scholar,b:Scholar)=>{
+          return b.monthSLP - a.monthSLP
+        });
+        this.scholars$.next(this.scholars);
         this.obtenerDatos(scholarsFirebase);
       })
   }
+  
   calcularRankMensual() {
     let rank = 1;
     this.scholars = this.scholars.sort((a:Scholar, b:Scholar)=>{
@@ -46,20 +54,22 @@ export class ScholarsComponent implements OnInit {
       return scholar;
     });
   }
-  async obtenerDatos(scholarFirebase:Scholar[]) {
-      let scholarsUpdated:Scholar[] = await Promise.all(scholarFirebase.map((scholar: Scholar)=> {
-        return this.obtenerDataActualizada(scholar);
-      }))
-      this.scholars = scholarFirebase.map((scholar:Scholar)=>{
-        let scholarUpdated:Scholar = scholarsUpdated.find((updatedData:Scholar)=>{
-          return updatedData.roninAddress === scholar.roninAddress;
-        }) || new Scholar();
-        scholar.update(scholarUpdated);
-        return scholar;
-      });
-      this.calcularRankMensual();
 
+  async obtenerDatos(scholarFirebase:Scholar[]) {
+    let scholarsUpdated:Scholar[] = await Promise.all(scholarFirebase.map((scholar: Scholar)=> {
+      return this.obtenerDataActualizada(scholar);
+    }))
+    this.scholars = scholarFirebase.map((scholar:Scholar)=>{
+      let scholarUpdated:Scholar = scholarsUpdated.find((updatedData:Scholar)=>{
+        return updatedData.roninAddress === scholar.roninAddress;
+      }) || new Scholar();
+      scholar.update(scholarUpdated);
+      return scholar;
+    });
+    this.scholars$.next(this.scholars);
+    this.calcularRankMensual();
   }
+
   obtenerDataActualizada(scholar: Scholar) {
     return this.schDataService
       .get(scholar.roninAddress)
@@ -69,4 +79,20 @@ export class ScholarsComponent implements OnInit {
         return Promise.resolve(newScholarData);
       });
   }
+
+  newBecado(): void{
+    this.addNewBecado.getNewBecado().subscribe((scholar:Scholar)=>{
+      let tempScholars = this.scholars
+      tempScholars.push(scholar);
+      this.scholars = [];
+      this.scholars = tempScholars.map((scholar)=>{
+        return scholar;
+      });
+    })
+  }
+
+  changeScholars(): Observable<Scholar[]>{
+    return this.scholars$
+  }
+
 }

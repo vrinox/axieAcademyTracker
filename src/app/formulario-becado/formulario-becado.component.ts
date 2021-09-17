@@ -1,0 +1,79 @@
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Scholar } from '../models/scholar';
+import { InsertScholarsService } from '../services/insertScholars/insert-scholars.service';
+import { AgregarNewBecadoService } from 'src/app/services/agregarNewBecado/agregar-new-becado.service';
+
+@Component({
+  selector: 'app-formulario-becado',
+  templateUrl: './formulario-becado.component.html',
+  styleUrls: ['./formulario-becado.component.sass']
+})
+export class FormularioBecadoComponent implements OnInit {
+  @ViewChild('modal', { static: true }) Modal!: ElementRef;
+  @Input('ViewModal') viewModal!: boolean;
+  @Output() OffModal = new EventEmitter<boolean>();
+
+  formBecado: FormGroup = new FormGroup({
+    name: new FormControl('',[
+      Validators.required,
+      Validators.pattern('^[a-zA-Z ]+$')
+    ]),
+    apellido: new FormControl('',[
+      Validators.required,
+      Validators.pattern('^[a-zA-Z ]+$')
+    ]),
+    roninAddress: new FormControl('',[
+      Validators.required
+    ]),
+    personalAdress: new FormControl('',[
+      Validators.required
+    ]),
+    ganancia: new FormControl('',[
+      Validators.required,
+      Validators.pattern('^[0-9-% ]+$')
+    ])
+  })
+
+  constructor(private insertNewScholar: InsertScholarsService,
+              private agregarBecado: AgregarNewBecadoService,
+              private render: Renderer2) { }
+              
+  ngOnInit(): void {
+    this.cirreExteriorModal();
+  }
+  
+  cirreExteriorModal(): void{
+    let modal = this.Modal.nativeElement;
+    this.render.listen(modal, 'click', (e: Event)=>{
+      if(e.target === modal) this.closeModal();
+    });
+  }
+
+  revisarValido(): void{
+    if(this.formBecado.valid){
+      this.formBecado.controls.name
+      .setValue(`${this.formBecado.controls.name.value} ${this.formBecado.controls.apellido.value}`);
+      this.enviarDatos();
+      this.closeModal();
+    }
+  }
+
+  async enviarDatos(): Promise<void>{
+    let newScholar = await this.insertNewScholar.insertNewScholar({...this.formBecado.value});
+    this.agregarBecado.setNewBecado(new Scholar(newScholar));
+  }
+
+  
+  closeModal(): void{
+    this.OffModal.emit(false);
+    this.limpiarFormulario();
+  }
+  
+  limpiarFormulario(): void{
+    this.formBecado.reset();
+    Object.keys(this.formBecado.controls).forEach(keys => {
+      this.formBecado.get(keys)?.setErrors(null);
+    });
+  }
+}

@@ -1,4 +1,4 @@
-<app-historial *ngIf="historialView"></app-historial>
+<app-historial></app-historial>
 <div class="container-table">
     <table mat-table [dataSource]="scholars" class="mat-elevation-z8" >  
       <ng-container matColumnDef="name" sticky>
@@ -33,7 +33,7 @@
     
       <ng-container matColumnDef="MMR">
         <th mat-header-cell *matHeaderCellDef> MMR </th>
-        <td mat-cell *matCellDef="let element"> {{element.MMR}} </td>
+        <td mat-cell *matCellDef="let element">{{element.MMR}}🏆</td>
       </ng-container>
     
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
