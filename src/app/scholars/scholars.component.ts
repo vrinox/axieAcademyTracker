@@ -56,9 +56,14 @@ export class ScholarsComponent implements OnInit {
   }
 
   async obtenerDatos(scholarFirebase:Scholar[]) {
-    // let scholarsUpdated:Scholar[] = await Promise.all(scholarFirebase.map((scholar: Scholar)=> {
-    //   return this.obtenerDataActualizada(scholar);
-    // }))
+    let scholarsUpdated: Scholar[] = await this.schDataService.get(scholarFirebase)
+    .then((scholarData: scholarOfficialData[])=>{
+      return scholarData.map((scholar: scholarOfficialData)=> {
+        let newScholarData:Scholar = new Scholar();
+        return newScholarData.parse(scholar);
+      });
+    });
+
     this.scholars = scholarFirebase.map((scholar:Scholar)=>{
       let scholarUpdated:Scholar = scholarsUpdated.find((updatedData:Scholar)=>{
         return updatedData.roninAddress === scholar.roninAddress;
@@ -68,16 +73,6 @@ export class ScholarsComponent implements OnInit {
     });
     this.scholars$.next(this.scholars);
     this.calcularRankMensual();
-  }
-
-  obtenerDataActualizada(scholar: Scholar) {
-    // return this.schDataService
-    //   .get(scholar.roninAddress)
-    //   .then((scholarData: scholarOfficialData)=>{
-    //     let newScholarData:Scholar = new Scholar();
-    //     newScholarData.parse(scholarData);
-    //     return Promise.resolve(newScholarData);
-    //   });
   }
 
   newBecado(): void{
