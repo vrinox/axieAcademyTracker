@@ -20,6 +20,7 @@ export class ScholarDataService {
       .subscribe(res=>{
         console.log(res);
         let axiesUserData: scholarOfficialData[] =  this.parserJson(res);
+        console.log(axiesUserData)
         resolve(axiesUserData);
       });
     });
@@ -39,33 +40,23 @@ export class ScholarDataService {
   }
 
   private parserJson(newDataScholar: object){
-    let scholarData: scholarOfficialData[] = Object.entries(newDataScholar)
+    let scholarData: any = Object.entries(newDataScholar)
     .map((scholarData: ParseUserData[])=>{
-      let newDataOficial: AxiesUserData = {
-        roninAddress: scholarData[0].roninUser,
-        in_game_slp: scholarData[1].userDataAxie.in_game_slp,
-        mmr: scholarData[1].userDataAxie.mmr,
-        name: scholarData[1].userDataAxie.name,
-        rank: scholarData[1].userDataAxie.rank,
-        ronin_slp: scholarData[1].userDataAxie.ronin_slp,
-        total_matches: scholarData[1].userDataAxie.total_matches,
-        total_slp: scholarData[1].userDataAxie.total_slp
-      }
-      return this.parseData(newDataOficial);
+      return this.parseData(scholarData);
     });
     return scholarData;
   }
 
-  private parseData(axiesUserData: AxiesUserData){
+  private parseData(axiesUserData: ParseUserData[]){
     return {
-      ronin_address: axiesUserData.roninAddress,
-      ronin_slp: axiesUserData.ronin_slp,
-      total_slp: axiesUserData.total_slp,
-      in_game_slp: axiesUserData.in_game_slp,
-      rank: axiesUserData.rank,
-      mmr: axiesUserData.mmr,
-      total_matches: axiesUserData.total_matches,
-      ign: axiesUserData.name
+      ronin_address: axiesUserData[0],
+      ronin_slp: axiesUserData[1].ronin_slp!,
+      total_slp: axiesUserData[1].total_slp!,
+      in_game_slp: axiesUserData[1].in_game_slp!,
+      rank: axiesUserData[1].rank!,
+      mmr: axiesUserData[1].mmr!,
+      total_matches: axiesUserData[1].total_matches!,
+      ign: axiesUserData[1].name!
     }
   }
 }

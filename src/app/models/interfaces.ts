@@ -24,20 +24,15 @@ export interface AxiesUserData{
 }
 
 export interface ParseUserData{
-    roninUser: string,
-    userDataAxie: UserDataAxie
+    roninUser?: string,
+    in_game_slp?: number,
+    mmr?: number,
+    rank?: number,
+    ronin_slp?: number,
+    total_slp?: number
+    name?: string,
+    total_matches?: number
 }
-
-export interface UserDataAxie{
-    in_game_slp: number,
-    mmr: number,
-    rank: number,
-    ronin_slp: number,
-    total_slp: number
-    name: string,
-    total_matches: number
-}
-
 
 // export interface statsData{
 //     client_id:string,
