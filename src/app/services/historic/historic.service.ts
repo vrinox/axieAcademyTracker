@@ -22,5 +22,25 @@ export class HistoricService {
     })
     return story;
   }
+
+  async getMontHistoric(firtsDate: Date, lastDate: Date) {
+    const querySnapshot = await getDocs(query(collection(this.db, "historic"), where('lastUpdate', ">", firtsDate), where('lastUpdate', "<", lastDate)));
+    const story = querySnapshot.docs.map((doc:QueryDocumentSnapshot)=>{
+      const rawScholar = doc.data();
+      rawScholar.lastUpdate = rawScholar.lastUpdate.toDate();
+      return new Scholar(rawScholar);
+    })
+    return story;
+  }
+
+  async getTowScholars(roninAddress: string, roningAddress2: string) {
+    const querySnapshot = await getDocs(query(collection(this.db, "historic"), where('roninAddress', "in", [roninAddress, roningAddress2])));
+    const story = querySnapshot.docs.map((doc:QueryDocumentSnapshot)=>{
+      const rawScholar = doc.data();
+      rawScholar.lastUpdate = rawScholar.lastUpdate.toDate();
+      return new Scholar(rawScholar);
+    })
+    return story;
+  }
   
 }

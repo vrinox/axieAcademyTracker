@@ -47,5 +47,6 @@ export interface DatosFormulario{
 export interface HistoricData{
     dias: number[], 
     slp: number[],
-    title: string
+    title: string,
+    historic?: HistoricData
 }
