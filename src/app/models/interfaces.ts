@@ -43,3 +43,9 @@ export interface DatosFormulario{
     personalAdress?: string,
     ganancia?: string
 }
+
+export interface HistoricData{
+    dias: number[], 
+    slp: number[],
+    title: string
+}

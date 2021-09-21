@@ -20,6 +20,7 @@ export class Scholar {
   constructor(values: Object = {}) {
     Object.assign(this, values);
   }
+
   parse(unParsedData: scholarOfficialData) {
     this.roninAddress = unParsedData.ronin_address;
     this.inRoninSLP = (isNaN(unParsedData.ronin_slp)) ? 0 : unParsedData.ronin_slp;
@@ -29,6 +30,7 @@ export class Scholar {
     this.MMR = (isNaN(unParsedData.mmr)) ? 0 : unParsedData.mmr;
     return this;
   }
+  
   getValues():object {
     return {
       roninAddress: this.roninAddress,

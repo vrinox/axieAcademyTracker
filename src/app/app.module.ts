@@ -17,13 +17,20 @@ import { FormularioBecadoComponent } from './formulario-becado/formulario-becado
 import { MatFormFieldModule  } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GraficasComponent } from './graficas/graficas.component';
+
+import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ScholarsComponent,
     HistorialComponent,
-    FormularioBecadoComponent
+    FormularioBecadoComponent,
+    GraficasComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +45,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
