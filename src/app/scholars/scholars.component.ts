@@ -5,6 +5,7 @@ import { DatabaseService } from '../services/database/database.service';
 import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 import { Observable, Subject } from 'rxjs';
 import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-scholars',
@@ -19,7 +20,8 @@ export class ScholarsComponent implements OnInit {
   constructor(
     private schDataService: ScholarDataService,
     private dbService: DatabaseService,
-    private addNewBecado: AgregarNewBecadoService
+    private addNewBecado: AgregarNewBecadoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -90,4 +92,7 @@ export class ScholarsComponent implements OnInit {
     return this.scholars$
   }
 
+  viewOneScholarHistoric(roninAddress: string): void{
+    this.router.navigate([`/historic/${roninAddress}`]);
+  }
 }

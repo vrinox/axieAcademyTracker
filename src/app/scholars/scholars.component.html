@@ -1,9 +1,15 @@
 <app-historial></app-historial>
 <div class="container-table">
-    <table mat-table [dataSource]="scholars" class="mat-elevation-z8" >  
-      <ng-container matColumnDef="name" sticky>
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  <table mat-table [dataSource]="scholars" class="mat-elevation-z8" >  
+    <ng-container matColumnDef="name" sticky>
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}}
+        <button class="container-table__btn">
+          <mat-icon>
+            <a (click)="viewOneScholarHistoric(element.roninAddress)">show_chart</a>
+          </mat-icon>
+        </button>
+      </td>
       </ng-container>
 
       <ng-container matColumnDef="totalSLP">
