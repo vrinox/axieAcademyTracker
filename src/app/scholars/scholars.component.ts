@@ -6,6 +6,7 @@ import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 import { Observable, Subject } from 'rxjs';
 import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
 import { Router } from '@angular/router';
+import { ReferenceScholarsService } from '../services/referenceScholars/reference-scholars.service';
 
 @Component({
   selector: 'app-scholars',
@@ -21,7 +22,8 @@ export class ScholarsComponent implements OnInit {
     private schDataService: ScholarDataService,
     private dbService: DatabaseService,
     private addNewBecado: AgregarNewBecadoService,
-    private router: Router
+    private router: Router,
+    private referenceScholar: ReferenceScholarsService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +44,7 @@ export class ScholarsComponent implements OnInit {
           return b.monthSLP - a.monthSLP
         });
         this.scholars$.next(this.scholars);
+        this.referenceScholar.set(this.scholars);
         this.obtenerDatos(scholarsFirebase);
       })
   }

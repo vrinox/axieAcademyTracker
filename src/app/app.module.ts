@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { HistorialComponent } from './scholars/subComponent/historial/historial.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { FormularioBecadoComponent } from './formulario-becado/formulario-becado.component';
@@ -18,6 +19,10 @@ import { MatFormFieldModule  } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GraficasComponent } from './graficas/graficas.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -45,7 +50,11 @@ import { environment } from 'src/environments/environment';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    MatAutocompleteModule,
     ReactiveFormsModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
   ],

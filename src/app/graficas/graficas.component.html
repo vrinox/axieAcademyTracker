@@ -1,12 +1,111 @@
 <div class="canvas">
     <div class="canvas__options">
-        <p>opciones</p>
-        <div class="canvas__select-options">
-            <p>comparar dos becados</p>
-            <p>fechas</p>
-        </div>
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title class="canvas__title-menu">
+                    <mat-icon class="canvas__icon-menu">sort</mat-icon>
+                    <div>
+                        <p class="canvas__title">Filtros</p>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="dateHide === 0" (opened)="openCloseMenu(0)" hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Filtre por fechas
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Enter a date range</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+                            <input [formControl]="dateStart" matStartDate placeholder="Start date">
+                            <input [formControl]="dateEnd" matEndDate placeholder="End date">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+
+                    <mat-action-row>
+                        <button mat-button 
+                                (click)="getMontScholars()" 
+                                color="primary">Buscar</button>
+                        <button mat-button
+                                (click)="openCloseMenu(2)"
+                                color="warn">Cancelar</button>
+                    </mat-action-row>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="dateHide === 1" (opened)="openCloseMenu(1)" hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Filtre por jugador
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    
+                    <form>
+
+                        <div class="canvas__inputs">
+                            <div class="canvas__icon-add" *ngIf="!addInput">
+                                <mat-icon (click)="addInput = true">add_circle</mat-icon>
+                            </div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Nombre becado</mat-label>
+                                <input type="text"
+                                    placeholder="Escoja un becado"
+                                    aria-label="Seleccione un Nombre"
+                                    matInput
+                                    [formControl]="myControl"
+                                    [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                        {{option}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="canvas__inputs" *ngIf="addInput">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Nombre becado</mat-label>
+                                <input type="text"
+                                    placeholder="Escoja un becado"
+                                    aria-label="Seleccione un Nombre"
+                                    matInput
+                                    [formControl]="myControl2"
+                                    [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let option of filteredOptions2 | async;" 
+                                                [value]="option">
+                                        {{ option }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <div (click)="addInput = false" class="canvas__icon-add canvas__icon-add--remove">
+                                <mat-icon>remove_circle</mat-icon>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <mat-action-row>
+                        <button mat-button (click)="compareScholarHistoric()" color="primary">Buscar</button>
+                        <button mat-button color="warn" (click)="openCloseMenu(2)">Cancelar</button>
+                    </mat-action-row>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
-    <div class="canvas__container">
-        <canvas #ctx >{{ canvas }}</canvas>
+
+    <div class="canvas__container mat-elevation-z8">
+        <canvas #ctx class="canvas__chart"></canvas>
     </div>
 </div>

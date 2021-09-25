@@ -2,6 +2,42 @@
     width: 100%
     display: flex
     justify-content: center
+    flex-wrap: wrap
     align-items: center
     &__container
-        width: 80%
+        width: 90vw
+        height: 50vh
+        background: #fff
+        margin: 10px 0px
+    &__options
+        width: 90vw
+        margin: 5px 0px 
+    &__inputs
+        height: 60px
+        padding: 10px
+        display: flex
+        box-sizing: border-box
+    &__icon-add
+        width: 24px
+        height: 100%
+        padding: 18px 5px
+        color: #00fd4c
+    &__icon-add--remove
+        color: #fd0800
+    &__title-menu
+        display: flex
+        height: 48px
+    &__title
+        padding: 14px
+    &__icon-menu
+        padding: 12px 0px
+
+
+
+@media screen and (min-width: 500px)
+    .canvas
+        &__container
+            width: 80vw
+            height: 70vh
+        &__options
+            width: 80vw
