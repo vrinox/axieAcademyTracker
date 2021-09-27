@@ -31,7 +31,6 @@
 
                     <mat-action-row>
                         <button mat-button 
-                                (click)="getMontScholars()" 
                                 color="primary">Buscar</button>
                         <button mat-button
                                 (click)="openCloseMenu(2)"
@@ -49,53 +48,42 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     
-                    <form>
+                    <form FormGroup="formNameUser">
+                        <div formArrayName="nameScholar" >
 
-                        <div class="canvas__inputs">
-                            <div class="canvas__icon-add" *ngIf="!addInput">
-                                <mat-icon (click)="addInput = true">add_circle</mat-icon>
-                            </div>
-                            <mat-form-field appearance="outline">
-                                <mat-label>Nombre becado</mat-label>
-                                <input type="text"
-                                    placeholder="Escoja un becado"
-                                    aria-label="Seleccione un Nombre"
-                                    matInput
-                                    [formControl]="myControl"
-                                    [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                        {{option}}
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                        </div>
+                            <div class="canvas__inputs" *ngFor="let name of nameScholar.controls; index as i">
+                                <div class="canvas__icon-add">
+                                    <mat-icon (click)="addInput = true">add_circle</mat-icon>
+                                </div>
+                                <div formGroupName="nameScholar">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Nombre becado</mat-label>
+                                        <input type="text"
+                                            #inputUser
+                                            placeholder="Escoja un becado"
+                                            aria-label="Seleccione un Nombre"
+                                            formControlName="inputScholar i"
+                                            matInput
+                                            [matAutocomplete]="auto">
+                                        <mat-autocomplete #auto="matAutocomplete">
+                                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                                {{option}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+    
+                                <div class="canvas__icon-add">
+                                    <mat-icon (click)="addInput = true">remove_circle</mat-icon>
+                                </div>
 
-                        <div class="canvas__inputs" *ngIf="addInput">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Nombre becado</mat-label>
-                                <input type="text"
-                                    placeholder="Escoja un becado"
-                                    aria-label="Seleccione un Nombre"
-                                    matInput
-                                    [formControl]="myControl2"
-                                    [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                    <mat-option *ngFor="let option of filteredOptions2 | async;" 
-                                                [value]="option">
-                                        {{ option }}
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </mat-form-field>
-                            <div (click)="addInput = false" class="canvas__icon-add canvas__icon-add--remove">
-                                <mat-icon>remove_circle</mat-icon>
                             </div>
                         </div>
 
                     </form>
 
                     <mat-action-row>
-                        <button mat-button (click)="compareScholarHistoric()" color="primary">Buscar</button>
+                        <button mat-button (click)="test()" color="primary">Buscar</button>
                         <button mat-button color="warn" (click)="openCloseMenu(2)">Cancelar</button>
                     </mat-action-row>
                     </mat-expansion-panel>
