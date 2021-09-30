@@ -14,18 +14,22 @@
   </button>
 </mat-toolbar>
 
-<mat-drawer-container class="container">
-  <mat-drawer #drawer class="container__menu-horizontal" mode="side">
+<mat-drawer-container class="container" autosize>
+  <mat-drawer #drawer mode="side" class="container__menu-horizontal">
     <p>Auto-resizing sidenav</p>
     <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+
     <button class="container__btn" (click)="showFiller = !showFiller; viewModal = !viewModal" 
-      mat-raised-button>
-      Agregar nuevo becado
+        mat-raised-button>
+        Agregar nuevo becado
     </button>
-    <button class="container__btn" mat-raised-button>
-      <a routerLink="/historic/months">Historico</a>
+
+    <button class="container__btn" routerLink="/historic/months" mat-raised-button>
+      Historico
     </button>
   </mat-drawer>
 
-  <router-outlet></router-outlet>
+  <div class="container__body">
+    <router-outlet></router-outlet>
+  </div>
 </mat-drawer-container>

@@ -3,14 +3,12 @@
   <table mat-table [dataSource]="scholars" class="mat-elevation-z8" >  
     <ng-container matColumnDef="name" sticky>
       <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}}
-        <button class="container-table__btn">
-          <mat-icon>
-            <a (click)="viewOneScholarHistoric(element.roninAddress)">show_chart</a>
-          </mat-icon>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button color="primary" (click)="viewOneScholarHistoric(element.roninAddress)">
+          {{element.name}}
         </button>
       </td>
-      </ng-container>
+    </ng-container>
 
       <ng-container matColumnDef="totalSLP">
         <th mat-header-cell *matHeaderCellDef> totalSLP </th>
