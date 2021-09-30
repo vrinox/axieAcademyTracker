@@ -31,7 +31,7 @@
 
                     <mat-action-row>
                         <button mat-button 
-                                color="primary">Buscar</button>
+                                color="primary" (click)="historicMonth()">Buscar</button>
                         <button mat-button
                                 (click)="openCloseMenu(2)"
                                 color="warn">Cancelar</button>
@@ -48,42 +48,41 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     
-                    <form FormGroup="formNameUser">
-                        <div formArrayName="nameScholar" >
+                    <form [formGroup]="formNameUser">
 
-                            <div class="canvas__inputs" *ngFor="let name of nameScholar.controls; index as i">
-                                <div class="canvas__icon-add">
-                                    <mat-icon (click)="addInput = true">add_circle</mat-icon>
-                                </div>
-                                <div formGroupName="nameScholar">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Nombre becado</mat-label>
-                                        <input type="text"
-                                            #inputUser
-                                            placeholder="Escoja un becado"
-                                            aria-label="Seleccione un Nombre"
-                                            formControlName="inputScholar i"
-                                            matInput
-                                            [matAutocomplete]="auto">
-                                        <mat-autocomplete #auto="matAutocomplete">
-                                            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                                                {{option}}
-                                            </mat-option>
-                                        </mat-autocomplete>
-                                    </mat-form-field>
-                                </div>
-    
-                                <div class="canvas__icon-add">
-                                    <mat-icon (click)="addInput = true">remove_circle</mat-icon>
-                                </div>
+                        <div class="canvas__inputs" formArrayName="nameScholar" *ngFor="let name of nameScholar.controls; index as i">
+                            <div class="canvas__icon-add" (click)="addNewControlName()">
+                                <mat-icon (click)="addInput = true">add_circle</mat-icon>
+                            </div>
+                            
+                            <div [formGroupName]="i">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Nombre becado</mat-label>
+                                    <input type="text"
+                                        #inputUser
+                                        placeholder="Escoja un becado"
+                                        formControlName="inputScholar"
+                                        aria-label="Seleccione un Nombre"
+                                        matInput
+                                        [matAutocomplete]="auto"
+                                        (focus)="filterOpntions(i)">
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                            {{option}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field>
+                            </div>
 
+                            <div class="canvas__icon-add" *ngIf="i != 0">
+                                <mat-icon (click)="addInput = true" (click)="removeControlName(i)">remove_circle</mat-icon>
                             </div>
                         </div>
 
                     </form>
 
                     <mat-action-row>
-                        <button mat-button (click)="test()" color="primary">Buscar</button>
+                        <button mat-button color="primary" (click)="hictoricMultPlayers()">Buscar</button>
                         <button mat-button color="warn" (click)="openCloseMenu(2)">Cancelar</button>
                     </mat-action-row>
                     </mat-expansion-panel>

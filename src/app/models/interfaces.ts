@@ -45,8 +45,15 @@ export interface DatosFormulario{
 }
 
 export interface HistoricData{
-    dias: number[], 
-    slp: number[],
-    title: string,
-    historic?: HistoricData
+    labelSlp: number[]
+    dataset: Dataset[]
+}
+
+export interface Dataset{
+    label: string,
+    data: number[], 
+    borderColor: string,
+    fill: boolean,
+    backgroundColor: string, 
+    borderWidth: number 
 }
