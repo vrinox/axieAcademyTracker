@@ -1,3 +1,4 @@
+import * as moment from "moment";
 import {scholarOfficialData} from "./interfaces";
 export class Scholar {
   id!: number;
@@ -16,18 +17,21 @@ export class Scholar {
   lastMonthSLP: number = 0;
   lastUpdate: Date = new Date;
   WinRate!: string;
+  weekSLP: number = 0;
+  lastWeekSLP: number = 0;
 
-  constructor(values: Object = {}) {
+  constructor(values: any = {}) {
     Object.assign(this, values);
   }
 
   parse(unParsedData: scholarOfficialData) {
-    this.roninAddress = unParsedData.ronin_address;
+    this.roninAddress = unParsedData.ronin_address
     this.inRoninSLP = (isNaN(unParsedData.ronin_slp)) ? 0 : unParsedData.ronin_slp;
     this.totalSLP = (isNaN(unParsedData.total_slp)) ? 0 : unParsedData.total_slp;
     this.inGameSLP = (isNaN(unParsedData.in_game_slp)) ? 0 : unParsedData.in_game_slp;
     this.PVPRank = (isNaN(unParsedData.rank)) ? 0 : unParsedData.rank;
     this.MMR = (isNaN(unParsedData.mmr)) ? 0 : unParsedData.mmr;
+    this.name = (this.name)? this.name : unParsedData.name;
     return this;
   }
   
@@ -49,12 +53,51 @@ export class Scholar {
     }
   }
   update(newData: Scholar):void {
-    this.todaySLP = newData.totalSLP - this.totalSLP;
-    this.monthSLP = this.monthSLP + this.todaySLP;
+    this.todaySLP = 0;
+    this.yesterdaySLP = this.calculateYesterdaySLP(newData);
+    this.monthSLP = this.calculateMonthSLP();
+    this.weekSLP = this.calculateWeekSLP();
+    this.averageSLP = this.calculateAverageSLP();
+    this.lastUpdate = new Date(moment().startOf("day").toString());
     this.MMR = newData.MMR;
     this.PVPRank = newData.PVPRank;
     this.inGameSLP = newData.inGameSLP;
     this.inRoninSLP = newData.inRoninSLP;
     this.totalSLP = newData.totalSLP;
   }
+  getDaysDiffStartOf(valor:any):number {
+    const startOfTheMonth = moment().startOf(valor);
+    const today = moment();
+    return today.diff(startOfTheMonth, "days");
+  }
+  calculateYesterdaySLP(newData: Scholar){
+    return (newData.totalSLP < this.totalSLP)? newData.totalSLP: newData.totalSLP - this.totalSLP;
+  }
+  calculateMonthSLP(){
+    if(this.getDaysDiffStartOf('month') === 0 || this.totalSLP === 0){
+      this.lastMonthSLP = this.monthSLP;
+      return 0;
+    } else {
+      return this.monthSLP + this.yesterdaySLP;
+    }
+  }
+  calculateWeekSLP(){
+    if(this.getDaysDiffStartOf('week') == 0 || this.totalSLP == 0){
+      this.lastWeekSLP = this.lastWeekSLP;
+      return 0;
+    } else {
+      return this.weekSLP + this.yesterdaySLP;
+    }
+  }
+  calculateAverageSLP(){
+    return this.monthSLP / this.getDaysDiffStartOf('month');
+  }
+  //esta funcion daña el formato de la roning de la api
+  // parseRonin(roninAddress: string){
+  //   if(roninAddress && roninAddress.search('ronin') !== -1){
+  //     roninAddress = "0x"+roninAddress.split(':')[1];
+  //   }
+  //   return roninAddress;
+  // }
+  
 }

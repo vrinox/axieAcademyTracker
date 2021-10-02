@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Scholar } from '../models/scholar';
 import { ScholarDataService } from 'src/app/services/scholarData/scholar-data.service';
 import { DatabaseService } from '../services/database/database.service';
@@ -7,6 +7,8 @@ import { Observable, Subject } from 'rxjs';
 import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
 import { Router } from '@angular/router';
 import { ReferenceScholarsService } from '../services/referenceScholars/reference-scholars.service';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-scholars',
@@ -17,7 +19,9 @@ export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
   scholars$: Subject<Scholar[]> = new Subject();
   displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
-  
+  @ViewChild(MatSort, { static: false }) sort?: MatSort;
+  dataSource: MatTableDataSource<Scholar> = new MatTableDataSource();
+
   constructor(
     private schDataService: ScholarDataService,
     private dbService: DatabaseService,
@@ -46,6 +50,8 @@ export class ScholarsComponent implements OnInit {
         this.scholars$.next(this.scholars);
         this.referenceScholar.set(this.scholars);
         this.obtenerDatos(scholarsFirebase);
+        this.dataSource = new MatTableDataSource(this.scholars);
+        this.dataSource.sort = this.sort!;
       })
   }
   

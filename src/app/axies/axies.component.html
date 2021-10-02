@@ -1,0 +1,76 @@
+<div class="container-axies">
+    <mat-accordion multi>
+        <mat-expansion-panel *ngFor="let axies of axiesData; index as i">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ axies.name }}
+                </mat-panel-title>
+
+                <mat-panel-description class="container-axies__description">
+                    Type your name and age
+                    <mat-icon>account_circle</mat-icon>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <mat-expansion-panel 
+                multi
+                class="container-axies__sub-panels"
+                *ngFor="let partsAxies of axiesData[i].axiesParts">
+                <mat-expansion-panel-header class="container-axies__sub-description">
+                    <mat-panel-title>
+                        {{ partsAxies.axies.name }}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        {{ partsAxies.axies.class }}
+                        <div *ngFor="let typesAxies of svgIcons">
+                            <svg *ngIf="partsAxies.axies.class === typesAxies.typesClass" 
+                                height="24" width="24" 
+                                [attr.stroke]="typesAxies.colorStroke"  
+                                [attr.fill]="typesAxies.colorFill">
+                                <path [attr.d]="typesAxies.dValue"/>
+                            </svg>
+                        </div>
+                    </mat-panel-description>
+                    <div></div>
+                </mat-expansion-panel-header>
+                
+                <div class="container-axies__expasion">
+                    <div class="container-axies__sub-content">
+                        <img class="container-axies__sub-img" [src]="partsAxies.axies.image">
+                        <div class="container-axies__sub-stast">
+                            <p>hp: {{ partsAxies.stats.hp }}</p>
+                            <p>speed: {{ partsAxies.stats.speed }}</p>
+                            <p>skill: {{ partsAxies.stats.skill }}</p>
+                            <p>morale: {{ partsAxies.stats.morale }}</p>
+                        </div>
+                    </div>
+    
+                    <div class="container-axies__sub-parts">
+                        <div *ngFor="let parts of partsAxies.parts">
+
+                            <div *ngFor="let iconParts of svgIconParts">
+                                    <div *ngIf="parts.type === iconParts.typePart">
+                                        <div *ngFor="let svgClass of iconParts.typeClass">
+                                            <svg *ngIf="parts.class === svgClass.class" 
+                                                height="24" width="24" 
+                                                [attr.stroke]="svgClass.colorStroke"  
+                                                [attr.fill]="svgClass.colorFill">
+                
+                                                <path [attr.d]="iconParts.dValue"/>
+                                            </svg>
+                                            <p *ngIf="parts.class === svgClass.class">
+                                                {{ parts.name }}
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </mat-expansion-panel>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
