@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
-import { AxiesData, SvgIconAxies, SvgIconParts } from '../models/interfaces';
+import { AxiesData, SvgIconAxies, PartsAxie } from '../models/interfaces';
 import { ReferenceScholarsService } from '../services/referenceScholars/reference-scholars.service';
 import { Scholar } from 'src/app/models/scholar';
 import { svg } from '../models/svg-icons';
@@ -13,7 +13,7 @@ import { svg } from '../models/svg-icons';
 })
 export class AxiesComponent implements OnInit {
   svgIcons: SvgIconAxies[] = svg.svgAxiesTypes;
-  svgIconParts: SvgIconParts[] = svg.svgIconsParts;
+  partsAxie: PartsAxie[] = svg.partsAxie;
 
   axiesData: AxiesData[] = []
 
@@ -34,7 +34,6 @@ export class AxiesComponent implements OnInit {
     // })
       this.getAxies.get('0xe4b5da6435d4641aff769e68b1496144a01fed6e', 'albino').then((axies: AxiesData)=>{
         console.log(axies);
-        console.log(this.svgIconParts)
         this.axiesData.push(axies);
       })
   }

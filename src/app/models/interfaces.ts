@@ -116,13 +116,12 @@ export interface SvgIconAxies{
 }
 
 export interface SvgIconParts{
-    dValue: string
-    typePart: string
-    typeClass: ClassAxies[]
+    dValue: string[]
 }
 
-export interface ClassAxies{
-    class: string 
-    colorStroke: string
-    colorFill: string
+export interface PartsAxie{
+    typePart: string,
+    typePartAxie: string,
+    color: string[]
+    svgParts: string[]
 }

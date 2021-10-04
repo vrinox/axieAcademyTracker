@@ -47,24 +47,15 @@
     
                     <div class="container-axies__sub-parts">
                         <div *ngFor="let parts of partsAxies.parts">
-
-                            <div *ngFor="let iconParts of svgIconParts">
-                                    <div *ngIf="parts.type === iconParts.typePart">
-                                        <div *ngFor="let svgClass of iconParts.typeClass">
-                                            <svg *ngIf="parts.class === svgClass.class" 
-                                                height="24" width="24" 
-                                                [attr.stroke]="svgClass.colorStroke"  
-                                                [attr.fill]="svgClass.colorFill">
-                
-                                                <path [attr.d]="iconParts.dValue"/>
-                                            </svg>
-                                            <p *ngIf="parts.class === svgClass.class">
-                                                {{ parts.name }}
-                                            </p>
-                                        </div>
-                                    </div>
+                            <div *ngFor="let partsAxie of partsAxie">
+                                <svg *ngIf="parts.class === partsAxie.typePartAxie && 
+                                parts.type === partsAxie.typePart" 
+                                height="24" width="24">
+                                <path *ngFor="let svg of partsAxie.svgParts; index as inde"
+                                    [attr.fill]="partsAxie.color[inde]"
+                                    [attr.d]="svg"/>
+                            </svg>
                             </div>
-
                         </div>
                     </div>
                 </div>
