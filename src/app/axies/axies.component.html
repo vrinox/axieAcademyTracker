@@ -22,14 +22,7 @@
                     </mat-panel-title>
                     <mat-panel-description>
                         {{ partsAxies.axies.class }}
-                        <div *ngFor="let typesAxies of svgIcons">
-                            <svg *ngIf="partsAxies.axies.class === typesAxies.typesClass" 
-                                height="24" width="24" 
-                                [attr.stroke]="typesAxies.colorStroke"  
-                                [attr.fill]="typesAxies.colorFill">
-                                <path [attr.d]="typesAxies.dValue"/>
-                            </svg>
-                        </div>
+                        <img src="assets/svg/axies/{{partsAxies.axies.class}}/{{partsAxies.axies.class}}.svg" alt="">
                     </mat-panel-description>
                     <div></div>
                 </mat-expansion-panel-header>
@@ -38,24 +31,34 @@
                     <div class="container-axies__sub-content">
                         <img class="container-axies__sub-img" [src]="partsAxies.axies.image">
                         <div class="container-axies__sub-stast">
-                            <p>hp: {{ partsAxies.stats.hp }}</p>
-                            <p>speed: {{ partsAxies.stats.speed }}</p>
-                            <p>skill: {{ partsAxies.stats.skill }}</p>
-                            <p>morale: {{ partsAxies.stats.morale }}</p>
+                            <div class="container-axies__icons-stast">
+                                <img src="assets/svg/hp.svg" height="24" width="24" alt="">
+                                <p class="container-axies__icon-text">
+                                    {{ partsAxies.stats.hp }}</p>
+                            </div>
+                            <div class="container-axies__icons-stast">
+                                <img src="assets/svg/speed.svg" height="24" width="24" alt="">
+                                <p class="container-axies__icon-text">
+                                    {{ partsAxies.stats.speed }}</p>
+                            </div>
+                            <div class="container-axies__icons-stast">
+                                <img src="assets/svg/skill.svg" height="24" width="24" alt="">
+                                <p class="container-axies__icon-text">
+                                    {{ partsAxies.stats.skill }}</p>
+                            </div>
+                            <div class="container-axies__icons-stast">
+                                <img src="assets/svg/morale.svg" height="24" width="24" alt="">
+                                <p class="container-axies__icon-text">
+                                    {{ partsAxies.stats.morale }}</p>
+                            </div>
                         </div>
                     </div>
     
-                    <div class="container-axies__sub-parts">
-                        <div *ngFor="let parts of partsAxies.parts">
-                            <div *ngFor="let partsAxie of partsAxie">
-                                <svg *ngIf="parts.class === partsAxie.typePartAxie && 
-                                parts.type === partsAxie.typePart" 
-                                height="24" width="24">
-                                <path *ngFor="let svg of partsAxie.svgParts; index as inde"
-                                    [attr.fill]="partsAxie.color[inde]"
-                                    [attr.d]="svg"/>
-                            </svg>
-                            </div>
+                    <div class="container-axies__parts">
+                        <div *ngFor="let parts of partsAxies.parts"
+                            class="container-axies__sub-parts">
+                            <img class="container-axies__parts-img" src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
+                            <p>{{ parts.name }}</p>
                         </div>
                     </div>
                 </div>

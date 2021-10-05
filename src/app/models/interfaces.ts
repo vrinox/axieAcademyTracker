@@ -107,21 +107,3 @@ export interface AxiesParseData{
         }]
     }
 }
-
-export interface SvgIconAxies{
-    dValue: string
-    typesClass: string
-    colorStroke: string
-    colorFill: string
-}
-
-export interface SvgIconParts{
-    dValue: string[]
-}
-
-export interface PartsAxie{
-    typePart: string,
-    typePartAxie: string,
-    color: string[]
-    svgParts: string[]
-}

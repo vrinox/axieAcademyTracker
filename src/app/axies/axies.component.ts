@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
-import { AxiesData, SvgIconAxies, PartsAxie } from '../models/interfaces';
-import { ReferenceScholarsService } from '../services/referenceScholars/reference-scholars.service';
+import { AxiesData } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
-import { svg } from '../models/svg-icons';
-
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-axies',
@@ -12,14 +10,12 @@ import { svg } from '../models/svg-icons';
   styleUrls: ['./axies.component.sass']
 })
 export class AxiesComponent implements OnInit {
-  svgIcons: SvgIconAxies[] = svg.svgAxiesTypes;
-  partsAxie: PartsAxie[] = svg.partsAxie;
 
-  axiesData: AxiesData[] = []
+  axiesData: AxiesData[] = [];
 
   constructor(
     private getAxies: GetAxiesService, 
-    private referenceScholar: ReferenceScholarsService
+    private router: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
@@ -27,14 +23,8 @@ export class AxiesComponent implements OnInit {
   }
 
   start(): void{
-    // this.referenceScholar.scholar.forEach((scholar: Scholar)=>{
-    //   this.getAxies.get(scholar.roninAddress).then((axies: AxiesData)=>{
-    //     this.axiesData.push(axies);
-    //   })
-    // })
       this.getAxies.get('0xe4b5da6435d4641aff769e68b1496144a01fed6e', 'albino').then((axies: AxiesData)=>{
-        console.log(axies);
-        this.axiesData.push(axies);
+        this.axiesData.push(axies)
       })
   }
 

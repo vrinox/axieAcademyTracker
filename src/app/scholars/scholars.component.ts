@@ -104,4 +104,9 @@ export class ScholarsComponent implements OnInit {
   viewOneScholarHistoric(roninAddress: string): void{
     this.router.navigate([`/historic/${roninAddress}`]);
   }
+
+  viewAxie(index: number): void{
+    let scholarToString: string = JSON.stringify(this.scholars[index]);
+    this.router.navigate([`axies`, scholarToString]);
+  }
 }
