@@ -2,14 +2,13 @@ import { Component, ElementRef, OnInit, QueryList, Renderer2, ViewChild, ViewChi
 import { HistoricService } from '../services/historic/historic.service';
 import { Scholar } from 'src/app/models/scholar';
 import { historic } from '../models/historic';
-import { HistoricData, Dataset } from '../models/interfaces';
-import { ActivatedRoute, Params } from '@angular/router';
+import { HistoricData } from '../models/interfaces';
+import { ActivatedRoute } from '@angular/router';
 import Chart from 'chart.js/auto';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';;
 import { map, startWith } from 'rxjs/operators';
-import { ReferenceScholarsService } from '../services/referenceScholars/reference-scholars.service';
-
+import { SessionsService } from 'src/app/services/sessions/sessions.service'
 
 @Component({
   selector: 'app-graficas',
@@ -38,14 +37,14 @@ export class GraficasComponent implements OnInit {
   constructor(
     private historic: HistoricService,
     private router: ActivatedRoute,
-    private referenceScholars:  ReferenceScholarsService,
+    private sessions: SessionsService,
     private formBuilder: FormBuilder
     ) { 
       this.filteredOptions = new Observable();
     }
 
   ngOnInit(): void {
-    this.referenceScholars.scholar.forEach((scholar: Scholar, index)=>{
+    this.sessions.scholar.forEach((scholar: Scholar, index)=>{
       this.options.push(`${index + 1}-${scholar.name}`)
     });
     this.startHistoric();
@@ -102,7 +101,7 @@ export class GraficasComponent implements OnInit {
     let ronin: string[] = []
     this.nameScholar.controls.forEach(positionScholar =>{
       const position: number = parseInt(positionScholar.get('inputScholar')!.value) - 1;
-      ronin.push(this.referenceScholars.scholar[position].roninAddress);
+      ronin.push(this.sessions.scholar[position].roninAddress);
     });
     this.createHistoricPlayer(ronin);
   }

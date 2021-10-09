@@ -62,10 +62,25 @@ export interface Dataset{
 export interface AxiesData{
     roning: string
     name: string
-    axiesParts: AxiesOficialData[]
+    axies: {
+        name: string
+        class: string
+        image: string
+    }
+    stats: {
+        hp: number
+        speed: number
+        skill: number
+        morale: number
+    }
+    parts: [{
+        name: string
+        type: string
+        class: string
+    }]
 }
 
-export interface AxiesOficialData{
+export interface AxiesParseData{
     axies: {
         name: string
         class: string
@@ -85,25 +100,27 @@ export interface AxiesOficialData{
     }]
 }
 
-export interface AxiesParseData{
+export interface AxiesOficialData{
     owner_address: string
     available_axies: {
-        results: [{
-            name: string
-            class: string
-            image: string
-            stats: {
-                hp: number
-                speed: number
-                skill: number
-                morale: number
-            }
-            parts: [{
-                id: string
-                name: string
-                type: string
-                class: string
-            }]
-        }]
+        results: AxiesResultsOficialData[]
     }
+}
+
+export interface AxiesResultsOficialData{
+    name: string
+    class: string
+    image: string
+    stats: {
+        hp: number
+        speed: number
+        skill: number
+        morale: number
+    }
+    parts: [{
+        id: string
+        name: string
+        type: string
+        class: string
+    }]
 }

@@ -5,18 +5,21 @@ import { Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ReferenceScholarsService {
+export class SessionsService {
+
   scholar: Scholar[] = [];
+  oneScholar: Scholar[] = [];
   private scholar$: Subject<Scholar[]> = new Subject;
 
-  constructor() { }
+  constructor() {}
 
-  get(): Observable<Scholar[]>{
+  getScholar(): Observable<Scholar[]>{
     return this.scholar$;
   }
 
-  set(scholars: Scholar[]): void{
+  setScholar(scholars: Scholar[]): void{
     this.scholar = scholars;
     this.scholar$.next(scholars);
   }
+
 }

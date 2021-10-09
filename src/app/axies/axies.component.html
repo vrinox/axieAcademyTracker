@@ -1,69 +1,53 @@
 <div class="container-axies">
-    <mat-accordion multi>
-        <mat-expansion-panel *ngFor="let axies of axiesData; index as i">
+    <mat-accordion class="container-axies__acordion" multi>
+        <mat-expansion-panel *ngFor="let axies of axiesData">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{ axies.name }}
                 </mat-panel-title>
 
                 <mat-panel-description class="container-axies__description">
-                    Type your name and age
-                    <mat-icon>account_circle</mat-icon>
+                    {{ axies.axies.name }}
+                    <img src="assets/svg/axies/{{axies.axies.class}}/{{axies.axies.class}}.svg" alt="">
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <mat-expansion-panel 
-                multi
-                class="container-axies__sub-panels"
-                *ngFor="let partsAxies of axiesData[i].axiesParts">
-                <mat-expansion-panel-header class="container-axies__sub-description">
-                    <mat-panel-title>
-                        {{ partsAxies.axies.name }}
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        {{ partsAxies.axies.class }}
-                        <img src="assets/svg/axies/{{partsAxies.axies.class}}/{{partsAxies.axies.class}}.svg" alt="">
-                    </mat-panel-description>
-                    <div></div>
-                </mat-expansion-panel-header>
-                
-                <div class="container-axies__expasion">
-                    <div class="container-axies__sub-content">
-                        <img class="container-axies__sub-img" [src]="partsAxies.axies.image">
-                        <div class="container-axies__sub-stast">
-                            <div class="container-axies__icons-stast">
-                                <img src="assets/svg/hp.svg" height="24" width="24" alt="">
-                                <p class="container-axies__icon-text">
-                                    {{ partsAxies.stats.hp }}</p>
-                            </div>
-                            <div class="container-axies__icons-stast">
-                                <img src="assets/svg/speed.svg" height="24" width="24" alt="">
-                                <p class="container-axies__icon-text">
-                                    {{ partsAxies.stats.speed }}</p>
-                            </div>
-                            <div class="container-axies__icons-stast">
-                                <img src="assets/svg/skill.svg" height="24" width="24" alt="">
-                                <p class="container-axies__icon-text">
-                                    {{ partsAxies.stats.skill }}</p>
-                            </div>
-                            <div class="container-axies__icons-stast">
-                                <img src="assets/svg/morale.svg" height="24" width="24" alt="">
-                                <p class="container-axies__icon-text">
-                                    {{ partsAxies.stats.morale }}</p>
-                            </div>
+            <div class="container-axies__expasion">
+                <div class="container-axies__sub-content">
+                    <img class="container-axies__sub-img" [src]="axies.axies.image">
+
+                    <div class="container-axies__sub-stast">
+                        <div class="container-axies__icons-stast">
+                            <img src="assets/svg/hp.svg" height="24" width="24" alt="">
+                            <p class="container-axies__icon-text">
+                                {{ axies.stats.hp }}</p>
                         </div>
-                    </div>
-    
-                    <div class="container-axies__parts">
-                        <div *ngFor="let parts of partsAxies.parts"
-                            class="container-axies__sub-parts">
-                            <img class="container-axies__parts-img" src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
-                            <p>{{ parts.name }}</p>
+                        <div class="container-axies__icons-stast">
+                            <img src="assets/svg/speed.svg" height="24" width="24" alt="">
+                            <p class="container-axies__icon-text">
+                                {{ axies.stats.speed }}</p>
+                        </div>
+                        <div class="container-axies__icons-stast">
+                            <img src="assets/svg/skill.svg" height="24" width="24" alt="">
+                            <p class="container-axies__icon-text">
+                                {{ axies.stats.skill }}</p>
+                        </div>
+                        <div class="container-axies__icons-stast">
+                            <img src="assets/svg/morale.svg" height="24" width="24" alt="">
+                            <p class="container-axies__icon-text">
+                                {{ axies.stats.morale }}</p>
                         </div>
                     </div>
                 </div>
 
-            </mat-expansion-panel>
+                <div class="container-axies__parts">
+                    <div *ngFor="let parts of axies.parts"
+                        class="container-axies__sub-parts">
+                        <img class="container-axies__parts-img" src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
+                        <p>{{ parts.name }}</p>
+                    </div>
+                </div>
+            </div>
 
         </mat-expansion-panel>
     </mat-accordion>

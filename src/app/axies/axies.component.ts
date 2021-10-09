@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
 import { AxiesData } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
-import { ActivatedRoute, Params } from '@angular/router';
+import { SessionsService } from '../services/sessions/sessions.service';
 
 @Component({
   selector: 'app-axies',
@@ -15,7 +15,7 @@ export class AxiesComponent implements OnInit {
 
   constructor(
     private getAxies: GetAxiesService, 
-    private router: ActivatedRoute
+    private sessions: SessionsService
     ) { }
 
   ngOnInit(): void {
@@ -23,9 +23,20 @@ export class AxiesComponent implements OnInit {
   }
 
   start(): void{
-      this.getAxies.get('0xe4b5da6435d4641aff769e68b1496144a01fed6e', 'albino').then((axies: AxiesData)=>{
-        this.axiesData.push(axies)
-      })
-  }
+    let scholars: Scholar[] = []
+    if(this.sessions.oneScholar.length === 1){
+      scholars = this.sessions.oneScholar;
+    }else{
+      scholars = this.sessions.scholar;
+    };
+    scholars.forEach((scholar: Scholar)=>{
+      this.getAxies.get(scholar.roninAddress, scholar.name).then((axies: AxiesData[])=>{
+        axies.forEach((axiesData: AxiesData)=>{
+          this.axiesData.push(axiesData)
+        });
+      });
+    });
+    this.sessions.oneScholar = [];
+  };
 
 }

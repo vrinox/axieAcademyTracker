@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/scholars', pathMatch: 'full' },
   { path: 'scholars', component: ScholarsComponent },
   { path: 'historic/:roninAddress', component: GraficasComponent },
-  { path: 'axies/:scholar', component: AxiesComponent }
+  { path: 'axies', component: AxiesComponent }
 ];
 
 
