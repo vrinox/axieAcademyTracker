@@ -139,9 +139,6 @@ export class GraficasComponent implements OnInit {
           scales: {
             y: {
               beginAtZero: true,
-            },
-            y1: {
-              beginAtZero: true,
             }
           }
       }
