@@ -66,6 +66,7 @@ export interface AxiesData{
         name: string
         class: string
         image: string
+        breedCount: number
     }
     stats: {
         hp: number
@@ -85,6 +86,7 @@ export interface AxiesParseData{
         name: string
         class: string
         image: string
+        breedCount: number
     }
     stats: {
         hp: number
@@ -111,6 +113,7 @@ export interface AxiesResultsOficialData{
     name: string
     class: string
     image: string
+    breedCount: number
     stats: {
         hp: number
         speed: number

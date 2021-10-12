@@ -36,7 +36,8 @@ export class GetAxiesService {
       axies: {
         name: axiesParse.name,
         class: axiesParse.class,
-        image: axiesParse.image
+        image: axiesParse.image,
+        breedCount: axiesParse.breedCount
       },
       parts: axiesParse.parts,
       stats: axiesParse.stats

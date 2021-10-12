@@ -23,12 +23,15 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { AxiesComponent } from './axies/axies.component';
+import { LoadingComponent } from './loading/loading.component';
 
 
 @NgModule({
@@ -38,7 +41,8 @@ import { AxiesComponent } from './axies/axies.component';
     HistorialComponent,
     FormularioBecadoComponent,
     GraficasComponent,
-    AxiesComponent
+    AxiesComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,9 @@ import { AxiesComponent } from './axies/axies.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSortModule,
+    MatMenuModule,
+    MatSliderModule,
+    MatChipsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
   ],

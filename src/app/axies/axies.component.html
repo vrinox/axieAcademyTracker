@@ -1,3 +1,64 @@
+<div class="menu-axies">
+    <form class="example-form">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Name Player</mat-label>
+            <input type="text"
+                    placeholder="Pick one"
+                    aria-label="name axies player"
+                    matInput
+                    [formControl]="myControl"
+                    [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+
+    <button mat-button [matMenuTriggerFor]="menu">tipo: {{ typeAxieTitle }}</button>
+    <mat-menu #menu="matMenu">
+        <button *ngFor="let type of typeAxies" (click)="selecTypeAxie(type)" 
+                mat-menu-item>{{ type }}</button>
+    </mat-menu>
+
+    <button mat-button [matMenuTriggerFor]="menu2">breed: {{ breedTitle }}</button>
+    <mat-menu #menu2="matMenu">
+        <button *ngFor="let bred of breed" (click)="selecBreed(bred)" 
+                mat-menu-item>{{ bred }}</button>
+    </mat-menu>
+
+    <mat-form-field class="example-chip-list" appearance="fill">
+        <mat-label>Partes</mat-label>
+        <mat-chip-list #chipList aria-label="Fruit selection">
+            <mat-chip
+                *ngFor="let part of parts"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(part)">
+                {{ part }}
+                <button matChipRemove *ngIf="removable">
+                <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip>
+            <input
+                placeholder="New Parts..."
+                #fruitInput
+                [formControl]="partAxies"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let fruit of filteredPartsOptions | async" [value]="fruit">
+            {{fruit}}
+        </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</div>
+
+
 <div class="container-axies">
     <mat-accordion class="container-axies__acordion" multi>
         <mat-expansion-panel *ngFor="let axies of axiesData">

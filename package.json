@@ -23,6 +23,7 @@
     "@angular/router": "~12.2.0",
     "chart.js": "^3.5.1",
     "firebase": "^9.0.1",
+    "moment": "^2.29.1",
     "rxfire": "^6.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
