@@ -1,24 +1,25 @@
 <div class="menu-axies">
-    <form class="example-form">
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Name Player</mat-label>
-            <input type="text"
-                    placeholder="Pick one"
-                    aria-label="name axies player"
-                    matInput
-                    [formControl]="myControl"
-                    [matAutocomplete]="auto">
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{ option }}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-    </form>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Name Player</mat-label>
+        <input type="text"
+                placeholder="Pick one"
+                aria-label="name axies player"
+                matInput
+                [formControl]="myControl"
+                [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{ option }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
 
     <button mat-button [matMenuTriggerFor]="menu">tipo: {{ typeAxieTitle }}</button>
     <mat-menu #menu="matMenu">
         <button *ngFor="let type of typeAxies" (click)="selecTypeAxie(type)" 
+                (click)="startFilter()"
                 mat-menu-item>{{ type }}</button>
     </mat-menu>
 
@@ -28,7 +29,7 @@
                 mat-menu-item>{{ bred }}</button>
     </mat-menu>
 
-    <mat-form-field class="example-chip-list" appearance="fill">
+    <mat-form-field class="menu-axies__cards" appearance="fill">
         <mat-label>Partes</mat-label>
         <mat-chip-list #chipList aria-label="Fruit selection">
             <mat-chip
@@ -37,25 +38,24 @@
                 [removable]="removable"
                 (removed)="remove(part)">
                 {{ part }}
-                <button matChipRemove *ngIf="removable">
-                <mat-icon>cancel</mat-icon>
-                </button>
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
             <input
                 placeholder="New Parts..."
-                #fruitInput
+                #cards
                 [formControl]="partAxies"
-                [matAutocomplete]="auto"
+                [matAutocomplete]="auto2"
                 [matChipInputFor]="chipList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 (matChipInputTokenEnd)="add($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-          <mat-option *ngFor="let fruit of filteredPartsOptions | async" [value]="fruit">
-            {{fruit}}
-        </mat-option>
+        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
+                {{ cards }}
+            </mat-option>
         </mat-autocomplete>
     </mat-form-field>
+
 </div>
 
 

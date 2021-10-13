@@ -4,34 +4,37 @@ import { GetAxiesService } from '../services/getAxies/get-axies.service';
 import { AxiesData } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
 import { SessionsService } from '../services/sessions/sessions.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
+import * as cards  from '../../assets/json/cards.json';
 
 @Component({
   selector: 'app-axies',
   templateUrl: './axies.component.html',
   styleUrls: ['./axies.component.sass']
 })
-export class AxiesComponent implements OnInit {
 
+export class AxiesComponent implements OnInit {
   myControl = new FormControl();
+  partAxies = new FormControl();
+
   namePlayerOptions: string[] = [];
   filteredOptions: Observable<string[]>;;
 
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  partAxies = new FormControl();
-  filteredPartsOptions: Observable<string[]>;
+  cardsOptions: Observable<string[]>;
   parts: string[] = [];
   allParts: string[] = [];
   
-  @ViewChild('fruitInput', { static: true }) fruitInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('cards', { static: true }) Cards!: ElementRef<HTMLInputElement>;
 
   axiesData: AxiesData[] = [];
+  copyAxiesData: AxiesData[] = [];
 
   typeAxies: string[] = ['Todos', 'Beast', 'Aquatic', 'Plant', 'Bird', 'Bug',
   'Reptile', 'Mech', 'Dawn', 'Dusk'];
@@ -45,7 +48,7 @@ export class AxiesComponent implements OnInit {
     private sessions: SessionsService
     ) { 
       this.filteredOptions = new Observable();
-      this.filteredPartsOptions = new Observable();
+      this.cardsOptions = new Observable();
     }
 
   ngOnInit(): void {
@@ -55,10 +58,17 @@ export class AxiesComponent implements OnInit {
       map(value => this._filter(value))
     );
 
-    this.filteredPartsOptions = this.partAxies.valueChanges.pipe(
+    this.cardsOptions = this.partAxies.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => fruit ? this._filterParts(fruit) : this.allParts.slice())
-    );
+      map((name: string | null) => {
+        if(name == null){
+          return this.allParts
+        }else{
+          return this._filterParts(name) 
+        };
+      }));
+    
+    this.setAllParts();
   }
 
   private _filter(value: string): string[] {
@@ -78,9 +88,9 @@ export class AxiesComponent implements OnInit {
       this.namePlayerOptions.push(scholar.name);
 
       this.getAxies.get(scholar.roninAddress, scholar.name).then((axies: AxiesData[])=>{
-        axies.forEach((axiesData: AxiesData)=>{
-          this.axiesData.push(axiesData)
-          this.setAllParts(axiesData)
+        axies.forEach((DataAxie: AxiesData)=>{
+          this.axiesData.push(DataAxie);
+          this.copyAxiesData.push(DataAxie);
         });
       });
 
@@ -88,8 +98,13 @@ export class AxiesComponent implements OnInit {
     this.sessions.oneScholar = [];
   };
 
-  setAllParts(axiesData: AxiesData): void{
-    
+  setAllParts(): void{
+    console.log(cards)
+    Object.entries(cards).forEach((key: any)=>{
+      if(key[1].skillName != undefined){
+        this.allParts.push(key[1].skillName);
+      }
+    })
   }
 
   selecTypeAxie(type: string): void{
@@ -124,13 +139,68 @@ export class AxiesComponent implements OnInit {
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.parts.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
+    this.Cards.nativeElement.value = '';
     this.partAxies.setValue(null);
   }
 
   private _filterParts(value: string): string[] {
-    const filterValue = value.toLowerCase();
+    if(typeof(value) === 'string'){
+      const filterValue = value.toLowerCase();
+      
+      return this.allParts.filter(name => name.toLowerCase().includes(filterValue));
+    }else{
+      return this.allParts
+    }
+  }
 
-    return this.allParts.filter(parts => parts.toLowerCase().includes(filterValue));
+  startFilter(): void{
+    console.log('hola');
+    console.log(this.axiesData)
+    console.log(this.copyAxiesData)
+    this.filterTypeAxies();
+    this.filterBreed();
+    this.filterParts();
+  }
+
+  private filterTypeAxies(): void{
+    if(this.typeAxieTitle === 'Todos'){
+      this.axiesData = [];
+      this.copyAxiesData.forEach(axie=>{
+        this.axiesData.push(axie);
+      })
+    }else{
+      this.axiesData = this.axiesData.filter(axie => axie.axies.class === this.typeAxieTitle);
+    }
+  }
+
+  private filterBreed(): void{
+    if(this.breedTitle != 'Todos'){
+      this.axiesData = this.axiesData.filter(axie => {
+        return axie.axies.breedCount.toString().includes(this.breedTitle);
+      });
+    }
+  }
+
+  private filterParts(): void{
+    if(this.allParts.length != 0){
+      let axies: AxiesData[] = [];
+      let addAxies: boolean = false;
+      for(let i=0; i < this.axiesData.length; i++){
+        for(let j=0; j < this.axiesData[i].parts.length; j++){
+          for(let index = 0; index < this.allParts.length; index++){
+            if(this.axiesData[i].parts[j].name === this.allParts[index]){
+              axies.push(this.axiesData[i]);
+              addAxies = true;
+              break;
+            }
+          }
+          if(addAxies){
+            addAxies = false;
+            break;
+          }
+        }
+      }
+      this.axiesData = axies;
+    }
   }
 }
