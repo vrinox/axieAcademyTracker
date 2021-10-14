@@ -21,6 +21,9 @@ export class AxiesComponent implements OnInit {
   myControl = new FormControl();
   partAxies = new FormControl();
 
+  filter: boolean = false;
+  filterNameCtrl: boolean = false;
+
   namePlayerOptions: string[] = [];
   filteredOptions: Observable<string[]>;;
 
@@ -73,7 +76,7 @@ export class AxiesComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
+    this.filterName(filterValue);
     return this.namePlayerOptions.filter(name => name.toLowerCase().includes(filterValue));
   }
 
@@ -91,6 +94,12 @@ export class AxiesComponent implements OnInit {
         axies.forEach((DataAxie: AxiesData)=>{
           this.axiesData.push(DataAxie);
           this.copyAxiesData.push(DataAxie);
+          if(this.filter){
+            this.startFilter();
+          }
+          if(this.filterNameCtrl){
+            this.filterName(this.myControl.value);
+          }
         });
       });
 
@@ -100,16 +109,14 @@ export class AxiesComponent implements OnInit {
 
   setAllParts(): void{
     Object.entries(cards).forEach((key: any)=>{
-      if(key[1].skillName != undefined){
-        this.allParts.push(key[1].skillName);
+      if(key[1].partName != undefined){
+        this.allParts.push(key[1].partName);
       }
     })
   }
 
   selecTypeAxie(type: string): void{
     this.typeAxieTitle = type;
-    console.log(type)
-    this.startFilter();
   };
 
   selecBreed(breed: string): void{
@@ -123,6 +130,7 @@ export class AxiesComponent implements OnInit {
     // Add our fruit
     if (value) {
       this.parts.push(value);
+      this.startFilter();
     }
 
     // Clear the input value
@@ -137,12 +145,14 @@ export class AxiesComponent implements OnInit {
     if (index >= 0) {
       this.parts.splice(index, 1);
     }
+    this.startFilter();
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.parts.push(event.option.viewValue);
     this.Cards.nativeElement.value = '';
     this.partAxies.setValue(null);
+    this.startFilter();
   }
 
   private _filterParts(value: string): string[] {
@@ -156,10 +166,25 @@ export class AxiesComponent implements OnInit {
   }
 
   startFilter(): void{
+    if(this.typeAxieTitle != 'Todos' || this.breedTitle != 'Todos' || this.parts.length != 0){
+      this.filter = true;
+    }
     this.filterTypeAxies();
     this.filterBreed();
     this.filterParts();
   }
+
+  filterName(value: string): void{
+    console.log(value)
+    if(value != ''){
+      this.filterNameCtrl = true;
+      this.axiesData =  this.copyAxiesData.filter(axie =>{
+        return axie.name.toLowerCase().includes(value.toLowerCase());
+      });
+    }else{
+      this.filterNameCtrl = false;
+    }
+  };
 
   private filterTypeAxies(): void{
     if(this.typeAxieTitle === 'Todos'){
@@ -195,7 +220,7 @@ export class AxiesComponent implements OnInit {
           }
         }
       }
-      this.axiesData = axies;
+      this.axiesData = [... axies];
     }
   }
 }

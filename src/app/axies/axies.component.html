@@ -9,7 +9,8 @@
                 [formControl]="myControl"
                 [matAutocomplete]="auto">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
+                (click)="filterName(option)">
                 {{ option }}
             </mat-option>
         </mat-autocomplete>
@@ -49,7 +50,8 @@
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 (matChipInputTokenEnd)="add($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-autocomplete #auto2="matAutocomplete" 
+                (optionSelected)="selected($event)">
             <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
                 {{ cards }}
             </mat-option>
