@@ -99,7 +99,6 @@ export class AxiesComponent implements OnInit {
   };
 
   setAllParts(): void{
-    console.log(cards)
     Object.entries(cards).forEach((key: any)=>{
       if(key[1].skillName != undefined){
         this.allParts.push(key[1].skillName);
@@ -109,10 +108,13 @@ export class AxiesComponent implements OnInit {
 
   selecTypeAxie(type: string): void{
     this.typeAxieTitle = type;
+    console.log(type)
+    this.startFilter();
   };
 
   selecBreed(breed: string): void{
     this.breedTitle = breed;
+    this.startFilter();
   }
 
   add(event: MatChipInputEvent): void {
@@ -154,9 +156,6 @@ export class AxiesComponent implements OnInit {
   }
 
   startFilter(): void{
-    console.log('hola');
-    console.log(this.axiesData)
-    console.log(this.copyAxiesData)
     this.filterTypeAxies();
     this.filterBreed();
     this.filterParts();
@@ -165,30 +164,26 @@ export class AxiesComponent implements OnInit {
   private filterTypeAxies(): void{
     if(this.typeAxieTitle === 'Todos'){
       this.axiesData = [];
-      this.copyAxiesData.forEach(axie=>{
-        this.axiesData.push(axie);
-      })
+      this.axiesData = [... this.copyAxiesData];
     }else{
-      this.axiesData = this.axiesData.filter(axie => axie.axies.class === this.typeAxieTitle);
+      this.axiesData = this.copyAxiesData.filter(axie => axie.axies.class === this.typeAxieTitle);
     }
   }
 
   private filterBreed(): void{
     if(this.breedTitle != 'Todos'){
-      this.axiesData = this.axiesData.filter(axie => {
-        return axie.axies.breedCount.toString().includes(this.breedTitle);
-      });
+      this.axiesData = this.axiesData.filter(axie => axie.axies.breedCount.toString() === this.breedTitle);
     }
   }
 
   private filterParts(): void{
-    if(this.allParts.length != 0){
+    if(this.parts.length != 0){
       let axies: AxiesData[] = [];
       let addAxies: boolean = false;
       for(let i=0; i < this.axiesData.length; i++){
         for(let j=0; j < this.axiesData[i].parts.length; j++){
-          for(let index = 0; index < this.allParts.length; index++){
-            if(this.axiesData[i].parts[j].name === this.allParts[index]){
+          for(let index = 0; index < this.parts.length; index++){
+            if(this.axiesData[i].parts[j].name === this.parts[index]){
               axies.push(this.axiesData[i]);
               addAxies = true;
               break;
