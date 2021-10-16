@@ -1,5 +1,6 @@
 <div class="menu-axies">
 
+<<<<<<< Updated upstream
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Name Player</mat-label>
         <input type="text"
@@ -15,21 +16,32 @@
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
+=======
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Name Player</mat-label>
+    <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="myControl"
+      [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+>>>>>>> Stashed changes
 
 
-    <button mat-button [matMenuTriggerFor]="menu">tipo: {{ typeAxieTitle }}</button>
-    <mat-menu #menu="matMenu">
-        <button *ngFor="let type of typeAxies" (click)="selecTypeAxie(type)" 
-                (click)="startFilter()"
-                mat-menu-item>{{ type }}</button>
-    </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menu">tipo: {{ typeAxieTitle }}</button>
+  <mat-menu #menu="matMenu">
+    <button *ngFor="let type of typeAxies" (click)="selecTypeAxie(type)" (click)="startFilter()" mat-menu-item>{{ type
+      }}</button>
+  </mat-menu>
 
-    <button mat-button [matMenuTriggerFor]="menu2">breed: {{ breedTitle }}</button>
-    <mat-menu #menu2="matMenu">
-        <button *ngFor="let bred of breed" (click)="selecBreed(bred)" 
-                mat-menu-item>{{ bred }}</button>
-    </mat-menu>
+  <button mat-button [matMenuTriggerFor]="menu2">breed: {{ breedTitle }}</button>
+  <mat-menu #menu2="matMenu">
+    <button *ngFor="let bred of breed" (click)="selecBreed(bred)" mat-menu-item>{{ bred }}</button>
+  </mat-menu>
 
+<<<<<<< Updated upstream
     <mat-form-field class="menu-axies__cards" appearance="fill">
         <mat-label>Partes</mat-label>
         <mat-chip-list #chipList aria-label="Fruit selection">
@@ -57,61 +69,79 @@
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
+=======
+  <mat-form-field class="menu-axies__cards" appearance="fill">
+    <mat-label>Partes</mat-label>
+    <mat-chip-list #chipList aria-label="Fruit selection">
+      <mat-chip *ngFor="let part of parts" [selectable]="selectable" [removable]="removable" (removed)="remove(part)">
+        {{ part }}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input placeholder="New Parts..." #cards [formControl]="partAxies" [matAutocomplete]="auto2"
+        [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
+        {{ cards }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+>>>>>>> Stashed changes
 
 </div>
 
 
 <div class="container-axies">
-    <mat-accordion class="container-axies__acordion" multi>
-        <mat-expansion-panel *ngFor="let axies of axiesData">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    {{ axies.name }}
-                </mat-panel-title>
+  <mat-accordion class="container-axies__acordion" multi>
+    <mat-expansion-panel *ngFor="let axies of axiesData">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ axies.name }}
+        </mat-panel-title>
 
-                <mat-panel-description class="container-axies__description">
-                    {{ axies.axies.name }}
-                    <img src="assets/svg/axies/{{axies.axies.class}}/{{axies.axies.class}}.svg" alt="">
-                </mat-panel-description>
-            </mat-expansion-panel-header>
+        <mat-panel-description class="container-axies__description">
+          {{ axies.axies.name }}
+          <img src="assets/svg/axies/{{axies.axies.class}}/{{axies.axies.class}}.svg" alt="">
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 
-            <div class="container-axies__expasion">
-                <div class="container-axies__sub-content">
-                    <img class="container-axies__sub-img" [src]="axies.axies.image">
+      <div class="container-axies__expasion">
+        <div class="container-axies__sub-content">
+          <img class="container-axies__sub-img" [src]="axies.axies.image">
 
-                    <div class="container-axies__sub-stast">
-                        <div class="container-axies__icons-stast">
-                            <img src="assets/svg/hp.svg" height="24" width="24" alt="">
-                            <p class="container-axies__icon-text">
-                                {{ axies.stats.hp }}</p>
-                        </div>
-                        <div class="container-axies__icons-stast">
-                            <img src="assets/svg/speed.svg" height="24" width="24" alt="">
-                            <p class="container-axies__icon-text">
-                                {{ axies.stats.speed }}</p>
-                        </div>
-                        <div class="container-axies__icons-stast">
-                            <img src="assets/svg/skill.svg" height="24" width="24" alt="">
-                            <p class="container-axies__icon-text">
-                                {{ axies.stats.skill }}</p>
-                        </div>
-                        <div class="container-axies__icons-stast">
-                            <img src="assets/svg/morale.svg" height="24" width="24" alt="">
-                            <p class="container-axies__icon-text">
-                                {{ axies.stats.morale }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="container-axies__parts">
-                    <div *ngFor="let parts of axies.parts"
-                        class="container-axies__sub-parts">
-                        <img class="container-axies__parts-img" src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
-                        <p>{{ parts.name }}</p>
-                    </div>
-                </div>
+          <div class="container-axies__sub-stast">
+            <div class="container-axies__icons-stast">
+              <img src="assets/svg/hp.svg" height="24" width="24" alt="">
+              <p class="container-axies__icon-text">
+                {{ axies.stats.hp }}</p>
             </div>
+            <div class="container-axies__icons-stast">
+              <img src="assets/svg/speed.svg" height="24" width="24" alt="">
+              <p class="container-axies__icon-text">
+                {{ axies.stats.speed }}</p>
+            </div>
+            <div class="container-axies__icons-stast">
+              <img src="assets/svg/skill.svg" height="24" width="24" alt="">
+              <p class="container-axies__icon-text">
+                {{ axies.stats.skill }}</p>
+            </div>
+            <div class="container-axies__icons-stast">
+              <img src="assets/svg/morale.svg" height="24" width="24" alt="">
+              <p class="container-axies__icon-text">
+                {{ axies.stats.morale }}</p>
+            </div>
+          </div>
+        </div>
 
-        </mat-expansion-panel>
-    </mat-accordion>
+        <div class="container-axies__parts">
+          <div *ngFor="let parts of axies.parts" class="container-axies__sub-parts">
+            <img class="container-axies__parts-img" src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
+            <p>{{ parts.name }}</p>
+          </div>
+        </div>
+      </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

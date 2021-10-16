@@ -127,3 +127,23 @@ export interface AxiesResultsOficialData{
         class: string
     }]
 }
+
+export interface communityRequest {from: string, communityId: string, id: string, fromName: string}
+export interface community {
+  type:string;
+  name:string;
+  id:string;
+  members?: any[];
+  admin?: string;
+  rankType: string;
+  discord?: string;
+  feed?: any[];
+  rank?: any;
+  solicitudes?: any[];
+}
+export interface communityPost{
+  author: any;
+  text: string;
+  creationDate: Date;
+  communityId: string;
+}

@@ -32,6 +32,9 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { AxiesComponent } from './axies/axies.component';
 import { LoadingComponent } from './loading/loading.component';
+import { StoryComponent } from './story/story.component';
+import { MatSelectModule } from '@angular/material/select';
+import { LineChartComponent } from './line-chart/line-chart.component';
 
 
 @NgModule({
@@ -42,7 +45,9 @@ import { LoadingComponent } from './loading/loading.component';
     FormularioBecadoComponent,
     GraficasComponent,
     AxiesComponent,
-    LoadingComponent
+    LoadingComponent,
+    StoryComponent,
+    LineChartComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +71,7 @@ import { LoadingComponent } from './loading/loading.component';
     MatMenuModule,
     MatSliderModule,
     MatChipsModule,
+    MatSelectModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
   ],

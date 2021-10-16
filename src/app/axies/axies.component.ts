@@ -189,20 +189,37 @@ export class AxiesComponent implements OnInit {
   private filterTypeAxies(): void{
     if(this.typeAxieTitle === 'Todos'){
       this.axiesData = [];
+<<<<<<< Updated upstream
       this.axiesData = [... this.copyAxiesData];
+=======
+      this.axiesData =  [... this.copyAxiesData] ;
+>>>>>>> Stashed changes
     }else{
       this.axiesData = this.copyAxiesData.filter(axie => axie.axies.class === this.typeAxieTitle);
     }
   }
 
   private filterBreed(): void{
+<<<<<<< Updated upstream
     if(this.breedTitle != 'Todos'){
       this.axiesData = this.axiesData.filter(axie => axie.axies.breedCount.toString() === this.breedTitle);
+=======
+    if(this.breedTitle !== 'Todos'){
+      console.log('entro breed');
+      this.axiesData = this.axiesData.filter(axie => {
+        return axie.axies.breedCount.toString().includes(this.breedTitle);
+      });
+>>>>>>> Stashed changes
     }
   }
 
   private filterParts(): void{
+<<<<<<< Updated upstream
     if(this.parts.length != 0){
+=======
+    if(this.parts.length !== 0){
+      console.log('entro parts');
+>>>>>>> Stashed changes
       let axies: AxiesData[] = [];
       let addAxies: boolean = false;
       for(let i=0; i < this.axiesData.length; i++){
