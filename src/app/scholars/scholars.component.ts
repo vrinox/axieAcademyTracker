@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Scholar } from '../models/scholar';
 import { ScholarDataService } from 'src/app/services/scholarData/scholar-data.service';
 import { DatabaseService } from '../services/database/database.service';
 import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
 import { Observable, Subject } from 'rxjs';
 import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
+import { Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { SessionsService } from '../services/sessions/sessions.service';
 
 @Component({
   selector: 'app-scholars',
@@ -15,11 +19,15 @@ export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
   scholars$: Subject<Scholar[]> = new Subject();
   displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
-  
+  @ViewChild(MatSort, { static: false }) sort?: MatSort;
+  dataSource: MatTableDataSource<Scholar> = new MatTableDataSource();
+
   constructor(
     private schDataService: ScholarDataService,
     private dbService: DatabaseService,
-    private addNewBecado: AgregarNewBecadoService
+    private addNewBecado: AgregarNewBecadoService,
+    private router: Router,
+    private sessions: SessionsService,
   ) {}
 
   ngOnInit(): void {
@@ -32,21 +40,24 @@ export class ScholarsComponent implements OnInit {
       .getAllData()
       .then((scholarData:scholarFirebaseI[])=> {
         let scholarsFirebase = scholarData
-          .map((scholar)=>{
-            return new Scholar(scholar)
-          });
+        .map((scholar)=>{
+          return new Scholar(scholar)
+        });
         this.scholars = scholarsFirebase;
         this.scholars.sort((a:Scholar,b:Scholar)=>{
           return b.monthSLP - a.monthSLP
         });
         this.scholars$.next(this.scholars);
+        this.sessions.setScholar(this.scholars);
+        this.dataSource = new MatTableDataSource(this.scholars);
+        this.dataSource.sort = this.sort!;
         this.obtenerDatos(scholarsFirebase);
       })
   }
   
   calcularRankMensual() {
     let rank = 1;
-    this.scholars = this.scholars.sort((a:Scholar, b:Scholar)=>{
+    this.dataSource.data = this.dataSource.data.sort((a:Scholar, b:Scholar)=>{
       return b.monthSLP -a.monthSLP;
     }).map((scholar:Scholar)=>{
       scholar.mounthlyRank = rank;
@@ -59,11 +70,10 @@ export class ScholarsComponent implements OnInit {
     let scholarsUpdated: Scholar[] = await this.schDataService.get(scholarFirebase)
     .then((scholarData: scholarOfficialData[])=>{
       return scholarData.map((scholar: scholarOfficialData)=> {
-        let newScholarData:Scholar = new Scholar();
+        let newScholarData: Scholar = new Scholar();
         return newScholarData.parse(scholar);
       });
     });
-
     this.scholars = scholarFirebase.map((scholar:Scholar)=>{
       let scholarUpdated:Scholar = scholarsUpdated.find((updatedData:Scholar)=>{
         return updatedData.roninAddress === scholar.roninAddress;
@@ -90,4 +100,14 @@ export class ScholarsComponent implements OnInit {
     return this.scholars$
   }
 
+  viewOneScholarHistoric(roninAddress: string): void{
+    this.router.navigate([`/historic/${roninAddress}`]);
+  }
+
+  viewAxie(scholar: Scholar): void{
+    this.sessions.oneScholar.push(scholar);
+    this.router.navigate(['/axies']);
+  }
+
 }
+

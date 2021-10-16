@@ -11,19 +11,38 @@ import { MatCardModule } from '@angular/material/card';
 import { HistorialComponent } from './scholars/subComponent/historial/historial.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { FormularioBecadoComponent } from './formulario-becado/formulario-becado.component';
 import { MatFormFieldModule  } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GraficasComponent } from './graficas/graficas.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSortModule } from '@angular/material/sort';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatChipsModule } from '@angular/material/chips';
+
+import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment';
+import { AxiesComponent } from './axies/axies.component';
+import { LoadingComponent } from './loading/loading.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ScholarsComponent,
     HistorialComponent,
-    FormularioBecadoComponent
+    FormularioBecadoComponent,
+    GraficasComponent,
+    AxiesComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +57,20 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSortModule,
+    MatMenuModule,
+    MatSliderModule,
+    MatChipsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

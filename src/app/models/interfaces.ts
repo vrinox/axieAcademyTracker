@@ -10,21 +10,10 @@ export interface scholarOfficialData{
     win_rate?: string,
     ign: string,
     game_stats_success?: string
-}
-
-export interface AxiesUserData{
-    roninAddress: string,
-    in_game_slp: number,
-    mmr: number,
-    rank: number,
-    ronin_slp: number,
-    total_slp: number
-    name: string,
-    total_matches: number
+    name: string
 }
 
 export interface ParseUserData{
-    roninUser?: string,
     in_game_slp?: number,
     mmr?: number,
     rank?: number,
@@ -33,25 +22,6 @@ export interface ParseUserData{
     name?: string,
     total_matches?: number
 }
-
-// export interface statsData{
-//     client_id:string,
-//     win_total: number,
-//     draw_total: number,
-//     lose_total: number,
-//     elo: number,
-//     rank: number,
-//     name: string
-// }
-
-// export interface earningsData {
-//     address: string,
-//     slp_holdings: number,
-//     slp_inventory: number,
-//     slp_in_total: number,
-//     last_claimed: number,
-//     next_claim: string,
-// }
 
 export interface scholarFirebaseI {
     roninAddress: string,
@@ -73,4 +43,87 @@ export interface DatosFormulario{
     roninAddress: string,
     personalAdress?: string,
     ganancia?: string
+}
+
+export interface HistoricData{
+    labelSlp: number[]
+    dataset: Dataset[]
+}
+
+export interface Dataset{
+    label: string,
+    data: number[], 
+    borderColor: string,
+    fill: boolean,
+    backgroundColor: string, 
+    borderWidth: number 
+}
+
+export interface AxiesData{
+    roning: string
+    name: string
+    axies: {
+        name: string
+        class: string
+        image: string
+        breedCount: number
+    }
+    stats: {
+        hp: number
+        speed: number
+        skill: number
+        morale: number
+    }
+    parts: [{
+        name: string
+        type: string
+        class: string
+    }]
+}
+
+export interface AxiesParseData{
+    axies: {
+        name: string
+        class: string
+        image: string
+        breedCount: number
+    }
+    stats: {
+        hp: number
+        speed: number
+        skill: number
+        morale: number
+    }
+    parts: [{
+        id: string
+        name: string
+        type: string
+        class: string
+    }]
+}
+
+export interface AxiesOficialData{
+    owner_address: string
+    available_axies: {
+        results: AxiesResultsOficialData[]
+    }
+}
+
+export interface AxiesResultsOficialData{
+    name: string
+    class: string
+    image: string
+    breedCount: number
+    stats: {
+        hp: number
+        speed: number
+        skill: number
+        morale: number
+    }
+    parts: [{
+        id: string
+        name: string
+        type: string
+        class: string
+    }]
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AxiesUserData, scholarOfficialData, ParseUserData } from 'src/app/models/interfaces';
+import { scholarOfficialData, ParseUserData } from 'src/app/models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
 
 
@@ -18,9 +18,7 @@ export class ScholarDataService {
       let multiRoning: String = this.setRoningAdress(scholar);
       this.httpClient.get(`${this.REST_API_SERVER}${multiRoning}`)
       .subscribe(res=>{
-        console.log(res);
         let axiesUserData: scholarOfficialData[] =  this.parserJson(res);
-        console.log(axiesUserData)
         resolve(axiesUserData);
       });
     });
