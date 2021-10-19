@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
-import { AxiesData } from '../models/interfaces';
+import { AxiesData, Parts } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
 import { SessionsService } from '../services/sessions/sessions.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -199,36 +199,35 @@ export class AxiesComponent implements OnInit {
       this.axiesData = [];
       this.axiesData = [... this.copyAxiesData];
     }else{
-      this.axiesData = this.copyAxiesData.filter(axie => axie.axies.class === this.typeAxieTitle);
+      this.axiesData = this.copyAxiesData.filter(axie => axie.axie.class === this.typeAxieTitle);
     }
   }
 
   private filterBreed(): void{
     if(this.breedTitle != 'Todos'){
-      this.axiesData = this.axiesData.filter(axie => axie.axies.breedCount.toString() === this.breedTitle);
+      this.axiesData = this.axiesData.filter(axie => axie.axie.breedCount.toString() === this.breedTitle);
     }
   }
 
   private filterParts(): void{
     if(this.parts.length != 0){
       let axies: AxiesData[] = [];
-      let addAxies: boolean = false;
-      for(let i=0; i < this.axiesData.length; i++){
-        for(let j=0; j < this.axiesData[i].parts.length; j++){
-          for(let index = 0; index < this.parts.length; index++){
-            if(this.axiesData[i].parts[j].name === this.parts[index]){
-              axies.push(this.axiesData[i]);
-              addAxies = true;
-              break;
-            }
-          }
-          if(addAxies){
-            addAxies = false;
-            break;
-          }
+
+      this.axiesData.forEach(axie =>{
+        if(this.hasPart(axie)){
+          axies.push(axie);
         }
-      }
+      });
+
       this.axiesData = [... axies];
     }
+  }
+
+  private hasPart(axie: AxiesData): boolean{
+    return this.parts.some(part => this.hasPartsAxies(part, axie));
+  }
+
+  private hasPartsAxies(part: string, axie: AxiesData): boolean{
+    return axie.parts.some(AxiePart => AxiePart.name === part)
   }
 }

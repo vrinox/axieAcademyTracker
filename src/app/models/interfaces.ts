@@ -62,7 +62,7 @@ export interface Dataset{
 export interface AxiesData{
     roning: string
     name: string
-    axies: {
+    axie: {
         name: string
         class: string
         image: string
@@ -126,4 +126,11 @@ export interface AxiesResultsOficialData{
         type: string
         class: string
     }]
+}
+
+export interface Parts{
+    id: string
+    name: string
+    type: string
+    class: string
 }
