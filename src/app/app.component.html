@@ -1,5 +1,9 @@
 <app-formulario-becado [ViewModal]="viewModal" (OffModal)="offModal($event)"></app-formulario-becado>
 
+<!-- <div class="container__loading" *ngIf="loading">
+  <app-loading></app-loading>
+</div> -->
+
 <mat-toolbar color="primary">
   <button mat-icon-button aria-label="Example icon-button with menu icon"  (click)="drawer.toggle()">
     <mat-icon>menu</mat-icon>
@@ -36,6 +40,5 @@
   <div>
     <router-outlet></router-outlet>
   </div>
-</mat-drawer-container>
 
-<app-loading></app-loading>
+</mat-drawer-container>

@@ -1,11 +1,19 @@
 .container
-    background: #dedede
     &__menu-horizontal
         padding: 10px
         box-sizing: border-box
     &__btn
         width: 100%
         margin: 10px
+    &__loading
+        position: absolute
+        width: 100%
+        height: 100vh
+        background: #28364b
+        z-index: 50
+
+.mat-drawer-container 
+    min-height: calc(100vh - 64px)
 
 @media screen and (max-width: 500px)
     .container

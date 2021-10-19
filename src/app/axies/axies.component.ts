@@ -21,6 +21,8 @@ export class AxiesComponent implements OnInit {
   myControl = new FormControl();
   partAxies = new FormControl();
 
+  loading: boolean = true;
+
   filter: boolean = false;
   filterNameCtrl: boolean = false;
 
@@ -80,30 +82,36 @@ export class AxiesComponent implements OnInit {
     return this.namePlayerOptions.filter(name => name.toLowerCase().includes(filterValue));
   }
 
-  start(): void{
+  async start(): Promise<void>{
     let scholars: Scholar[] = []
     if(this.sessions.oneScholar.length === 1){
       scholars = this.sessions.oneScholar;
     }else{
       scholars = this.sessions.scholar;
     };
-    scholars.forEach((scholar: Scholar)=>{
-      this.namePlayerOptions.push(scholar.name);
 
-      this.getAxies.get(scholar.roninAddress, scholar.name).then((axies: AxiesData[])=>{
-        axies.forEach((DataAxie: AxiesData)=>{
-          this.axiesData.push(DataAxie);
-          this.copyAxiesData.push(DataAxie);
-          if(this.filter){
-            this.startFilter();
-          }
-          if(this.filterNameCtrl){
-            this.filterName(this.myControl.value);
-          }
+    await Promise.all(
+      scholars.map((scholar: Scholar)=>{
+        this.namePlayerOptions.push(scholar.name);
+
+        return this.getAxies.get(scholar.roninAddress, scholar.name).then((axies: AxiesData[])=>{
+          axies.forEach((DataAxie: AxiesData)=>{
+            this.axiesData.push(DataAxie);
+            this.copyAxiesData.push(DataAxie);
+            if(this.filter){
+              this.startFilter();
+            }
+            if(this.filterNameCtrl){
+              this.filterName(this.myControl.value);
+            }
+            return
+          });
         });
-      });
+      })
+    )
+    
+    this.loading = false;
 
-    });
     this.sessions.oneScholar = [];
   };
 
