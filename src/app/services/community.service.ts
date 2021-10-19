@@ -53,9 +53,9 @@ export class ComunityService {
   }
   async getCommunities(roninAddress: string) {
     const querySnapshot = await getDocs(query(collection(this.db, "scholar-communities"), where('members', "array-contains", roninAddress)));
-    const communities = await Promise.all(querySnapshot.docs.map(async (doc) => {
+    let communities = await Promise.all(querySnapshot.docs.map(async (doc) => {
       return this.getCommunityAllData(doc.data().community);
-    }));
+    }))
     return communities || [];
   }
   getCommunitiesByName(partialName: string): Observable<any> {
@@ -64,7 +64,7 @@ export class ComunityService {
   getCommunitiesByPartialName(partialName: string): Observable<any> {
     return from(getDocs(query(collection(this.db, "communities"), where('name', '>=', partialName), where('name', '<=', partialName + '\uf8ff'))));
   }
-  async getCommunityAllData(id: string): Promise<community | null> {
+  async getCommunityAllData(id: string): Promise<community> {
     const docRef = doc(this.db, 'communities', id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -77,7 +77,13 @@ export class ComunityService {
         admin: data.admin
       };
     } else {
-      return null;
+      return  {
+        name: '',
+        type: '',
+        id: '',
+        rankType: '',
+        admin: ''
+      };
     }
   }
   async addCommunityPost(msg: communityPost) {

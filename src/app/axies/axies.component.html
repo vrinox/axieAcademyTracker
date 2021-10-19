@@ -1,6 +1,5 @@
 <div class="menu-axies">
 
-<<<<<<< Updated upstream
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Name Player</mat-label>
         <input type="text"
@@ -16,18 +15,6 @@
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
-=======
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Name Player</mat-label>
-    <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="myControl"
-      [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{ option }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
->>>>>>> Stashed changes
 
 
   <button mat-button [matMenuTriggerFor]="menu">tipo: {{ typeAxieTitle }}</button>
@@ -41,7 +28,6 @@
     <button *ngFor="let bred of breed" (click)="selecBreed(bred)" mat-menu-item>{{ bred }}</button>
   </mat-menu>
 
-<<<<<<< Updated upstream
     <mat-form-field class="menu-axies__cards" appearance="fill">
         <mat-label>Partes</mat-label>
         <mat-chip-list #chipList aria-label="Fruit selection">
@@ -69,25 +55,6 @@
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
-=======
-  <mat-form-field class="menu-axies__cards" appearance="fill">
-    <mat-label>Partes</mat-label>
-    <mat-chip-list #chipList aria-label="Fruit selection">
-      <mat-chip *ngFor="let part of parts" [selectable]="selectable" [removable]="removable" (removed)="remove(part)">
-        {{ part }}
-        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-      </mat-chip>
-      <input placeholder="New Parts..." #cards [formControl]="partAxies" [matAutocomplete]="auto2"
-        [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        (matChipInputTokenEnd)="add($event)">
-    </mat-chip-list>
-    <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event)">
-      <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
-        {{ cards }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
->>>>>>> Stashed changes
 
 </div>
 

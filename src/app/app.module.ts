@@ -26,6 +26,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
+import {MatListModule} from '@angular/material/list';
 
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -35,6 +36,9 @@ import { LoadingComponent } from './loading/loading.component';
 import { StoryComponent } from './story/story.component';
 import { MatSelectModule } from '@angular/material/select';
 import { LineChartComponent } from './line-chart/line-chart.component';
+import { LoginComponent } from './pages/login/login.component';
+import { Auth, provideAuth } from '@angular/fire/auth';
+import { getAuth } from '@firebase/auth';
 
 
 @NgModule({
@@ -47,7 +51,8 @@ import { LineChartComponent } from './line-chart/line-chart.component';
     AxiesComponent,
     LoadingComponent,
     StoryComponent,
-    LineChartComponent
+    LineChartComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -72,8 +77,10 @@ import { LineChartComponent } from './line-chart/line-chart.component';
     MatSliderModule,
     MatChipsModule,
     MatSelectModule,
+    MatListModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() => getFirestore()),    
+    provideAuth(() => getAuth()),
   ],
   providers: [
   ],

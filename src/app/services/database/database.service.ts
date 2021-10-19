@@ -33,10 +33,10 @@ export class DatabaseService {
     })
     return story;
   }
-  async getScholar(field: string, value: string): Promise<Scholar | null> {
+  async getScholar(field: string, value: string): Promise<Scholar> {
     const querySnapshot = await getDocs(query(collection(this.db, "scholars"), where(field, "==", value)));
     const dbScholar = (querySnapshot.docs[0]) ? querySnapshot.docs[0].data() : null;
-    return (!dbScholar) ? null : new Scholar(dbScholar);
+    return (!dbScholar) ? new Scholar() : new Scholar(dbScholar);
   }
 
   private async getAxieAvatar(roninAddress: string): Promise<Axie> {

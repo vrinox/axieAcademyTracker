@@ -50,7 +50,7 @@ export class ScholarsComponent implements OnInit {
     this.obtenerDatos(scholars);
   }
   async obtainDataFromDB() {
-    const memberAddressList = await this.communityService.getMembersAddressList('ANp1h8MyTqlwi0FsISaN');
+    const memberAddressList = await this.communityService.getMembersAddressList(this.communityService.activeCommunity.id);
     return await this.dbService.getScholarsByAddressList(memberAddressList);
   }
   calcularRankMensual() {
