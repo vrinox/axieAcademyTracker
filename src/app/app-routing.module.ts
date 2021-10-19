@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ScholarsComponent } from './scholars/scholars.component';
 import { GraficasComponent } from './graficas/graficas.component';
 import { AxiesComponent } from './axies/axies.component';
-import { StoryComponent } from './story/story.component';
+import { StoryComponent } from './pages/story/story.component';
 import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [

@@ -9,8 +9,8 @@
               [alt]="hist.title != 'Best pvp' ? imageAlt : trofeoAlt"> 
       </mat-card-title-group>
       <mat-card-content class="historial__total">
-        {{ hist.nombre === undefined ? hist.usd :  hist.nombre }}$
-        {{ hist.nombre !== undefined ? hist.mmr : '' }}$
+        {{ hist.nombre === undefined ? hist.usd + '$' :  hist.nombre }}
+        {{ hist.nombre !== undefined ? hist.mmr : '' }}
       </mat-card-content>
     </mat-card>
 </div>

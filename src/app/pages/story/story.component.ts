@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Scholar } from '../models/scholar';
-import { DatabaseService } from '../services/database/database.service';
+import { Scholar } from '../../models/scholar';
+import { DatabaseService } from '../../services/database/database.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { ComunityService } from '../services/community.service';
+import { ComunityService } from '../../services/community.service';
 
 @Component({
   selector: 'app-story',
@@ -31,7 +31,7 @@ export class StoryComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const memberAddressList = await this.communityService.getMembersAddressList('ANp1h8MyTqlwi0FsISaN');
+    const memberAddressList = await this.communityService.getMembersAddressList(this.communityService.activeCommunity.id);
     
     this.disponibleScholars = await this.dbService.getScholarsByAddressList(memberAddressList);
     this.disponibleScholars.forEach((scholar: Scholar)=>{
@@ -66,7 +66,6 @@ export class StoryComponent implements OnInit {
   }
   public buscar(){
     const name = this.myControl.value;
-    console.log(name);
     const scholar = this.disponibleScholars.find((requestedScholar:Scholar)=>{
       return requestedScholar.name === name;
     });

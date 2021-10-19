@@ -28,12 +28,12 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
 import {MatListModule} from '@angular/material/list';
 
-import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { AxiesComponent } from './axies/axies.component';
 import { LoadingComponent } from './loading/loading.component';
-import { StoryComponent } from './story/story.component';
+import { StoryComponent } from './pages/story/story.component';
 import { MatSelectModule } from '@angular/material/select';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { LoginComponent } from './pages/login/login.component';
