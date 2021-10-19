@@ -1,6 +1,6 @@
 <div class="menu-axies">
 
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="menu-axies__input--name" appearance="outline">
         <mat-label>Name Player</mat-label>
         <input type="text"
                 placeholder="Pick one"
@@ -17,20 +17,22 @@
     </mat-form-field>
 
 
-    <button mat-button [matMenuTriggerFor]="menu">tipo: {{ typeAxieTitle }}</button>
+    <button mat-stroked-button [matMenuTriggerFor]="menu"
+            class="menu-axies__btn">tipo: {{ typeAxieTitle }}</button>
     <mat-menu #menu="matMenu">
         <button *ngFor="let type of typeAxies" (click)="selecTypeAxie(type)" 
                 (click)="startFilter()"
                 mat-menu-item>{{ type }}</button>
     </mat-menu>
 
-    <button mat-button [matMenuTriggerFor]="menu2">breed: {{ breedTitle }}</button>
+    <button mat-stroked-button [matMenuTriggerFor]="menu2"
+            class="menu-axies__btn">breed: {{ breedTitle }}</button>
     <mat-menu #menu2="matMenu">
         <button *ngFor="let bred of breed" (click)="selecBreed(bred)" 
                 mat-menu-item>{{ bred }}</button>
     </mat-menu>
 
-    <mat-form-field class="menu-axies__cards" appearance="fill">
+    <mat-form-field class="menu-axies__cards" appearance="outline">
         <mat-label>Partes</mat-label>
         <mat-chip-list #chipList aria-label="Fruit selection">
             <mat-chip
@@ -118,6 +120,5 @@
     <div class="container-axies__loading" *ngIf="loading">
         <app-loading></app-loading>
     </div>
-
+    
 </div>
-
