@@ -1,4 +1,6 @@
-export interface scholarOfficialData{
+import { Axie } from "./axie";
+
+export interface scholarOfficialData {
     ronin_address: string,
     ronin_slp: number,
     total_slp: number,
@@ -13,7 +15,7 @@ export interface scholarOfficialData{
     name: string
 }
 
-export interface ParseUserData{
+export interface ParseUserData {
     in_game_slp?: number,
     mmr?: number,
     rank?: number,
@@ -30,13 +32,13 @@ export interface scholarFirebaseI {
 
 export interface Historial {
     title: string,
-    subTitleNumber:  number,
+    subTitleNumber: number,
     usd?: number,
     nombre?: string,
     mmr?: number
 }
 
-export interface DatosFormulario{
+export interface DatosFormulario {
     id?: number,
     name: string,
     apellido?: string,
@@ -45,21 +47,21 @@ export interface DatosFormulario{
     ganancia?: string
 }
 
-export interface HistoricData{
+export interface HistoricData {
     labelSlp: number[]
     dataset: Dataset[]
 }
 
-export interface Dataset{
+export interface Dataset {
     label: string,
-    data: number[], 
+    data: number[],
     borderColor: string,
     fill: boolean,
-    backgroundColor: string, 
-    borderWidth: number 
+    backgroundColor: string,
+    borderWidth: number
 }
 
-export interface AxiesData{
+export interface AxiesData {
     roning: string
     name: string
     axies: {
@@ -81,7 +83,7 @@ export interface AxiesData{
     }]
 }
 
-export interface AxiesParseData{
+export interface AxiesParseData {
     axies: {
         name: string
         class: string
@@ -102,14 +104,14 @@ export interface AxiesParseData{
     }]
 }
 
-export interface AxiesOficialData{
+export interface AxiesOficialData {
     owner_address: string
     available_axies: {
         results: AxiesResultsOficialData[]
     }
 }
 
-export interface AxiesResultsOficialData{
+export interface AxiesResultsOficialData {
     name: string
     class: string
     image: string
@@ -126,4 +128,43 @@ export interface AxiesResultsOficialData{
         type: string
         class: string
     }]
+}
+
+export interface communityRequest { from: string, communityId: string, id: string, fromName: string }
+export interface community {
+    type: string;
+    name: string;
+    id: string;
+    members?: any[];
+    admin?: string;
+    rankType: string;
+    discord?: string;
+    feed?: any[];
+    rank?: any;
+    solicitudes?: any[];
+}
+export interface communityPost {
+    author: any;
+    text: string;
+    creationDate: Date;
+    communityId: string;
+}
+export interface userLink {
+    uid: string;
+    roninAddress: string;
+    avatar: string;
+    userAvatar?: Axie;
+}
+
+export interface community {
+    type: string;
+    name: string;
+    id: string;
+    members?: any[];
+    admin?: string;
+    rankType: string;
+    discord?: string;
+    feed?: any[];
+    rank?: any;
+    solicitudes?: any[];
 }

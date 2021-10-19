@@ -26,12 +26,19 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
+import {MatListModule} from '@angular/material/list';
 
-import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { AxiesComponent } from './axies/axies.component';
 import { LoadingComponent } from './loading/loading.component';
+import { StoryComponent } from './pages/story/story.component';
+import { MatSelectModule } from '@angular/material/select';
+import { LineChartComponent } from './line-chart/line-chart.component';
+import { LoginComponent } from './pages/login/login.component';
+import { Auth, provideAuth } from '@angular/fire/auth';
+import { getAuth } from '@firebase/auth';
 
 
 @NgModule({
@@ -42,7 +49,10 @@ import { LoadingComponent } from './loading/loading.component';
     FormularioBecadoComponent,
     GraficasComponent,
     AxiesComponent,
-    LoadingComponent
+    LoadingComponent,
+    StoryComponent,
+    LineChartComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -66,8 +76,11 @@ import { LoadingComponent } from './loading/loading.component';
     MatMenuModule,
     MatSliderModule,
     MatChipsModule,
+    MatSelectModule,
+    MatListModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() => getFirestore()),    
+    provideAuth(() => getAuth()),
   ],
   providers: [
   ],
