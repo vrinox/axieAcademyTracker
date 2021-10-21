@@ -27,7 +27,7 @@
                     (click)="selecTypeAxie(type)" 
                     (click)="startFilter()"
                     mat-menu-item>{{ type }}
-                    <img src="assets/svg/axies/{{type}}/{{type}}.svg" class="menu-axies__btn-img" alt="">
+                    <img *ngIf="type != 'Todos'" src="assets/svg/axies/{{type}}/{{type}}.svg" class="menu-axies__btn-img" alt="">
             </button>
         </mat-menu>
     

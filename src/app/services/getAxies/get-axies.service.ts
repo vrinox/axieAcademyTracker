@@ -16,7 +16,6 @@ export class GetAxiesService {
       this.http.get(`${this.api_url}_axies/${roningAdress}`).subscribe((res: any)=>{
         let axiesData: AxiesData[] = [];
         let axieDataOficial: AxiesOficialData = res;
-        console.log(axieDataOficial)
         axieDataOficial.available_axies.results.forEach((Result: AxiesResultsOficialData)=>{
           let axiesParse: AxiesParseData = this.parseAxies(Result);
           axiesData.push({
