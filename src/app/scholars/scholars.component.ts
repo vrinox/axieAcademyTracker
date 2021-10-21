@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Scholar } from '../models/scholar';
 import { ScholarDataService } from 'src/app/services/scholarData/scholar-data.service';
 import { DatabaseService } from '../services/database/database.service';
-import { scholarOfficialData, scholarFirebaseI } from '../models/interfaces';
+import { scholarOfficialData, scholarFirebaseI, community } from '../models/interfaces';
 import { Observable, Subject } from 'rxjs';
 import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
 import { Router } from '@angular/router';
@@ -54,9 +54,10 @@ export class ScholarsComponent implements OnInit {
     return await this.dbService.getScholarsByAddressList(memberAddressList);
   }
   calcularRankMensual() {
+    const community: community = this.communityService.activeCommunity;
     let rank = 1;
-    this.dataSource.data = this.dataSource.data.sort((a: Scholar, b: Scholar) => {
-      return b.monthSLP - a.monthSLP;
+    this.dataSource.data = this.dataSource.data.sort((a: any, b: any) => {
+      return b[community.rankType] - a[community.rankType];
     }).map((scholar: Scholar) => {
       scholar.mounthlyRank = rank;
       rank++;

@@ -56,7 +56,6 @@ export class Scholar {
   }
 
   update(newData: Scholar):void { 
-    this.yesterdaySLP = this.todaySLP;
     this.todaySLP = this.calculateTodaySLP(newData);
     this.monthSLP = this.calculateMonthSLP();
     this.weekSLP = this.calculateWeekSLP();

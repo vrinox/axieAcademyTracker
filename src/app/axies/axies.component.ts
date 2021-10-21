@@ -10,6 +10,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import * as cards  from '../../assets/json/cards.json';
+import { Axie } from '../models/axie';
 
 @Component({
   selector: 'app-axies',

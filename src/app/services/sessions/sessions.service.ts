@@ -19,7 +19,7 @@ export class SessionsService {
   private scholar$: Subject<Scholar[]> = new Subject;
 
   constructor(
-    private storage: StorageService,
+    public storage: StorageService,
     private communityservice: ComunityService,
     private router: Router
   ) {}
