@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
-import { AxiesData, Parts } from '../models/interfaces';
+import { AxiesData } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
 import { SessionsService } from '../services/sessions/sessions.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -10,6 +10,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import * as cards  from '../../assets/json/cards.json';
+import { Axie } from '../models/axie';
 
 @Component({
   selector: 'app-axies',
@@ -204,13 +205,17 @@ export class AxiesComponent implements OnInit {
   }
 
   private filterBreed(): void{
-    if(this.breedTitle != 'Todos'){
-      this.axiesData = this.axiesData.filter(axie => axie.axie.breedCount.toString() === this.breedTitle);
+    if(this.breedTitle !== 'Todos'){
+      console.log('entro breed');
+      this.axiesData = this.axiesData.filter(axie => {
+        return axie.axie.breedCount.toString().includes(this.breedTitle);
+      });
     }
   }
 
   private filterParts(): void{
-    if(this.parts.length != 0){
+    if(this.parts.length !== 0){
+      console.log('entro parts');
       let axies: AxiesData[] = [];
 
       this.axiesData.forEach(axie =>{

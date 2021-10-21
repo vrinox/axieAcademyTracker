@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { SessionsService } from './services/sessions/sessions.service';
 
 @Component({
@@ -6,22 +7,33 @@ import { SessionsService } from './services/sessions/sessions.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit{
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   title = 'axie';
   showFiller = false;
   viewModal: boolean = false;
   loading: boolean = true;
 
-  constructor(private sessions: SessionsService){
+  constructor(public sesion: SessionsService){
+    this.sesion.appStart();
   }
 
-  ngOnInit(): void {
-    this.sessions.getLoading().subscribe(loadingHome=>{
-      this.loading = loadingHome;
-    });
+  ngOnInit(){
+    this.sesion.getLoading().subscribe(viewLoading=>{
+      this.loading = viewLoading;
+    })
   }
-
+  
   offModal(event: boolean){
     this.viewModal = event
+  }
+
+  close(){
+    this.sidenav.toggle();
+  }
+
+  logOut(){
+    this.sesion.close();
+    this.sidenav.toggle();
   }
 }

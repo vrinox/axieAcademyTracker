@@ -1,44 +1,56 @@
 <app-formulario-becado [ViewModal]="viewModal" (OffModal)="offModal($event)"></app-formulario-becado>
 
+<div class="whole">
+
 <div class="container__loading" *ngIf="loading">
   <app-loading></app-loading>
 </div>
 
-<mat-toolbar color="primary">
-  <button mat-icon-button aria-label="Example icon-button with menu icon"  (click)="drawer.toggle()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>My App</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button>
-</mat-toolbar>
-
-<mat-drawer-container class="container" autosize>
-  <mat-drawer #drawer mode="side" class="container__menu-horizontal">
-    <p>Auto-resizing sidenav</p>
-    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-
-    <button class="container__btn" (click)="showFiller = !showFiller; viewModal = !viewModal" 
-        mat-raised-button>
-        Agregar nuevo becado
+  <mat-toolbar color="primary" *ngIf="this.sesion.init">
+    <button mat-icon-button mat-button (click)="close()">
+      <mat-icon>menu</mat-icon>
     </button>
-
-    <button class="container__btn" routerLink="/historic/months" mat-raised-button>
-      Historico
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
     </button>
-
-    <button class="container__btn" routerLink="/axies" mat-raised-button>
-      Axies
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
     </button>
-  </mat-drawer>
-
-  <div>
-    <router-outlet></router-outlet>
-  </div>
-
-</mat-drawer-container>
+  </mat-toolbar>
+  
+  <mat-sidenav-container class="container" [hasBackdrop]="false">
+    <mat-sidenav #sidenav (keydown.escape)="close()" disableClose [mode]="'side'">
+      <mat-list role="list">
+        <mat-list-item role="listitem" routerLink="/scholars">
+          <mat-icon>groups</mat-icon>
+          <span>Users</span>
+        </mat-list-item>
+        <mat-list-item role="listitem" (click)="showFiller = !showFiller; viewModal = !viewModal">
+          <mat-icon>add</mat-icon>
+          <span> Agregar nuevo becado</span>
+        </mat-list-item>
+        <mat-list-item role="listitem" routerLink="/historic/months">
+          <mat-icon>insights</mat-icon>
+          <span>Historico</span>
+        </mat-list-item>
+        <mat-list-item role="listitem" routerLink="/story">
+          <mat-icon>history</mat-icon>
+          <span>Historico por usuario</span>
+        </mat-list-item>
+        <mat-list-item role="listitem" routerLink="/axies">
+          <mat-icon>pets</mat-icon>
+          <span>Axies</span>
+        </mat-list-item>
+        <mat-list-item role="listitem" (click)="logOut()">
+          <mat-icon>logout</mat-icon>
+          <span> logOut</span>
+        </mat-list-item>
+      </mat-list>
+    </mat-sidenav>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-container>
+</div>
