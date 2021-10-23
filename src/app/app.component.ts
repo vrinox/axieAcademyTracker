@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { SessionsService } from './services/sessions/sessions.service';
 
@@ -12,18 +12,26 @@ export class AppComponent implements OnInit{
   title = 'axie';
   showFiller = false;
   viewModal: boolean = false;
+  loading: boolean = true;
+
   constructor(public sesion: SessionsService){
     this.sesion.appStart();
   }
-  ngOnInit(){
 
+  ngOnInit(){
+    this.sesion.getLoading().subscribe(viewLoading=>{
+      this.loading = viewLoading;
+    })
   }
+  
   offModal(event: boolean){
     this.viewModal = event
   }
+
   close(){
     this.sidenav.toggle();
   }
+
   logOut(){
     this.sesion.close();
     this.sidenav.toggle();

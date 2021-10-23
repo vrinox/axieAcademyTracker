@@ -1,60 +1,72 @@
 <div class="menu-axies">
 
-    <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Name Player</mat-label>
-        <input type="text"
-                placeholder="Pick one"
-                aria-label="name axies player"
-                matInput
-                [formControl]="myControl"
-                [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
-                (click)="filterName(option)">
-                {{ option }}
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
+    <div class="menu-axies__content">
 
+        <mat-form-field class="menu-axies__input--name" appearance="outline">
+            <mat-label>Name Player</mat-label>
+            <input type="text"
+                    placeholder="Pick one"
+                    aria-label="name axies player"
+                    matInput
+                    [formControl]="myControl"
+                    [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
+                    (click)="filterName(option)">
+                    {{ option }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    
+    
+        <button mat-stroked-button [matMenuTriggerFor]="menu"
+                class="menu-axies__btn">tipo: {{ typeAxieTitle }}</button>
+        <mat-menu #menu="matMenu">
+            <button *ngFor="let type of typeAxies" 
+                    class="menu-axies__btn--type"
+                    (click)="selecTypeAxie(type)" 
+                    (click)="startFilter()"
+                    mat-menu-item>{{ type }}
+                    <img *ngIf="type != 'Todos'" src="assets/svg/axies/{{type}}/{{type}}.svg" class="menu-axies__btn-img" alt="">
+            </button>
+        </mat-menu>
+    
+        <button mat-stroked-button [matMenuTriggerFor]="menu2"
+                class="menu-axies__btn">breed: {{ breedTitle }}</button>
+        <mat-menu #menu2="matMenu">
+            <button *ngFor="let bred of breed" (click)="selecBreed(bred)" 
+                    mat-menu-item>{{ bred }}</button>
+        </mat-menu>
+    
+        <mat-form-field class="menu-axies__cards" appearance="outline">
+            <mat-label>Partes</mat-label>
+            <mat-chip-list #chipList aria-label="Fruit selection">
+                <mat-chip
+                    *ngFor="let part of parts"
+                    [selectable]="selectable"
+                    [removable]="removable"
+                    (removed)="remove(part)">
+                    {{ part }}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                    placeholder="New Parts..."
+                    #cards
+                    [formControl]="partAxies"
+                    [matAutocomplete]="auto2"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto2="matAutocomplete" 
+                    (optionSelected)="selected($event)">
+                <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
+                    {{ cards }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
 
-  <button mat-button [matMenuTriggerFor]="menu">tipo: {{ typeAxieTitle }}</button>
-  <mat-menu #menu="matMenu">
-    <button *ngFor="let type of typeAxies" (click)="selecTypeAxie(type)" (click)="startFilter()" mat-menu-item>{{ type
-      }}</button>
-  </mat-menu>
-
-  <button mat-button [matMenuTriggerFor]="menu2">breed: {{ breedTitle }}</button>
-  <mat-menu #menu2="matMenu">
-    <button *ngFor="let bred of breed" (click)="selecBreed(bred)" mat-menu-item>{{ bred }}</button>
-  </mat-menu>
-
-    <mat-form-field class="menu-axies__cards" appearance="fill">
-        <mat-label>Partes</mat-label>
-        <mat-chip-list #chipList aria-label="Fruit selection">
-            <mat-chip
-                *ngFor="let part of parts"
-                [selectable]="selectable"
-                [removable]="removable"
-                (removed)="remove(part)">
-                {{ part }}
-                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-            </mat-chip>
-            <input
-                placeholder="New Parts..."
-                #cards
-                [formControl]="partAxies"
-                [matAutocomplete]="auto2"
-                [matChipInputFor]="chipList"
-                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                (matChipInputTokenEnd)="add($event)">
-        </mat-chip-list>
-        <mat-autocomplete #auto2="matAutocomplete" 
-                (optionSelected)="selected($event)">
-            <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
-                {{ cards }}
-            </mat-option>
-        </mat-autocomplete>
-    </mat-form-field>
+    </div>
 
 </div>
 
@@ -67,15 +79,15 @@
           {{ axies.name }}
         </mat-panel-title>
 
-        <mat-panel-description class="container-axies__description">
-          {{ axies.axies.name }}
-          <img src="assets/svg/axies/{{axies.axies.class}}/{{axies.axies.class}}.svg" alt="">
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+                <mat-panel-description class="container-axies__description">
+                    {{ axies.axie.name }}
+                    <img src="assets/svg/axies/{{axies.axie.class}}/{{axies.axie.class}}.svg" alt="">
+                </mat-panel-description>
+            </mat-expansion-panel-header>
 
-      <div class="container-axies__expasion">
-        <div class="container-axies__sub-content">
-          <img class="container-axies__sub-img" [src]="axies.axies.image">
+            <div class="container-axies__expasion">
+                <div class="container-axies__sub-content">
+                    <img class="container-axies__sub-img" [src]="axies.axie.image">
 
           <div class="container-axies__sub-stast">
             <div class="container-axies__icons-stast">
@@ -109,6 +121,11 @@
         </div>
       </div>
 
-    </mat-expansion-panel>
-  </mat-accordion>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="container-axies__loading" *ngIf="loading">
+        <app-loading></app-loading>
+    </div>
+    
 </div>

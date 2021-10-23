@@ -21,7 +21,7 @@ export class GetAxiesService {
           axiesData.push({
             roning: roningAdress,
             name: nameUser,
-            axies: axiesParse.axies,
+            axie: axiesParse.axies,
             parts: axiesParse.parts,
             stats: axiesParse.stats
           });

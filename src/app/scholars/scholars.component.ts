@@ -47,6 +47,7 @@ export class ScholarsComponent implements OnInit {
     this.sessions.setScholar(this.scholars);
     this.dataSource = new MatTableDataSource(this.scholars);
     this.dataSource.sort = this.sort!;
+    this.sessions.setLoading(false);
     this.obtenerDatos(scholars);
   }
   async obtainDataFromDB() {

@@ -4,12 +4,13 @@ import { GetAxiesService } from '../services/getAxies/get-axies.service';
 import { AxiesData } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
 import { SessionsService } from '../services/sessions/sessions.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import * as cards  from '../../assets/json/cards.json';
+import { StorageService } from '../services/storage/storage.service';
 import { Axie } from '../models/axie';
 
 @Component({
@@ -21,6 +22,8 @@ import { Axie } from '../models/axie';
 export class AxiesComponent implements OnInit {
   myControl = new FormControl();
   partAxies = new FormControl();
+
+  loading: boolean = true;
 
   filter: boolean = false;
   filterNameCtrl: boolean = false;
@@ -49,7 +52,8 @@ export class AxiesComponent implements OnInit {
 
   constructor(
     private getAxies: GetAxiesService, 
-    private sessions: SessionsService
+    private sessions: SessionsService,
+    private storare: StorageService
     ) { 
       this.filteredOptions = new Observable();
       this.cardsOptions = new Observable();
@@ -82,31 +86,63 @@ export class AxiesComponent implements OnInit {
   }
 
   start(): void{
-    let scholars: Scholar[] = []
     if(this.sessions.oneScholar.length === 1){
-      scholars = this.sessions.oneScholar;
+      this.getAxieData(true, true, this.sessions.oneScholar)
+
     }else{
-      scholars = this.sessions.scholar;
+
+      let storeItem = this.storare.getItem('AxieData')
+      if(storeItem === null){
+        this.getAxieData(false, false, this.sessions.scholar, this.axiesData);
+      }else{
+        this.loading = false;
+        this.assingStorgeAxieData(storeItem);
+        this.getAxieData(true, false, this.sessions.scholar);
+      }
+
     };
-    scholars.forEach((scholar: Scholar)=>{
-      this.namePlayerOptions.push(scholar.name);
-
-      this.getAxies.get(scholar.roninAddress, scholar.name).then((axies: AxiesData[])=>{
-        axies.forEach((DataAxie: AxiesData)=>{
-          this.axiesData.push(DataAxie);
-          this.copyAxiesData.push(DataAxie);
-          if(this.filter){
-            this.startFilter();
-          }
-          if(this.filterNameCtrl){
-            this.filterName(this.myControl.value);
-          }
-        });
-      });
-
-    });
-    this.sessions.oneScholar = [];
   };
+
+  async getAxieData(saveInAxiedata: boolean, oneScholar: Boolean, 
+    scholar: Scholar[], newAxieData: AxiesData[] = []){
+    let scholars: Scholar[] = scholar;
+    await Promise.all(
+      scholars.map((scholar: Scholar)=>{
+        this.namePlayerOptions.push(scholar.name);
+
+        return this.getAxies.get(scholar.roninAddress, scholar.name).then((axies: AxiesData[])=>{
+          axies.forEach((DataAxie: AxiesData)=>{
+            newAxieData.push(DataAxie);
+            this.copyAxiesData.push(DataAxie);
+            if(this.filter){
+              this.startFilter();
+            }
+            if(this.filterNameCtrl){
+              this.filterName(this.myControl.value);
+            }
+            return
+          });
+        });
+      })
+    )
+
+    if(!oneScholar){
+      this.storare.setItem('AxieData', JSON.stringify(newAxieData));
+    }
+
+    if(saveInAxiedata){
+      this.axiesData = [... newAxieData]
+    }
+    
+    this.loading = false;
+
+    this.sessions.oneScholar = [];
+  }
+
+  assingStorgeAxieData(storageAxieData: string): void{
+    this.axiesData = JSON.parse(storageAxieData);
+  }
+
 
   setAllParts(): void{
     Object.entries(cards).forEach((key: any)=>{
@@ -176,7 +212,6 @@ export class AxiesComponent implements OnInit {
   }
 
   filterName(value: string): void{
-    console.log(value)
     if(value != ''){
       this.filterNameCtrl = true;
       this.axiesData =  this.copyAxiesData.filter(axie =>{
@@ -192,40 +227,37 @@ export class AxiesComponent implements OnInit {
       this.axiesData = [];
       this.axiesData = [... this.copyAxiesData];
     }else{
-      this.axiesData = this.copyAxiesData.filter(axie => axie.axies.class === this.typeAxieTitle);
+      this.axiesData = this.copyAxiesData.filter(axie => axie.axie.class === this.typeAxieTitle);
     }
   }
 
   private filterBreed(): void{
     if(this.breedTitle !== 'Todos'){
-      console.log('entro breed');
       this.axiesData = this.axiesData.filter(axie => {
-        return axie.axies.breedCount.toString().includes(this.breedTitle);
+        return axie.axie.breedCount.toString().includes(this.breedTitle);
       });
     }
   }
 
   private filterParts(): void{
     if(this.parts.length !== 0){
-      console.log('entro parts');
       let axies: AxiesData[] = [];
-      let addAxies: boolean = false;
-      for(let i=0; i < this.axiesData.length; i++){
-        for(let j=0; j < this.axiesData[i].parts.length; j++){
-          for(let index = 0; index < this.parts.length; index++){
-            if(this.axiesData[i].parts[j].name === this.parts[index]){
-              axies.push(this.axiesData[i]);
-              addAxies = true;
-              break;
-            }
-          }
-          if(addAxies){
-            addAxies = false;
-            break;
-          }
+
+      this.axiesData.forEach(axie =>{
+        if(this.hasPart(axie)){
+          axies.push(axie);
         }
-      }
+      });
+
       this.axiesData = [... axies];
     }
+  }
+
+  private hasPart(axie: AxiesData): boolean{
+    return this.parts.some(part => this.hasPartsAxies(part, axie));
+  }
+
+  private hasPartsAxies(part: string, axie: AxiesData): boolean{
+    return axie.parts.some(AxiePart => AxiePart.name === part)
   }
 }

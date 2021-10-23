@@ -64,7 +64,7 @@ export interface Dataset {
 export interface AxiesData {
     roning: string
     name: string
-    axies: {
+    axie: {
         name: string
         class: string
         image: string

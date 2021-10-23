@@ -17,6 +17,8 @@ export class SessionsService {
   scholar: Scholar[] = [];
   oneScholar: Scholar[] = [];
   private scholar$: Subject<Scholar[]> = new Subject;
+  
+  private loadingHome: Subject<boolean> = new Subject;
 
   constructor(
     public storage: StorageService,
@@ -40,6 +42,15 @@ export class SessionsService {
     this.scholar = scholars;
     this.scholar$.next(scholars);
   }
+
+  getLoading(): Observable<boolean>{
+    return this.loadingHome
+  }
+
+  setLoading(onOffLoading: boolean): void{
+    this.loadingHome.next(onOffLoading);
+  }
+
   start(user: userLink, scholar: Scholar, communities: community[]):void{
     this.user = user;
     this.infinity = scholar;
@@ -68,6 +79,7 @@ export class SessionsService {
       return false;
     }
   }
+  
   close(){
     this.init = false;
     this.storage.clear();
