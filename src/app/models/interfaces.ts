@@ -77,6 +77,7 @@ export interface AxiesData {
         morale: number
     }
     parts: [{
+        id: string
         name: string
         type: string
         class: string

@@ -11,6 +11,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import * as cards  from '../../assets/json/cards.json';
 import { StorageService } from '../services/storage/storage.service';
+import { MarketplaceService } from '../services/marketplace/marketplace.service';
 import { Axie } from '../models/axie';
 
 @Component({
@@ -53,7 +54,8 @@ export class AxiesComponent implements OnInit {
   constructor(
     private getAxies: GetAxiesService, 
     private sessions: SessionsService,
-    private storare: StorageService
+    private storare: StorageService,
+    private martketPlace: MarketplaceService
     ) { 
       this.filteredOptions = new Observable();
       this.cardsOptions = new Observable();
@@ -105,7 +107,9 @@ export class AxiesComponent implements OnInit {
 
   async getAxieData(saveInAxiedata: boolean, oneScholar: Boolean, 
     scholar: Scholar[], newAxieData: AxiesData[] = []){
+
     let scholars: Scholar[] = scholar;
+    
     await Promise.all(
       scholars.map((scholar: Scholar)=>{
         this.namePlayerOptions.push(scholar.name);
@@ -259,5 +263,12 @@ export class AxiesComponent implements OnInit {
 
   private hasPartsAxies(part: string, axie: AxiesData): boolean{
     return axie.parts.some(AxiePart => AxiePart.name === part)
+  }
+
+  hasTotalPortafolio(): void{
+    console.log('hola');
+    this.axiesData.forEach(async axieData=>{
+      await this.martketPlace.get(axieData);
+    })
   }
 }
