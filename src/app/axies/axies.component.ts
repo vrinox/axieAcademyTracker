@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
-import { AxiesData } from '../models/interfaces';
+import { AxiesData, MarketPlacePrice, Portafolio } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
 import { SessionsService } from '../services/sessions/sessions.service';
 import { FormControl } from '@angular/forms';
@@ -38,6 +38,14 @@ export class AxiesComponent implements OnInit {
   cardsOptions: Observable<string[]>;
   parts: string[] = [];
   allParts: string[] = [];
+
+  totalPortafolio: Portafolio = {
+    totalAxies: 0,
+    totalBecados: 0,
+    totalEth: 0,
+    totalUsd: 0,
+    totalTypeAxies: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  }
   
   @ViewChild('cards', { static: true }) Cards!: ElementRef<HTMLInputElement>;
 
@@ -266,9 +274,39 @@ export class AxiesComponent implements OnInit {
   }
 
   hasTotalPortafolio(): void{
-    console.log('hola');
     this.axiesData.forEach(async axieData=>{
-      await this.martketPlace.get(axieData);
+      if(axieData.axie.class != null){
+        let marketPrice: MarketPlacePrice = await this.martketPlace.get(axieData);
+        axieData.price = marketPrice.price;
+        axieData.eth = marketPrice.eth;
+        this.calcTotalProtafolio(parseInt(axieData.price), parseFloat(axieData.eth));
+        this.totalAxiesTypes(axieData.axie.class);
+      }
     })
+    this.totalBecados();
+  }
+
+  calcTotalProtafolio(usd:number, eth: number){
+    this.totalPortafolio.totalUsd += (isNaN(usd)) ? 0 : usd;
+    this.totalPortafolio.totalEth += (isNaN(eth)) ? 0 : eth;
+    this.totalPortafolio.totalAxies += 1;
+  }
+
+  totalBecados(){
+    this.totalPortafolio.totalBecados = this.sessions.scholar.length;
+    this.parseEth();
+  }
+
+  totalAxiesTypes(classAxie: string){
+    this.typeAxies.forEach((type: string, i: number)=>{
+      if(type === classAxie){
+        this.totalPortafolio.totalTypeAxies[i-1] += 1;
+      }
+    })
+  }
+
+  parseEth(){
+    let eth: number = parseFloat(this.totalPortafolio.totalEth.toFixed(2));
+    this.totalPortafolio.totalEth = eth;
   }
 }

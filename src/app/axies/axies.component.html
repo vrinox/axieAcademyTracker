@@ -18,8 +18,6 @@
             </mat-autocomplete>
         </mat-form-field>
     
-        <button mat-stroked-button class="menu-axies__btn" (click)="hasTotalPortafolio()">Total De la cuenta</button>
-    
         <button mat-stroked-button [matMenuTriggerFor]="menu"
                 class="menu-axies__btn">tipo: {{ typeAxieTitle }}</button>
         <mat-menu #menu="matMenu">
@@ -38,6 +36,9 @@
             <button *ngFor="let bred of breed" (click)="selecBreed(bred)" 
                     mat-menu-item>{{ bred }}</button>
         </mat-menu>
+
+        <button mat-stroked-button class="menu-axies__btn" 
+        (click)="hasTotalPortafolio()">Valor del Portafolio</button>
     
         <mat-form-field class="menu-axies__cards" appearance="outline">
             <mat-label>Partes</mat-label>
@@ -71,6 +72,22 @@
 
 </div>
 
+<div class="portafolio">
+  <div class="portafolio__totals">
+    <p>$ {{ totalPortafolio.totalUsd }}</p>
+    <p><i class="cf cf-eth"></i>{{ totalPortafolio.totalEth }}</p>
+    <p>Total Becados: {{ totalPortafolio.totalBecados }}</p>
+    <p>Total Axies: {{ totalPortafolio.totalAxies }}</p>
+  </div>
+  <div class="portafolio__totals">
+    <div *ngFor="let type of typeAxies | slice:1; index as i">
+      <div [matBadge]="totalPortafolio.totalTypeAxies[i]" matBadgeOverlap="false">
+        <img class="portafolio__img" src="assets/svg/axies/{{type}}/{{type}}.svg" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="container-axies">
   <mat-accordion class="container-axies__acordion" multi>
@@ -82,15 +99,28 @@
 
                 <mat-panel-description class="container-axies__description">
                     {{ axies.axie.name }}
-                    <img src="assets/svg/axies/{{axies.axie.class}}/{{axies.axie.class}}.svg" alt="">
+                    <img *ngIf="axies.axie.class != null" 
+                          src="assets/svg/axies/{{axies.axie.class}}/{{axies.axie.class}}.svg" 
+                          alt="">
                 </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <div class="container-axies__expasion">
-                <div class="container-axies__sub-content">
-                    <img class="container-axies__sub-img" [src]="axies.axie.image">
+      <div class="container-axies__expasion">
+        <div class="container-axies__sub-content" [class.container-axies__egg]="axies.axie.class === null">
+          <img class="container-axies__sub-img" [class.container-axies__egg-img]="axies.axie.class === null" 
+                [src]="axies.axie.image">
 
-          <div class="container-axies__sub-stast">
+          <div class="container-axies__price" 
+          *ngIf="axies.price != undefined">
+            <div class="container-axies__price-content">
+              <p class="container-axies__icon-usd">$</p> <p> {{ axies.price }}</p>
+            </div>
+            <div class="container-axies__price-content">
+              <p class="container-axies__icon-eth"><i class="cf cf-eth"></i></p> <p> {{ axies.eth }}</p>
+            </div>
+          </div>
+
+          <div class="container-axies__sub-stast" *ngIf="axies.axie.class != null" >
             <div class="container-axies__icons-stast">
               <img src="assets/svg/hp.svg" height="24" width="24" alt="">
               <p class="container-axies__icon-text">
@@ -114,9 +144,11 @@
           </div>
         </div>
 
-        <div class="container-axies__parts">
+        <div class="container-axies__parts" 
+              *ngIf="axies.axie.class != null">
           <div *ngFor="let parts of axies.parts" class="container-axies__sub-parts">
-            <img class="container-axies__parts-img" src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
+            <img class="container-axies__parts-img" 
+                  src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
             <p>{{ parts.name }}</p>
           </div>
         </div>

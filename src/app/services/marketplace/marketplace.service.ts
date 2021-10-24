@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AxiesData } from 'src/app/models/interfaces'
+import { AxiesData, MarcketPlaceOficialData, MarketPlacePrice } from 'src/app/models/interfaces'
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +9,13 @@ export class MarketplaceService {
 
   constructor(private http: HttpClient) { }
 
-  get(axiesData: AxiesData): Promise<boolean>{
+  get(axiesData: AxiesData): Promise<MarketPlacePrice>{
     return new Promise((resolve)=>{
       let test: any = {
         "operationName": "GetAxieBriefList",
         "variables": {
           "from": 0,
-          "size": 24,
+          "size": 1,
           "sort": "PriceAsc",
           "auctionType": "Sale",
           "criteria": {
@@ -30,19 +30,34 @@ export class MarketplaceService {
         },
         "query": "query GetAxieBriefList($auctionType: AuctionType, $criteria: AxieSearchCriteria, $from: Int, $sort: SortBy, $size: Int, $owner: String) {\n  axies(auctionType: $auctionType, criteria: $criteria, from: $from, sort: $sort, size: $size, owner: $owner) {\n    total\n    results {\n      ...AxieBrief\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AxieBrief on Axie {\n  id\n  name\n  stage\n  class\n  breedCount\n  image\n  title\n  battleInfo {\n    banned\n    __typename\n  }\n  auction {\n    currentPrice\n    currentPriceUSD\n    __typename\n  }\n  parts {\n    id\n    name\n    class\n    type\n    specialGenes\n    __typename\n  }\n  __typename\n}\n"
       }
-      // this.http.post('https://graphql-gateway.axieinfinity.com/graphql', test).subscribe(res=>{
-      //   console.log(res);
-      // })
-      console.log(test);
-      resolve(true)
+      this.http.post('https://graphql-gateway.axieinfinity.com/graphql', test).subscribe((res: any) =>{
+        let marketplace: MarcketPlaceOficialData = res;
+        let marketPrice: MarketPlacePrice;
+        console.log(res);
+        if(marketplace.data.axies.results.length > 0){
+          marketPrice = {
+            eth: (parseFloat(marketplace.data.axies.results[0].auction.currentPrice)/(10 ** 18)).toFixed(2),
+            price: marketplace.data.axies.results[0].auction.currentPriceUSD
+          };
+          resolve(marketPrice)
+        }else{
+          marketPrice = {
+            eth: 'N/A',
+            price: 'N/A'
+          }
+          resolve(marketPrice);
+        }
+      })
     });
   }
 
   parseParts(AxiesData: AxiesData): String[]{
     let partsSearch: String[] = [];
     AxiesData.parts.forEach(part=>{
-      partsSearch.push(part.type);
-      partsSearch.push(part.id);
+      if(part.type != 'Eyes' && part.type != 'Ears'){
+        partsSearch.push(part.type);
+        partsSearch.push(part.id);
+      }
     });
     return partsSearch
   }

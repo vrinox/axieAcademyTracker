@@ -64,6 +64,8 @@ export interface Dataset {
 export interface AxiesData {
     roning: string
     name: string
+    price?: string
+    eth?: string
     axie: {
         name: string
         class: string
@@ -168,4 +170,30 @@ export interface community {
     feed?: any[];
     rank?: any;
     solicitudes?: any[];
+}
+
+export interface MarcketPlaceOficialData{
+    data: {
+        axies: {
+            results: [{
+                auction: {
+                    currentPriceUSD: string
+                    currentPrice: string
+                }
+            }]
+        }
+    }
+}
+
+export interface MarketPlacePrice{
+    price: string
+    eth: string
+}
+
+export interface Portafolio{
+    totalUsd: number
+    totalEth: number
+    totalAxies: number
+    totalBecados: number
+    totalTypeAxies: number[]
 }
