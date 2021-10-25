@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
-import { AxiesData } from '../models/interfaces';
+import { AxiesData, MarketPlacePrice, Portafolio } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
 import { SessionsService } from '../services/sessions/sessions.service';
 import { FormControl } from '@angular/forms';
@@ -10,7 +10,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import * as cards  from '../../assets/json/cards.json';
-import { StorageService } from '../services/storage/storage.service';
+import { MarketplaceService } from '../services/marketplace/marketplace.service';
 import { Axie } from '../models/axie';
 
 @Component({
@@ -25,6 +25,8 @@ export class AxiesComponent implements OnInit {
 
   loading: boolean = true;
 
+  valuePortafolio: boolean = false;
+
   filter: boolean = false;
   filterNameCtrl: boolean = false;
 
@@ -37,6 +39,15 @@ export class AxiesComponent implements OnInit {
   cardsOptions: Observable<string[]>;
   parts: string[] = [];
   allParts: string[] = [];
+
+  totalPortafolio: Portafolio = {
+    totalAxies: 0,
+    totalBecados: 0,
+    totalEth: 0,
+    totalUsd: 0,
+    na: 0,
+    totalTypeAxies: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  }
   
   @ViewChild('cards', { static: true }) Cards!: ElementRef<HTMLInputElement>;
 
@@ -53,7 +64,7 @@ export class AxiesComponent implements OnInit {
   constructor(
     private getAxies: GetAxiesService, 
     private sessions: SessionsService,
-    private storare: StorageService
+    private martketPlace: MarketplaceService
     ) { 
       this.filteredOptions = new Observable();
       this.cardsOptions = new Observable();
@@ -87,32 +98,25 @@ export class AxiesComponent implements OnInit {
 
   start(): void{
     if(this.sessions.oneScholar.length === 1){
-      this.getAxieData(true, true, this.sessions.oneScholar)
+      this.getAxieData(this.sessions.oneScholar)
 
     }else{
-
-      let storeItem = this.storare.getItem('AxieData')
-      if(storeItem === null){
-        this.getAxieData(false, false, this.sessions.scholar, this.axiesData);
-      }else{
-        this.loading = false;
-        this.assingStorgeAxieData(storeItem);
-        this.getAxieData(true, false, this.sessions.scholar);
-      }
+      this.getAxieData(this.sessions.scholar);
 
     };
   };
 
-  async getAxieData(saveInAxiedata: boolean, oneScholar: Boolean, 
-    scholar: Scholar[], newAxieData: AxiesData[] = []){
+  async getAxieData(scholar: Scholar[]){
+
     let scholars: Scholar[] = scholar;
+    
     await Promise.all(
       scholars.map((scholar: Scholar)=>{
         this.namePlayerOptions.push(scholar.name);
 
         return this.getAxies.get(scholar.roninAddress, scholar.name).then((axies: AxiesData[])=>{
           axies.forEach((DataAxie: AxiesData)=>{
-            newAxieData.push(DataAxie);
+            this.axiesData.push(DataAxie);
             this.copyAxiesData.push(DataAxie);
             if(this.filter){
               this.startFilter();
@@ -125,14 +129,6 @@ export class AxiesComponent implements OnInit {
         });
       })
     )
-
-    if(!oneScholar){
-      this.storare.setItem('AxieData', JSON.stringify(newAxieData));
-    }
-
-    if(saveInAxiedata){
-      this.axiesData = [... newAxieData]
-    }
     
     this.loading = false;
 
@@ -259,5 +255,50 @@ export class AxiesComponent implements OnInit {
 
   private hasPartsAxies(part: string, axie: AxiesData): boolean{
     return axie.parts.some(AxiePart => AxiePart.name === part)
+  }
+
+  async hasTotalPortafolio(): Promise<void>{
+    await Promise.all(
+      this.axiesData.map(async axieData=>{
+        if(axieData.axie.class != null){
+          return await this.martketPlace.get(axieData)
+          .then((marketPrice: MarketPlacePrice | undefined)=>{
+            if(this.martketPlace != undefined){
+              axieData.price = marketPrice!.price;
+              axieData.eth = marketPrice!.eth;
+              this.calcTotalProtafolio(parseInt(axieData.price), parseFloat(axieData.eth));
+              this.totalAxiesTypes(axieData.axie.class);
+            }
+          });
+        }
+      })
+    )
+    this.totalBecados();
+  }
+
+  calcTotalProtafolio(usd: number, eth: number){
+    this.totalPortafolio.totalUsd += (isNaN(usd)) ? 0 : usd;
+    this.totalPortafolio.totalEth += (isNaN(eth)) ? 0 : eth;
+    this.totalPortafolio.na += (isNaN(usd)) ? 1 : 0;
+    this.totalPortafolio.totalAxies += 1;
+  }
+
+  totalBecados(){
+    this.totalPortafolio.totalBecados = this.sessions.scholar.length;
+    this.parseEth();
+  }
+
+  totalAxiesTypes(classAxie: string){
+    this.typeAxies.forEach((type: string, i: number)=>{
+      if(type === classAxie){
+        this.totalPortafolio.totalTypeAxies[i-1] += 1;
+      }
+    })
+  }
+
+  parseEth(){
+    let eth: number = parseFloat(this.totalPortafolio.totalEth.toFixed(3));
+    this.totalPortafolio.totalEth = eth;
+    this.valuePortafolio = true;
   }
 }
