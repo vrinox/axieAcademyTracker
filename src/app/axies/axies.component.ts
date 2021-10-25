@@ -10,7 +10,6 @@ import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import * as cards  from '../../assets/json/cards.json';
-import { StorageService } from '../services/storage/storage.service';
 import { MarketplaceService } from '../services/marketplace/marketplace.service';
 import { Axie } from '../models/axie';
 
@@ -25,6 +24,8 @@ export class AxiesComponent implements OnInit {
   partAxies = new FormControl();
 
   loading: boolean = true;
+
+  valuePortafolio: boolean = false;
 
   filter: boolean = false;
   filterNameCtrl: boolean = false;
@@ -44,6 +45,7 @@ export class AxiesComponent implements OnInit {
     totalBecados: 0,
     totalEth: 0,
     totalUsd: 0,
+    na: 0,
     totalTypeAxies: [0, 0, 0, 0, 0, 0, 0, 0, 0]
   }
   
@@ -62,7 +64,6 @@ export class AxiesComponent implements OnInit {
   constructor(
     private getAxies: GetAxiesService, 
     private sessions: SessionsService,
-    private storare: StorageService,
     private martketPlace: MarketplaceService
     ) { 
       this.filteredOptions = new Observable();
@@ -97,24 +98,15 @@ export class AxiesComponent implements OnInit {
 
   start(): void{
     if(this.sessions.oneScholar.length === 1){
-      this.getAxieData(true, true, this.sessions.oneScholar)
+      this.getAxieData(this.sessions.oneScholar)
 
     }else{
-
-      let storeItem = this.storare.getItem('AxieData')
-      if(storeItem === null){
-        this.getAxieData(false, false, this.sessions.scholar, this.axiesData);
-      }else{
-        this.loading = false;
-        this.assingStorgeAxieData(storeItem);
-        this.getAxieData(true, false, this.sessions.scholar);
-      }
+      this.getAxieData(this.sessions.scholar);
 
     };
   };
 
-  async getAxieData(saveInAxiedata: boolean, oneScholar: Boolean, 
-    scholar: Scholar[], newAxieData: AxiesData[] = []){
+  async getAxieData(scholar: Scholar[]){
 
     let scholars: Scholar[] = scholar;
     
@@ -124,7 +116,7 @@ export class AxiesComponent implements OnInit {
 
         return this.getAxies.get(scholar.roninAddress, scholar.name).then((axies: AxiesData[])=>{
           axies.forEach((DataAxie: AxiesData)=>{
-            newAxieData.push(DataAxie);
+            this.axiesData.push(DataAxie);
             this.copyAxiesData.push(DataAxie);
             if(this.filter){
               this.startFilter();
@@ -137,14 +129,6 @@ export class AxiesComponent implements OnInit {
         });
       })
     )
-
-    if(!oneScholar){
-      this.storare.setItem('AxieData', JSON.stringify(newAxieData));
-    }
-
-    if(saveInAxiedata){
-      this.axiesData = [... newAxieData]
-    }
     
     this.loading = false;
 
@@ -273,22 +257,29 @@ export class AxiesComponent implements OnInit {
     return axie.parts.some(AxiePart => AxiePart.name === part)
   }
 
-  hasTotalPortafolio(): void{
-    this.axiesData.forEach(async axieData=>{
-      if(axieData.axie.class != null){
-        let marketPrice: MarketPlacePrice = await this.martketPlace.get(axieData);
-        axieData.price = marketPrice.price;
-        axieData.eth = marketPrice.eth;
-        this.calcTotalProtafolio(parseInt(axieData.price), parseFloat(axieData.eth));
-        this.totalAxiesTypes(axieData.axie.class);
-      }
-    })
+  async hasTotalPortafolio(): Promise<void>{
+    await Promise.all(
+      this.axiesData.map(async axieData=>{
+        if(axieData.axie.class != null){
+          return await this.martketPlace.get(axieData)
+          .then((marketPrice: MarketPlacePrice | undefined)=>{
+            if(this.martketPlace != undefined){
+              axieData.price = marketPrice!.price;
+              axieData.eth = marketPrice!.eth;
+              this.calcTotalProtafolio(parseInt(axieData.price), parseFloat(axieData.eth));
+              this.totalAxiesTypes(axieData.axie.class);
+            }
+          });
+        }
+      })
+    )
     this.totalBecados();
   }
 
-  calcTotalProtafolio(usd:number, eth: number){
+  calcTotalProtafolio(usd: number, eth: number){
     this.totalPortafolio.totalUsd += (isNaN(usd)) ? 0 : usd;
     this.totalPortafolio.totalEth += (isNaN(eth)) ? 0 : eth;
+    this.totalPortafolio.na += (isNaN(usd)) ? 1 : 0;
     this.totalPortafolio.totalAxies += 1;
   }
 
@@ -306,7 +297,8 @@ export class AxiesComponent implements OnInit {
   }
 
   parseEth(){
-    let eth: number = parseFloat(this.totalPortafolio.totalEth.toFixed(2));
+    let eth: number = parseFloat(this.totalPortafolio.totalEth.toFixed(3));
     this.totalPortafolio.totalEth = eth;
+    this.valuePortafolio = true;
   }
 }

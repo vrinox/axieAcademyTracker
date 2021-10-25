@@ -72,14 +72,16 @@
 
 </div>
 
-<div class="portafolio">
-  <div class="portafolio__totals">
+<div class="portafolio" *ngIf="valuePortafolio">
+  <div class="portafolio__totals portafolio__totals--prices">
     <p>$ {{ totalPortafolio.totalUsd }}</p>
     <p><i class="cf cf-eth"></i>{{ totalPortafolio.totalEth }}</p>
     <p>Total Becados: {{ totalPortafolio.totalBecados }}</p>
     <p>Total Axies: {{ totalPortafolio.totalAxies }}</p>
+    <p>Total N/A: {{ totalPortafolio.na }}</p>
   </div>
-  <div class="portafolio__totals">
+
+  <div class="portafolio__totals portafolio__totals--icons">
     <div *ngFor="let type of typeAxies | slice:1; index as i">
       <div [matBadge]="totalPortafolio.totalTypeAxies[i]" matBadgeOverlap="false">
         <img class="portafolio__img" src="assets/svg/axies/{{type}}/{{type}}.svg" alt="">

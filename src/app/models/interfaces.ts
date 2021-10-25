@@ -108,9 +108,27 @@ export interface AxiesParseData {
 }
 
 export interface AxiesOficialData {
-    owner_address: string
-    available_axies: {
-        results: AxiesResultsOficialData[]
+    data: {
+        axies: {
+            results: [{
+                name: string
+                class: string
+                image: string
+                breedCount: number
+                stats: {
+                    hp: number
+                    speed: number
+                    skill: number
+                    morale: number
+                }
+                parts: [{
+                    id: string
+                    name: string
+                    type: string
+                    class: string
+                }]
+            }]
+        }
     }
 }
 
@@ -195,5 +213,6 @@ export interface Portafolio{
     totalEth: number
     totalAxies: number
     totalBecados: number
+    na: number 
     totalTypeAxies: number[]
 }
