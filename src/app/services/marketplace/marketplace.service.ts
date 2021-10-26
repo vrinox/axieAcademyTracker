@@ -30,8 +30,8 @@ export class MarketplaceService {
           }
         },
         "query": "query GetAxieBriefList($auctionType: AuctionType, $criteria: AxieSearchCriteria, $from: Int, $sort: SortBy, $size: Int, $owner: String) {\n  axies(auctionType: $auctionType, criteria: $criteria, from: $from, sort: $sort, size: $size, owner: $owner) {\n    total\n    results {\n      ...AxieBrief\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AxieBrief on Axie {\n  id\n  name\n  stage\n  class\n  breedCount\n  image\n  title\n  battleInfo {\n    banned\n    __typename\n  }\n  auction {\n    currentPrice\n    currentPriceUSD\n    __typename\n  }\n  parts {\n    id\n    name\n    class\n    type\n    specialGenes\n    __typename\n  }\n  __typename\n}\n"
-      }     
-      this.http.post('https://graphql-gateway.axieinfinity.com/graphql', test).subscribe((res: any) =>{
+      }
+      this.http.post('https://graphql-gateway.axieinfinity.com/graphql', test).toPromise().then((res: any) =>{
         let marketplace: MarcketPlaceOficialData = res;
         let marketPrice: MarketPlacePrice;
         if(marketplace.data != null && marketplace.data.axies.results.length > 0){
@@ -46,15 +46,8 @@ export class MarketplaceService {
           }
         }
         resolve(marketPrice);
-      }, (error)=>{
-        console.log(this.intentos)
-        if(this.intentos != 5){
-          this.intentos += 1;
-          this.get(axiesData);
-        }else{
-          this.intentos = 0;
-          reject();
-        }
+      }).catch((error)=>{
+        reject(error);
       })
     });
   }
