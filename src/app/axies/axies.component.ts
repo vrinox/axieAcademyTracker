@@ -299,6 +299,7 @@ export class AxiesComponent implements OnInit {
   parseEth(){
     let eth: number = parseFloat(this.totalPortafolio.totalEth.toFixed(3));
     this.totalPortafolio.totalEth = eth;
+    console.log('aqui');
     this.valuePortafolio = true;
   }
 }

@@ -5,6 +5,8 @@ import { GraficasComponent } from './graficas/graficas.component';
 import { AxiesComponent } from './axies/axies.component';
 import { StoryComponent } from './pages/story/story.component';
 import { LoginComponent } from './pages/login/login.component';
+import { StoryDayComponent } from './pages/story-day/story-day.component';
+import { ReportDailyGeneralComponent } from './pages/report-daily-general/report-daily-general.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -12,6 +14,8 @@ const routes: Routes = [
   { path: 'historic/:roninAddress', component: GraficasComponent },
   { path: 'axies', component: AxiesComponent },
   { path: 'story', component: StoryComponent },
+  { path: 'storyDay', component: StoryDayComponent },
+  { path: 'reportDailyGeneral', component: ReportDailyGeneralComponent },
   { path: 'login', component: LoginComponent }
 ];
 

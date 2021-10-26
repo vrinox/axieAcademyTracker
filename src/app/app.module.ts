@@ -41,6 +41,9 @@ import { LineChartComponent } from './line-chart/line-chart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { Auth, provideAuth } from '@angular/fire/auth';
 import { getAuth } from '@firebase/auth';
+import { StoryDayComponent } from './pages/story-day/story-day.component';
+import { TotalsComponent } from './components/totals/totals.component';
+import { ReportDailyGeneralComponent } from './pages/report-daily-general/report-daily-general.component';
 
 
 @NgModule({
@@ -54,7 +57,10 @@ import { getAuth } from '@firebase/auth';
     LoadingComponent,
     StoryComponent,
     LineChartComponent,
-    LoginComponent
+    LoginComponent,
+    StoryDayComponent,
+    TotalsComponent,
+    ReportDailyGeneralComponent
   ],
   imports: [
     BrowserModule,

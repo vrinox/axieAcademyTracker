@@ -53,9 +53,9 @@ export class LoginComponent implements OnInit {
     }
     let communities: community[] = await this.communityService.getCommunities(userLink.roninAddress);
     communities = communities.filter(c=> c.id !== '');
-    let community = communities[0];
-    if(community.admin === scholar.roninAddress){
-      this.sesion.start(userLink, scholar, communities);
+    let community = communities.find((c)=> c.admin === scholar.roninAddress);
+    if(community){
+      this.sesion.start(userLink, scholar, communities.filter( c=> c.admin === scholar.roninAddress));
       this.communityService.activeCommunity = community;
     }else{
       console.log('debes ser admin de una comunidad para entrar en esta herramienta');
