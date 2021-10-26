@@ -259,7 +259,12 @@ export class AxiesComponent implements OnInit {
     return axie.parts.some(AxiePart => AxiePart.name === part)
   }
 
-  async hasTotalPortafolio(): Promise<void> {
+  async hasTotalPortafolio(): Promise<void> {    
+    this.valuePortafolio = false;
+    this.totalPortafolio.totalUsd = 0;
+    this.totalPortafolio.totalEth = 0;
+    this.totalPortafolio.na = 0;
+    this.totalPortafolio.totalAxies = 0;
     await Promise.all(
       this.axiesData.map(async axieData => {
         return (axieData.axie.class != null) ? this.calculateAxiePrice(axieData): Promise.resolve(axieData);
@@ -268,7 +273,7 @@ export class AxiesComponent implements OnInit {
       axiesData.forEach((axieData)=>{
         this.calcTotalProtafolio(parseInt(axieData.price || '0'), parseFloat(axieData.eth || '0'));
         this.totalAxiesTypes(axieData.axie.class);
-      })      
+      })
     })
     this.totalBecados();
     this.parseEth();
