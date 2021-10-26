@@ -6,10 +6,11 @@ import { AxiesData, MarcketPlaceOficialData, MarketPlacePrice } from 'src/app/mo
   providedIn: 'root'
 })
 export class MarketplaceService {
+  intentos: number = 0;
 
   constructor(private http: HttpClient) { }
 
-  get(axiesData: AxiesData): Promise<MarketPlacePrice | undefined>{
+  get(axiesData: AxiesData): Promise<MarketPlacePrice>{
     return new Promise((resolve, reject)=>{
       let test: any = {
         "operationName": "GetAxieBriefList",
@@ -29,27 +30,32 @@ export class MarketplaceService {
           }
         },
         "query": "query GetAxieBriefList($auctionType: AuctionType, $criteria: AxieSearchCriteria, $from: Int, $sort: SortBy, $size: Int, $owner: String) {\n  axies(auctionType: $auctionType, criteria: $criteria, from: $from, sort: $sort, size: $size, owner: $owner) {\n    total\n    results {\n      ...AxieBrief\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AxieBrief on Axie {\n  id\n  name\n  stage\n  class\n  breedCount\n  image\n  title\n  battleInfo {\n    banned\n    __typename\n  }\n  auction {\n    currentPrice\n    currentPriceUSD\n    __typename\n  }\n  parts {\n    id\n    name\n    class\n    type\n    specialGenes\n    __typename\n  }\n  __typename\n}\n"
-      }
-      try{       
-        this.http.post('https://graphql-gateway.axieinfinity.com/graphql', test).subscribe((res: any) =>{
-          let marketplace: MarcketPlaceOficialData = res;
-          let marketPrice: MarketPlacePrice;
-          if(marketplace.data.axies.results.length > 0){
-            marketPrice = {
-              eth: (parseFloat(marketplace.data.axies.results[0].auction.currentPrice)/(10 ** 18)).toFixed(3),
-              price: marketplace.data.axies.results[0].auction.currentPriceUSD
-            };
-          }else{
-            marketPrice = {
-              eth: 'N/A',
-              price: 'N/A'
-            }
+      }     
+      this.http.post('https://graphql-gateway.axieinfinity.com/graphql', test).subscribe((res: any) =>{
+        let marketplace: MarcketPlaceOficialData = res;
+        let marketPrice: MarketPlacePrice;
+        if(marketplace.data != null && marketplace.data.axies.results.length > 0){
+          marketPrice = {
+            eth: (parseFloat(marketplace.data.axies.results[0].auction.currentPrice)/(10 ** 18)).toFixed(3),
+            price: marketplace.data.axies.results[0].auction.currentPriceUSD
+          };
+        }else{
+          marketPrice = {
+            eth: 'N/A',
+            price: 'N/A'
           }
-          resolve(marketPrice);
-        })
-      }catch(error){
-        reject(undefined)
-      }
+        }
+        resolve(marketPrice);
+      }, (error)=>{
+        console.log(this.intentos)
+        if(this.intentos != 5){
+          this.intentos += 1;
+          this.get(axiesData);
+        }else{
+          this.intentos = 0;
+          reject();
+        }
+      })
     });
   }
 

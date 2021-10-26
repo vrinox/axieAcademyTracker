@@ -126,6 +126,8 @@ export class AxiesComponent implements OnInit {
             }
             return
           });
+        }).catch(() => {
+          return
         });
       })
     )
@@ -262,14 +264,16 @@ export class AxiesComponent implements OnInit {
       this.axiesData.map(async axieData=>{
         if(axieData.axie.class != null){
           return await this.martketPlace.get(axieData)
-          .then((marketPrice: MarketPlacePrice | undefined)=>{
-            if(this.martketPlace != undefined){
-              axieData.price = marketPrice!.price;
-              axieData.eth = marketPrice!.eth;
-              this.calcTotalProtafolio(parseInt(axieData.price), parseFloat(axieData.eth));
-              this.totalAxiesTypes(axieData.axie.class);
-            }
+          .then((marketPrice: MarketPlacePrice)=>{
+            axieData.price = marketPrice!.price;
+            axieData.eth = marketPrice!.eth;
+            this.calcTotalProtafolio(parseInt(axieData.price), parseFloat(axieData.eth));
+            this.totalAxiesTypes(axieData.axie.class);
+          }).catch(() =>{
+            return
           });
+        }else{
+          return
         }
       })
     )

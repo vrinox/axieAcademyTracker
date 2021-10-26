@@ -12,7 +12,7 @@ export class GetAxiesService {
   constructor(private http: HttpClient) { }
 
   get(roningAdress: string, nameUser: string): Promise<AxiesData[]>{
-    return new Promise((resolve)=>{
+    return new Promise((resolve, reject)=>{
       let test: any = {
         "operationName": "GetAxieLatest",
         "variables": {
@@ -39,7 +39,10 @@ export class GetAxiesService {
           });
         })
         resolve(axiesData);
+      }, (error)=>{
+        reject();
       });
+
     });
   }
 
