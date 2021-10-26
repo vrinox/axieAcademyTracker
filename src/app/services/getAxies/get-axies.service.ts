@@ -28,16 +28,18 @@ export class GetAxiesService {
       .subscribe((res: any)=>{
         let axiesData: AxiesData[] = [];
         let axieDataOficial: AxiesOficialData = res;
-        axieDataOficial.data.axies.results.forEach((Result: AxiesResultsOficialData)=>{
-          let axiesParse: AxiesParseData = this.parseAxies(Result);
-          axiesData.push({
-            roning: roningAdress,
-            name: nameUser,
-            axie: axiesParse.axies,
-            parts: axiesParse.parts,
-            stats: axiesParse.stats
-          });
-        })
+        if(axieDataOficial.data != null){
+          axieDataOficial.data.axies.results.forEach((Result: AxiesResultsOficialData)=>{
+            let axiesParse: AxiesParseData = this.parseAxies(Result);
+            axiesData.push({
+              roning: roningAdress,
+              name: nameUser,
+              axie: axiesParse.axies,
+              parts: axiesParse.parts,
+              stats: axiesParse.stats
+            });
+          })
+        }
         resolve(axiesData);
       }, (error)=>{
         reject();

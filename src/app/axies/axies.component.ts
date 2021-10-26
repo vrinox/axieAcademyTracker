@@ -259,12 +259,12 @@ export class AxiesComponent implements OnInit {
     return axie.parts.some(AxiePart => AxiePart.name === part)
   }
 
-  async hasTotalPortafolio(): Promise<void> {    
+  async calculateTotalPortafolio(): Promise<void> {  
     this.valuePortafolio = false;
     this.totalPortafolio.totalUsd = 0;
     this.totalPortafolio.totalEth = 0;
     this.totalPortafolio.na = 0;
-    this.totalPortafolio.totalAxies = 0;
+    this.totalPortafolio.totalAxies = 0;  
     await Promise.all(
       this.axiesData.map(async axieData => {
         return (axieData.axie.class != null) ? this.calculateAxiePrice(axieData): Promise.resolve(axieData);
@@ -295,6 +295,7 @@ export class AxiesComponent implements OnInit {
       }
     })
   }
+
   calcTotalProtafolio(usd: number, eth: number) {
     this.totalPortafolio.totalUsd += (isNaN(usd)) ? 0 : usd;
     this.totalPortafolio.totalEth += (isNaN(eth)) ? 0 : eth;
