@@ -63,21 +63,18 @@ export interface Dataset {
 
 export interface AxiesData {
     roning: string
-    name: string
+    namePlayer: string
     price?: string
     eth?: string
-    axie: {
-        name: string
-        class: string
-        image: string
-        breedCount: number
-    }
-    stats: {
-        hp: number
-        speed: number
-        skill: number
-        morale: number
-    }
+    hp: number
+    speed: number
+    skill: number
+    morale: number
+    id: string
+    name: string
+    class: string
+    image: string
+    breedCount: number
     parts: [{
         id: string
         name: string
@@ -87,18 +84,17 @@ export interface AxiesData {
 }
 
 export interface AxiesParseData {
-    axies: {
-        name: string
-        class: string
-        image: string
-        breedCount: number
-    }
-    stats: {
-        hp: number
-        speed: number
-        skill: number
-        morale: number
-    }
+    roning: string
+    namePlayer: string
+    name: string
+    class: string
+    image: string
+    breedCount: number
+    id: string
+    hp: number
+    speed: number
+    skill: number
+    morale: number
     parts: [{
         id: string
         name: string
@@ -115,6 +111,7 @@ export interface AxiesOficialData {
                 class: string
                 image: string
                 breedCount: number
+                id: string
                 stats: {
                     hp: number
                     speed: number
@@ -137,6 +134,7 @@ export interface AxiesResultsOficialData {
     class: string
     image: string
     breedCount: number
+    id: string
     stats: {
         hp: number
         speed: number

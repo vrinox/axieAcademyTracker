@@ -1,0 +1,60 @@
+<div class="axies-module">
+    <div class="axies-module__title">
+        <p class="axies-module__name-axie">{{ axie.name }}</p>
+        <p class="axies-module__opacity axies-module__breed" >Breed count: {{ axie.breedCount }}</p>
+        <div *ngIf="axie.class != null"  
+            class="axies-module__class" 
+            [ngClass]="{'axies-module__Plant': axie.class === 'Plant',
+                        'axies-module__Aquatic': axie.class === 'Aquatic',
+                        'axies-module__Bird': axie.class === 'Bird',
+                        'axies-module__Dawn': axie.class === 'Dawn',
+                        'axies-module__Mech': axie.class === 'Mech',
+                        'axies-module__Reptile': axie.class === 'Reptile',
+                        'axies-module__Beast': axie.class === 'Beast',
+                        'axies-module__Bug': axie.class === 'Bug',
+                        'axies-module__Dusk': axie.class === 'Dusk' }">
+            <img class="axies-module__img-class" 
+                src="assets/svg/axies/{{axie.class}}/{{axie.class}}.svg"  alt="">
+        </div>
+    </div>
+    <div class="axies-module__content">
+        <a class="axies-module__content-a" 
+            href="https://marketplace.axieinfinity.com/axie/{{axie.id}}"
+            target="__blanck">
+            <img class="axies-module__content-img" 
+            [src]="axie.image" alt="">
+        </a>
+    </div>
+
+    <div class="axies-module__footer-stast" *ngIf="axie.class != null">
+        <div class="axies-module__icons-stast">
+            <img src="assets/svg/axiesModule/hp.svg" height="24" width="24" alt="">
+            <p class="axies-module__opacity axies-module__icon-text">{{ axie.hp }}</p>
+        </div>
+        <div class="axies-module__icons-stast">
+            <img src="assets/svg/axiesModule/speed.svg" height="24" width="24" alt="">
+            <p class="axies-module__opacity axies-module__icon-text">{{ axie.speed }}</p>
+        </div>
+        <div class="axies-module__icons-stast">
+            <img src="assets/svg/axiesModule/skill.svg" height="24" width="24" alt="">
+            <p class="axies-module__opacity axies-module__icon-text">{{ axie.skill }}</p>
+        </div>
+        <div class="axies-module__icons-stast">
+            <img src="assets/svg/axiesModule/morale.svg" height="24" width="24" alt="">
+            <p class="axies-module__opacity axies-module__icon-text">{{ axie.morale }}</p>
+        </div>
+    </div>
+
+    <div class="axies-module__footer-egg" *ngIf="axie.class === null">
+        
+    </div>
+
+    <div class="axies-module__footer-price">
+        <div class="axies-module__price axies-module__price--left">
+            <p class="axies-module__opacity">$ {{ axie.price }}</p>
+        </div>
+        <div class="axies-module__price axies-module__price--rigth">
+            <p class="axies-module__opacity"><i class="cf cf-eth"></i> {{ axie.eth }}</p>
+        </div>
+    </div>
+</div>

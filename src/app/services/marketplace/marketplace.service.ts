@@ -22,11 +22,11 @@ export class MarketplaceService {
           "criteria": {
             parts: this.parseParts(axiesData),
             breedCount: [0, 7],
-            hp: [axiesData.stats!.hp, axiesData.stats!.hp],
-            speed: [axiesData.stats!.speed, axiesData.stats!.speed],
-            skill: [axiesData.stats!.skill, axiesData.stats!.skill],
-            morale: [axiesData.stats!.morale, axiesData.stats!.morale],
-            classes: [axiesData.axie.class]
+            hp: [axiesData!.hp, axiesData!.hp],
+            speed: [axiesData!.speed, axiesData!.speed],
+            skill: [axiesData!.skill, axiesData!.skill],
+            morale: [axiesData!.morale, axiesData!.morale],
+            classes: [axiesData.class]
           }
         },
         "query": "query GetAxieBriefList($auctionType: AuctionType, $criteria: AxieSearchCriteria, $from: Int, $sort: SortBy, $size: Int, $owner: String) {\n  axies(auctionType: $auctionType, criteria: $criteria, from: $from, sort: $sort, size: $size, owner: $owner) {\n    total\n    results {\n      ...AxieBrief\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AxieBrief on Axie {\n  id\n  name\n  stage\n  class\n  breedCount\n  image\n  title\n  battleInfo {\n    banned\n    __typename\n  }\n  auction {\n    currentPrice\n    currentPriceUSD\n    __typename\n  }\n  parts {\n    id\n    name\n    class\n    type\n    specialGenes\n    __typename\n  }\n  __typename\n}\n"

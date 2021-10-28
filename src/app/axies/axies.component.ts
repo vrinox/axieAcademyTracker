@@ -23,6 +23,8 @@ export class AxiesComponent implements OnInit {
   myControl = new FormControl();
   partAxies = new FormControl();
 
+  list: boolean = true;
+
   loading: boolean = true;
 
   valuePortafolio: boolean = false;
@@ -225,14 +227,14 @@ export class AxiesComponent implements OnInit {
       this.axiesData = [];
       this.axiesData = [... this.copyAxiesData];
     } else {
-      this.axiesData = this.copyAxiesData.filter(axie => axie.axie.class === this.typeAxieTitle);
+      this.axiesData = this.copyAxiesData.filter(axie => axie.class === this.typeAxieTitle);
     }
   }
 
   private filterBreed(): void {
     if (this.breedTitle !== 'Todos') {
       this.axiesData = this.axiesData.filter(axie => {
-        return axie.axie.breedCount.toString().includes(this.breedTitle);
+        return axie.breedCount.toString().includes(this.breedTitle);
       });
     }
   }
@@ -265,14 +267,16 @@ export class AxiesComponent implements OnInit {
     this.totalPortafolio.totalEth = 0;
     this.totalPortafolio.na = 0;
     this.totalPortafolio.totalAxies = 0;  
+    this.totalPortafolio.totalTypeAxies = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
     await Promise.all(
       this.axiesData.map(async axieData => {
-        return (axieData.axie.class != null) ? this.calculateAxiePrice(axieData): Promise.resolve(axieData);
+        return (axieData.class != null) ? this.calculateAxiePrice(axieData): Promise.resolve(axieData);
       })
     ).then((axiesData: AxiesData[])=>{
       axiesData.forEach((axieData)=>{
         this.calcTotalProtafolio(parseInt(axieData.price || '0'), parseFloat(axieData.eth || '0'));
-        this.totalAxiesTypes(axieData.axie.class);
+        this.totalAxiesTypes(axieData.class);
       })
     })
     this.totalBecados();
@@ -296,18 +300,18 @@ export class AxiesComponent implements OnInit {
     })
   }
 
-  calcTotalProtafolio(usd: number, eth: number) {
+  calcTotalProtafolio(usd: number, eth: number): void {
     this.totalPortafolio.totalUsd += (isNaN(usd)) ? 0 : usd;
     this.totalPortafolio.totalEth += (isNaN(eth)) ? 0 : eth;
     this.totalPortafolio.na += (isNaN(usd)) ? 1 : 0;
     this.totalPortafolio.totalAxies += 1;
   }
 
-  totalBecados() {
+  totalBecados(): void {
     this.totalPortafolio.totalBecados = this.sessions.scholar.length;
   }
 
-  totalAxiesTypes(classAxie: string) {
+  totalAxiesTypes(classAxie: string): void {
     this.typeAxies.forEach((type: string, i: number) => {
       if (type === classAxie) {
         this.totalPortafolio.totalTypeAxies[i - 1] += 1;
@@ -315,8 +319,13 @@ export class AxiesComponent implements OnInit {
     })
   }
 
-  parseEth() {
+  parseEth(): void {
     let eth: number = parseFloat(this.totalPortafolio.totalEth.toFixed(3));
     this.totalPortafolio.totalEth = eth;
+  }
+
+  async viewModule(): Promise<void>{
+    await this.calculateTotalPortafolio();
+    this.list = false;
   }
 }
