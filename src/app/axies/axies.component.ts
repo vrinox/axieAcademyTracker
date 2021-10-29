@@ -42,6 +42,8 @@ export class AxiesComponent implements OnInit {
   parts: string[] = [];
   allParts: string[] = [];
 
+  calculatePortafolio: boolean = true;
+
   totalPortafolio: Portafolio = {
     totalAxies: 0,
     totalBecados: 0,
@@ -135,7 +137,7 @@ export class AxiesComponent implements OnInit {
     )
 
     this.loading = false;
-
+    this.calculatePortafolio = false;
     this.sessions.oneScholar = [];
   }
 
@@ -164,13 +166,10 @@ export class AxiesComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
-    // Add our fruit
     if (value) {
       this.parts.push(value);
       this.startFilter();
     }
-
-    // Clear the input value
     event.chipInput!.clear();
 
     this.partAxies.setValue(null);
@@ -201,11 +200,13 @@ export class AxiesComponent implements OnInit {
       return this.allParts
     }
   }
+
   getNA(){
     this.axiesData = this.copyAxiesData.filter(axie => {
       return axie.price === 'N/A';
     });
   }
+
   startFilter(auction?: boolean): void {
     if (this.typeAxieTitle != 'Todos' || this.breedTitle != 'Todos' || this.parts.length != 0) {
       this.filter = true;
@@ -292,6 +293,11 @@ export class AxiesComponent implements OnInit {
         this.totalAxiesTypes(axieData.class);
       })
     })
+
+    if(!this.filter){
+      this.copyAxiesData = [... this.axiesData];
+    }
+
     this.totalBecados();
     this.parseEth();
     this.valuePortafolio = true;
@@ -342,5 +348,13 @@ export class AxiesComponent implements OnInit {
       await this.calculateTotalPortafolio();
     }
     this.list = false;
+  }
+
+  clearFilters(){
+    this.typeAxieTitle = this.typeAxies[0];
+    this.breedTitle = this.breed[0];
+    this.parts = [];
+    this.myControl.setValue('');
+    this.axiesData = [... this.copyAxiesData];
   }
 }
