@@ -2,7 +2,10 @@
     <div class="axies-module__title">
         <p class="axies-module__name-axie">{{ axie.name }}</p>
         <p class="axies-module__opacity axies-module__breed" >
-            <i class="cf cf-eth" *ngIf="axie.auction"></i>Breed count: {{ axie.breedCount }}
+           {{ axie.namePlayer }}<i class="cf cf-eth" *ngIf="axie.auction"></i>
+        </p>
+        <p class="axies-module__opacity axies-module__breed" >
+            Breed count: {{ axie.breedCount }}
         </p>
         <div *ngIf="axie.class != null"  
             class="axies-module__class" 
