@@ -81,6 +81,7 @@ export interface AxiesData {
         type: string
         class: string
     }]
+    auction?: auction
 }
 
 export interface AxiesParseData {
@@ -101,6 +102,7 @@ export interface AxiesParseData {
         type: string
         class: string
     }]
+    auction?: auction
 }
 
 export interface AxiesOficialData {
@@ -123,7 +125,8 @@ export interface AxiesOficialData {
                     name: string
                     type: string
                     class: string
-                }]
+                }],
+                auction?:auction
             }]
         }
     }
@@ -147,8 +150,22 @@ export interface AxiesResultsOficialData {
         type: string
         class: string
     }]
+    auction?: auction
 }
-
+export interface auction {
+    startingPrice?: any
+    endingPrice?: any
+    startingTimestamp?: any
+    endingTimestamp?: any
+    duration?: any
+    timeLeft?: any
+    currentPriceUSD: string
+    currentPrice: string
+    suggestedPrice?: any
+    seller?: any
+    listingIndex?: any
+    state?: any
+}
 export interface communityRequest { from: string, communityId: string, id: string, fromName: string }
 export interface community {
     type: string;
@@ -188,29 +205,26 @@ export interface community {
     solicitudes?: any[];
 }
 
-export interface MarcketPlaceOficialData{
+export interface MarcketPlaceOficialData {
     data: {
         axies: {
             results: [{
-                auction: {
-                    currentPriceUSD: string
-                    currentPrice: string
-                }
+                auction: auction
             }]
         }
     }
 }
 
-export interface MarketPlacePrice{
+export interface MarketPlacePrice {
     price: string
     eth: string
 }
 
-export interface Portafolio{
+export interface Portafolio {
     totalUsd: number
     totalEth: number
     totalAxies: number
     totalBecados: number
-    na: number 
+    na: number
     totalTypeAxies: number[]
 }

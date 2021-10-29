@@ -201,21 +201,34 @@ export class AxiesComponent implements OnInit {
       return this.allParts
     }
   }
-
-  startFilter(): void {
+  getNA(){
+    this.axiesData = this.copyAxiesData.filter(axie => {
+      return axie.price === 'N/A';
+    });
+  }
+  startFilter(auction?: boolean): void {
     if (this.typeAxieTitle != 'Todos' || this.breedTitle != 'Todos' || this.parts.length != 0) {
       this.filter = true;
     }
     this.filterTypeAxies();
     this.filterBreed();
     this.filterParts();
+    if(auction){
+      this.filterAuction();
+    }
+  }
+
+  filterAuction(){
+    this.axiesData = this.copyAxiesData.filter(axie => {
+      return axie.auction
+    });
   }
 
   filterName(value: string): void {
     if (value != '') {
       this.filterNameCtrl = true;
       this.axiesData = this.copyAxiesData.filter(axie => {
-        return axie.name.toLowerCase().includes(value.toLowerCase());
+        return axie.namePlayer.toLowerCase().includes(value.toLowerCase());
       });
     } else {
       this.filterNameCtrl = false;
@@ -325,7 +338,9 @@ export class AxiesComponent implements OnInit {
   }
 
   async viewModule(): Promise<void>{
-    await this.calculateTotalPortafolio();
+    if(!this.valuePortafolio){
+      await this.calculateTotalPortafolio();
+    }
     this.list = false;
   }
 }

@@ -32,7 +32,6 @@ export class AxiesModuleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
 }

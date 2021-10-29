@@ -7,7 +7,7 @@
             </mat-panel-title>
 
             <mat-panel-description class="container-axies__description">
-                {{ axie.name }}
+                <div><i class="cf cf-eth" *ngIf="axie.auction"></i>{{ axie.name }}</div>
                 <div class="container-axies__icon-price" *ngIf="axie.class != null" >
                     <p class="container-axies__price-panel" 
                     *ngIf="axie.price != undefined">$ {{ axie.price }}</p>

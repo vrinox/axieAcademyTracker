@@ -55,7 +55,8 @@ export class GetAxiesService {
       morale: axiesParse.stats.morale,
       speed: axiesParse.stats.speed,
       skill: axiesParse.stats.skill,
-      parts: axiesParse.parts
+      parts: axiesParse.parts,
+      auction: (axiesParse.auction)?axiesParse.auction:undefined
     }
     
     return axiesData
