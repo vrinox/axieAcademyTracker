@@ -11,7 +11,6 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import * as cards from '../../assets/json/cards.json';
 import { MarketplaceService } from '../services/marketplace/marketplace.service';
-import { Axie } from '../models/axie';
 
 @Component({
   selector: 'app-axies',
@@ -110,15 +109,13 @@ export class AxiesComponent implements OnInit {
     };
   };
 
-  async getAxieData(scholar: Scholar[]) {
-
-    let scholars: Scholar[] = scholar;
+  async getAxieData(scholars: Scholar[]) {
 
     await Promise.all(
       scholars.map((scholar: Scholar) => {
         this.namePlayerOptions.push(scholar.name);
 
-        return this.getAxies.get(scholar.roninAddress, scholar.name).then((axies: AxiesData[]) => {
+        return this.getAxies.get(scholar).then((axies: AxiesData[]) => {
           axies.forEach((DataAxie: AxiesData) => {
             this.axiesData.push(DataAxie);
             this.copyAxiesData.push(DataAxie);
@@ -140,11 +137,6 @@ export class AxiesComponent implements OnInit {
     this.calculatePortafolio = false;
     this.sessions.oneScholar = [];
   }
-
-  assingStorgeAxieData(storageAxieData: string): void {
-    this.axiesData = JSON.parse(storageAxieData);
-  }
-
 
   setAllParts(): void {
     Object.entries(cards).forEach((key: any) => {
@@ -306,7 +298,7 @@ export class AxiesComponent implements OnInit {
   calculateAxiePrice(axieData: AxiesData): Promise<AxiesData>{
     return new Promise(async (resolve)=>{
       try{        
-        let marketPrice: MarketPlacePrice = await this.martketPlace.get(axieData);
+        let marketPrice: MarketPlacePrice = await this.martketPlace.getPrice(axieData);
         axieData.price = marketPrice.price;
         axieData.eth = marketPrice.eth;        
         resolve(axieData);

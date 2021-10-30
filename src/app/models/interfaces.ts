@@ -75,34 +75,8 @@ export interface AxiesData {
     class: string
     image: string
     breedCount: number
-    parts: [{
-        id: string
-        name: string
-        type: string
-        class: string
-    }]
     auction?: auction
-}
-
-export interface AxiesParseData {
-    roning: string
-    namePlayer: string
-    name: string
-    class: string
-    image: string
-    breedCount: number
-    id: string
-    hp: number
-    speed: number
-    skill: number
-    morale: number
-    parts: [{
-        id: string
-        name: string
-        type: string
-        class: string
-    }]
-    auction?: auction
+    parts: AxieParts[]
 }
 
 export interface AxiesOficialData {
@@ -114,18 +88,8 @@ export interface AxiesOficialData {
                 image: string
                 breedCount: number
                 id: string
-                stats: {
-                    hp: number
-                    speed: number
-                    skill: number
-                    morale: number
-                }
-                parts: [{
-                    id: string
-                    name: string
-                    type: string
-                    class: string
-                }],
+                stats: stats
+                parts: AxieParts[],
                 auction?:auction
             }]
         }
@@ -138,20 +102,25 @@ export interface AxiesResultsOficialData {
     image: string
     breedCount: number
     id: string
-    stats: {
-        hp: number
-        speed: number
-        skill: number
-        morale: number
-    }
-    parts: [{
-        id: string
-        name: string
-        type: string
-        class: string
-    }]
     auction?: auction
+    stats: stats
+    parts: AxieParts[]
 }
+
+export interface stats{
+    hp: number
+    speed: number
+    skill: number
+    morale: number
+}
+
+export interface AxieParts{
+    id: string
+    name: string
+    type: string
+    class: string
+}
+
 export interface auction {
     startingPrice?: any
     endingPrice?: any
@@ -227,4 +196,28 @@ export interface Portafolio {
     totalBecados: number
     na: number
     totalTypeAxies: number[]
+}
+
+export interface GraphqlBody{
+    operationName: string,
+    variables: {
+        from: number,
+        size: number,
+        sort: string,
+        auctionType: string,
+        owner?: string,
+        criteria?: Criteria
+    },
+    query: string
+}
+
+export interface Criteria{
+    parts: string[],
+    breedCount: number[],
+    hp: number[],
+    speed: number[],
+    skill: number[],
+    morale: number[],
+    classes: string[],
+    pureness: number[]
 }

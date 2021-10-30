@@ -20,9 +20,11 @@ export class Axie {
       this.generateImage();
     }
   }
+  
   generateImage(){
     this.image = `https://storage.googleapis.com/assets.axieinfinity.com/axies/${this.id}/axie/axie-full-transparent.png`;
   }
+
   getValues() {
     const values: any = this.getValuesMin();
     values.banned = this.banned;
@@ -32,6 +34,7 @@ export class Axie {
     values.stage = this.stage;    
     return values
   }
+
   getValuesMin(){
     return {
       breedCount: this.breedCount,
