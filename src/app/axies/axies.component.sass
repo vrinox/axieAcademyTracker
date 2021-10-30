@@ -1,17 +1,10 @@
 .menu-axies
-    width: 100%
-    padding: 5px
+    width: calc( 100% - 40px )
+    margin: 5px 20px
     box-sizing: border-box
-    &__content
-        width: 100%
-        padding: 20px
-        box-sizing: border-box
-    &__clear
-        display: flex
-        justify-content: space-between
-    &__clear-h2
+    &__title-h2
         margin: 0
-    &__filters-menu
+    &__filters-menu, &__btn--type
         display: flex
         justify-content: space-between
     &__cards
@@ -19,10 +12,6 @@
     &__btn
         height: 51px
         margin: .25em 0
-    &__btn--type
-        display: flex
-        justify-content: space-between
-        align-items: center
     &__btn-img
         width: 17px
     &__input--name
@@ -32,7 +21,6 @@
 
 .portafolio
     width: calc(100% - 40px)
-    padding: 10px 24px
     display: flex
     flex-wrap: wrap
     margin-left: 20px
@@ -44,10 +32,12 @@
     &__img
         width: 24px
     &__totals--icons
+        padding: 0px 10px
         margin-top: 12px
 
 .loading
-    width: 100%
+    width: calc(100% - 40px)
+    margin: 5px 20px
     height: 160px
     font-size: 15px
     background:#28364b

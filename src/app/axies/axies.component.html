@@ -1,63 +1,65 @@
-<div class="menu-axies">
-  <mat-card class="menu-axies__content">
-    <div class="menu-axies__clear">
-      <h2 class="menu-axies__clear-h2">Filtros</h2>
-      <button mat-stroked-button (click)="clearFilters()">Limpiar Filtros <mat-icon>clear</mat-icon></button>
-    </div>
+<mat-card class="menu-axies">
+  <div class="menu-axies__filters-menu">
+    <h2 class="menu-axies__title-h2">Filtros</h2>
+    <button mat-stroked-button (click)="clearFilters()">Limpiar Filtros 
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
 
+  <div class="menu-axies__filters-menu">
+    <mat-form-field class="menu-axies__input--name" appearance="outline">
+      <mat-label>Name Player</mat-label>
+      <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="myControl"
+        [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="filterName(option)">
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
 
-    <div class="menu-axies__filters-menu">
-      <mat-form-field class="menu-axies__input--name" appearance="outline">
-        <mat-label>Name Player</mat-label>
-        <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="myControl"
-          [matAutocomplete]="auto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="filterName(option)">
-            {{ option }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+    <button mat-stroked-button [matMenuTriggerFor]="menu" class="menu-axies__btn">tipo: {{ typeAxieTitle }}</button>
+    <mat-menu #menu="matMenu">
+      <button *ngFor="let type of typeAxies" class="menu-axies__btn--type" (click)="selecTypeAxie(type)"
+        (click)="startFilter()" mat-menu-item>{{ type }}
+        <img *ngIf="type != 'Todos'" src="assets/svg/axies/{{type}}/{{type}}.svg" class="menu-axies__btn-img" alt="">
+      </button>
+    </mat-menu>
 
-      <button mat-stroked-button [matMenuTriggerFor]="menu" class="menu-axies__btn">tipo: {{ typeAxieTitle }}</button>
-      <mat-menu #menu="matMenu">
-        <button *ngFor="let type of typeAxies" class="menu-axies__btn--type" (click)="selecTypeAxie(type)"
-          (click)="startFilter()" mat-menu-item>{{ type }}
-          <img *ngIf="type != 'Todos'" src="assets/svg/axies/{{type}}/{{type}}.svg" class="menu-axies__btn-img" alt="">
-        </button>
-      </mat-menu>
+    <button mat-stroked-button [matMenuTriggerFor]="menu2" class="menu-axies__btn">breed: {{ breedTitle }}</button>
+    <mat-menu #menu2="matMenu">
+      <button *ngFor="let bred of breed" (click)="selecBreed(bred)" mat-menu-item>{{ bred }}</button>
+    </mat-menu>
 
-      <button mat-stroked-button [matMenuTriggerFor]="menu2" class="menu-axies__btn">breed: {{ breedTitle }}</button>
-      <mat-menu #menu2="matMenu">
-        <button *ngFor="let bred of breed" (click)="selecBreed(bred)" mat-menu-item>{{ bred }}</button>
-      </mat-menu>
+    <button mat-stroked-button 
+          [disabled]="calculatePortafolio"
+          class="menu-axies__btn" 
+          (click)="calculateTotalPortafolio()">
+          Valor del Portafolio</button>
 
-      <button mat-stroked-button 
-            [disabled]="calculatePortafolio"
-            class="menu-axies__btn" 
-            (click)="calculateTotalPortafolio()">
-            Valor del Portafolio</button>
+    <mat-form-field class="menu-axies__cards" appearance="outline" style=" margin-bottom: -1.25em">
+      <mat-label>Partes</mat-label>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let part of parts" [selectable]="selectable" [removable]="removable" (removed)="remove(part)">
+          {{ part }}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New Parts..." #cards [formControl]="partAxies" [matAutocomplete]="auto2"
+          [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
+          {{ cards }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    
+    <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)">Axies en venta</button>
+  </div>
 
-      <mat-form-field class="menu-axies__cards" appearance="outline" style=" margin-bottom: -1.25em">
-        <mat-label>Partes</mat-label>
-        <mat-chip-list #chipList>
-          <mat-chip *ngFor="let part of parts" [selectable]="selectable" [removable]="removable" (removed)="remove(part)">
-            {{ part }}
-            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-          </mat-chip>
-          <input placeholder="New Parts..." #cards [formControl]="partAxies" [matAutocomplete]="auto2"
-            [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            (matChipInputTokenEnd)="add($event)">
-        </mat-chip-list>
-        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event)">
-          <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
-            {{ cards }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)">Axies en venta</button>
-    </div>
-    </mat-card>
-</div>
+</mat-card>
+
 
 <mat-card class="portafolio" *ngIf="valuePortafolio">
   <div class="portafolio__totals portafolio__totals--prices">
