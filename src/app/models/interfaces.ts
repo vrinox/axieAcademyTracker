@@ -109,11 +109,11 @@ export interface AxiesOficialData {
     data: {
         axies: {
             results: [{
+                id: string
                 name: string
                 class: string
                 image: string
                 breedCount: number
-                id: string
                 stats: {
                     hp: number
                     speed: number
@@ -133,11 +133,11 @@ export interface AxiesOficialData {
 }
 
 export interface AxiesResultsOficialData {
+    id: string
     name: string
     class: string
     image: string
     breedCount: number
-    id: string
     stats: {
         hp: number
         speed: number

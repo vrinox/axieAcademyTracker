@@ -23,6 +23,14 @@ export class ScholarDataService {
       });
     });
   }
+  public async getOne(roninAddress: string): Promise<any>{
+    return new Promise((resolve)=>{
+      this.httpClient.get(`${this.REST_API_SERVER}${roninAddress}`)
+      .subscribe((res: any)=>{        
+        resolve(res);
+      });
+    });
+  }
 
   private setRoningAdress(scholar: Scholar[]){
     let multiRoning: String = '';

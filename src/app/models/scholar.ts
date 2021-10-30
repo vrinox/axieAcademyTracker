@@ -1,7 +1,7 @@
 import * as moment from "moment";
 import {scholarOfficialData} from "./interfaces";
 export class Scholar {
-  id!: number;
+  id!: string;
   roninAddress: string = "";
   name!: string;
   todaySLP: number = 0;
