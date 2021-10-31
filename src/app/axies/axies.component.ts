@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
-import { AxiesData, MarketPlacePrice, Portafolio } from '../models/interfaces';
+import { AxiesData } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
 import { SessionsService } from '../services/sessions/sessions.service';
 import { FormControl } from '@angular/forms';
@@ -10,7 +10,8 @@ import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import * as cards from '../../assets/json/cards.json';
-import { MarketplaceService } from '../services/marketplace/marketplace.service';
+import { FiltersAxiesService } from '../services/filtersAxies/filters-axies.service';
+import { CalculatedPortafolioService } from '../services/calculatedPortafolio/calculated-portafolio.service';
 
 @Component({
   selector: 'app-axies',
@@ -43,19 +44,9 @@ export class AxiesComponent implements OnInit {
 
   calculatePortafolio: boolean = true;
 
-  totalPortafolio: Portafolio = {
-    totalAxies: 0,
-    totalBecados: 0,
-    totalEth: 0,
-    totalUsd: 0,
-    na: 0,
-    totalTypeAxies: [0, 0, 0, 0, 0, 0, 0, 0, 0]
-  }
-
   @ViewChild('cards', { static: true }) Cards!: ElementRef<HTMLInputElement>;
 
   axiesData: AxiesData[] = [];
-  copyAxiesData: AxiesData[] = [];
 
   typeAxies: string[] = ['Todos', 'Beast', 'Aquatic', 'Plant', 'Bird', 'Bug',
     'Reptile', 'Mech', 'Dawn', 'Dusk'];
@@ -67,7 +58,8 @@ export class AxiesComponent implements OnInit {
   constructor(
     private getAxies: GetAxiesService,
     private sessions: SessionsService,
-    private martketPlace: MarketplaceService
+    public filterAxies: FiltersAxiesService,
+    public portafolio: CalculatedPortafolioService
   ) {
     this.filteredOptions = new Observable();
     this.cardsOptions = new Observable();
@@ -95,8 +87,17 @@ export class AxiesComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    this.filterName(filterValue);
+    if(value != ''){
+      this.filterNameCtrl = true;
+    }else{
+      this.filterNameCtrl = false;
+    }
+    this.axiesData = this.filterAxies.namePlayer(filterValue);
     return this.namePlayerOptions.filter(name => name.toLowerCase().includes(filterValue));
+  }
+
+  filterName(filterValue: string){
+    this.axiesData = this.filterAxies.namePlayer(filterValue);
   }
 
   start(): void {
@@ -117,13 +118,12 @@ export class AxiesComponent implements OnInit {
 
         return this.getAxies.get(scholar).then((axies: AxiesData[]) => {
           axies.forEach((DataAxie: AxiesData) => {
-            this.axiesData.push(DataAxie);
-            this.copyAxiesData.push(DataAxie);
+            this.filterAxies.copyAxiesData.push(DataAxie);
+            if (!this.filterNameCtrl) {
+              this.axiesData.push(DataAxie);
+            }
             if (this.filter) {
               this.startFilter();
-            }
-            if (this.filterNameCtrl) {
-              this.filterName(this.myControl.value);
             }
             return
           });
@@ -193,151 +193,25 @@ export class AxiesComponent implements OnInit {
     }
   }
 
-  getNA(){
-    this.axiesData = this.copyAxiesData.filter(axie => {
-      return axie.price === 'N/A';
-    });
-  }
 
   startFilter(auction?: boolean): void {
     if (this.typeAxieTitle != 'Todos' || this.breedTitle != 'Todos' || this.parts.length != 0) {
       this.filter = true;
-    }
-    this.filterTypeAxies();
-    this.filterBreed();
-    this.filterParts();
-    if(auction){
-      this.filterAuction();
-    }
+    };
+    this.axiesData = this.filterAxies.get(this.typeAxieTitle, this.breedTitle, this.parts, auction);
   }
 
-  filterAuction(){
-    this.axiesData = this.copyAxiesData.filter(axie => {
-      return axie.auction
-    });
-  }
-
-  filterName(value: string): void {
-    if (value != '') {
-      this.filterNameCtrl = true;
-      this.axiesData = this.copyAxiesData.filter(axie => {
-        return axie.namePlayer.toLowerCase().includes(value.toLowerCase());
-      });
-    } else {
-      this.filterNameCtrl = false;
-    }
-  };
-
-  private filterTypeAxies(): void {
-    if (this.typeAxieTitle === 'Todos') {
-      this.axiesData = [];
-      this.axiesData = [... this.copyAxiesData];
-    } else {
-      this.axiesData = this.copyAxiesData.filter(axie => axie.class === this.typeAxieTitle);
-    }
-  }
-
-  private filterBreed(): void {
-    if (this.breedTitle !== 'Todos') {
-      this.axiesData = this.axiesData.filter(axie => {
-        return axie.breedCount.toString().includes(this.breedTitle);
-      });
-    }
-  }
-
-  private filterParts(): void {
-    if (this.parts.length !== 0) {
-      let axies: AxiesData[] = [];
-
-      this.axiesData.forEach(axie => {
-        if (this.hasPart(axie)) {
-          axies.push(axie);
-        }
-      });
-
-      this.axiesData = [...axies];
-    }
-  }
-
-  private hasPart(axie: AxiesData): boolean {
-    return this.parts.some(part => this.hasPartsAxies(part, axie));
-  }
-
-  private hasPartsAxies(part: string, axie: AxiesData): boolean {
-    return axie.parts.some(AxiePart => AxiePart.name === part)
-  }
-
-  async calculateTotalPortafolio(): Promise<void> {  
-    this.valuePortafolio = false;
-    this.totalPortafolio.totalUsd = 0;
-    this.totalPortafolio.totalEth = 0;
-    this.totalPortafolio.na = 0;
-    this.totalPortafolio.totalAxies = 0;  
-    this.totalPortafolio.totalTypeAxies = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-    await Promise.all(
-      this.axiesData.map(async axieData => {
-        return (axieData.class != null) ? this.calculateAxiePrice(axieData): Promise.resolve(axieData);
-      })
-    ).then((axiesData: AxiesData[])=>{
-      axiesData.forEach((axieData)=>{
-        this.calcTotalProtafolio(parseInt(axieData.price || '0'), parseFloat(axieData.eth || '0'));
-        this.totalAxiesTypes(axieData.class);
-      })
-    })
-
+  async totalPortafolio(): Promise<void>{
+    this.axiesData = await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
     if(!this.filter){
-      this.copyAxiesData = [... this.axiesData];
+      this.filterAxies.copyAxiesData = [... this.axiesData];
     }
-
-    this.totalBecados();
-    this.parseEth();
     this.valuePortafolio = true;
-  }
-
-  calculateAxiePrice(axieData: AxiesData): Promise<AxiesData>{
-    return new Promise(async (resolve)=>{
-      try{        
-        let marketPrice: MarketPlacePrice = await this.martketPlace.getPrice(axieData);
-        axieData.price = marketPrice.price;
-        axieData.eth = marketPrice.eth;        
-        resolve(axieData);
-      }catch(err){
-        console.log(axieData,err);
-        axieData.price = 'N/A';
-        axieData.eth = 'N/A';
-        resolve(axieData);
-      }
-    })
-  }
-
-  calcTotalProtafolio(usd: number, eth: number): void {
-    this.totalPortafolio.totalUsd += (isNaN(usd)) ? 0 : usd;
-    this.totalPortafolio.totalEth += (isNaN(eth)) ? 0 : eth;
-    this.totalPortafolio.na += (isNaN(usd)) ? 1 : 0;
-    this.totalPortafolio.totalAxies += 1;
-  }
-
-  totalBecados(): void {
-    this.totalPortafolio.totalBecados = this.sessions.scholar.length;
-  }
-
-  totalAxiesTypes(classAxie: string): void {
-    this.typeAxies.forEach((type: string, i: number) => {
-      if (type === classAxie) {
-        this.totalPortafolio.totalTypeAxies[i - 1] += 1;
-      }
-    })
-  }
-
-  parseEth(): void {
-    let eth: number = parseFloat(this.totalPortafolio.totalEth.toFixed(3));
-    this.totalPortafolio.totalEth = eth;
   }
 
   async viewModule(): Promise<void>{
     if(!this.valuePortafolio){
-      await this.calculateTotalPortafolio();
+      this.axiesData = await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
     }
     this.list = false;
   }
@@ -347,6 +221,6 @@ export class AxiesComponent implements OnInit {
     this.breedTitle = this.breed[0];
     this.parts = [];
     this.myControl.setValue('');
-    this.axiesData = [... this.copyAxiesData];
+    this.axiesData = [... this.filterAxies.copyAxiesData];
   }
 }

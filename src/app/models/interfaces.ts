@@ -190,12 +190,12 @@ export interface MarketPlacePrice {
 }
 
 export interface Portafolio {
-    totalUsd: number
-    totalEth: number
-    totalAxies: number
-    totalBecados: number
+    usd: number
+    eth: number
+    axies: number
+    becados: number
     na: number
-    totalTypeAxies: number[]
+    typeAxies: number[]
 }
 
 export interface GraphqlBody{
