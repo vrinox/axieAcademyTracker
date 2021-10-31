@@ -55,33 +55,6 @@ export class HistoricService {
     })
     return scholars;
   }
-  async recalculateStory(story: Scholar[]) {
-    const organizedStory = story.sort((a, b) => {
-      return new Date(a.lastUpdate).getTime() - new Date(b.lastUpdate).getTime();
-    });
-    let monthAcumulated = 0;
-    let weekAccumulated = 0;
-    let todaySLP = 0;
-    organizedStory.reduce((yesterday: Scholar, today: Scholar, index: number, array: Scholar[]) => {
-      if (index === 1) {
-        todaySLP = (yesterday.inGameSLP < yesterday.monthSLP) ? yesterday.monthSLP : yesterday.inGameSLP;
-        monthAcumulated += todaySLP;
-        weekAccumulated += todaySLP;
-        yesterday.todaySLP = todaySLP;
-        yesterday.monthSLP = monthAcumulated;
-        yesterday.weekSLP = weekAccumulated;
-      }
-      todaySLP = 0;
-      todaySLP = (today.inGameSLP < yesterday.inGameSLP) ? today.inGameSLP : today.inGameSLP - yesterday.inGameSLP;
-      monthAcumulated = this.calculateMonthAcc(todaySLP, monthAcumulated, today.lastUpdate);
-      weekAccumulated = this.calculateWeekAcc(todaySLP, weekAccumulated, today.lastUpdate);
-      today.todaySLP = todaySLP;
-      today.monthSLP = monthAcumulated;
-      today.weekSLP = weekAccumulated;
-      today.yesterdaySLP = yesterday.todaySLP;
-      return today;
-    })
-  }
   private calculateMonthAcc(todaySLP: number, monthAcumulated: number, actualDate: any) {
     if (this.getDaysDiffStartOf('month', actualDate) === 0) {
       monthAcumulated = 0;
@@ -108,6 +81,34 @@ export class HistoricService {
   }
   async updateStoryDay(day: Scholar){
     const docRef = doc(this.db, 'historic', day.id);
-    await updateDoc(docRef, day.getValues());
+    // await updateDoc(docRef, day.getValues());
+  }
+  
+  async recalculateStory(story: Scholar[]) {
+    const organizedStory = story.sort((a, b) => {
+      return new Date(a.lastUpdate).getTime() - new Date(b.lastUpdate).getTime();
+    });
+    let monthAcumulated = 0;
+    let weekAccumulated = 0;
+    let todaySLP = 0;
+    organizedStory.reduce((yesterday: Scholar, today: Scholar, index: number, array: Scholar[]) => {
+      if (index === 1) {
+        todaySLP = (yesterday.inGameSLP < yesterday.monthSLP) ? yesterday.monthSLP : yesterday.inGameSLP;
+        monthAcumulated += todaySLP;
+        weekAccumulated += todaySLP;
+        yesterday.todaySLP = todaySLP;
+        yesterday.monthSLP = monthAcumulated;
+        yesterday.weekSLP = weekAccumulated;
+      }
+      todaySLP = 0;
+      todaySLP = (today.inGameSLP < yesterday.inGameSLP) ? today.inGameSLP : today.inGameSLP - yesterday.inGameSLP;
+      monthAcumulated = this.calculateMonthAcc(todaySLP, monthAcumulated, today.lastUpdate);
+      weekAccumulated = this.calculateWeekAcc(todaySLP, weekAccumulated, today.lastUpdate);
+      today.todaySLP = todaySLP;
+      today.monthSLP = monthAcumulated;
+      today.weekSLP = weekAccumulated;
+      today.yesterdaySLP = yesterday.todaySLP;
+      return today;
+    })
   }
 }

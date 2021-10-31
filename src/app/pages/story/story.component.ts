@@ -43,7 +43,6 @@ export class StoryComponent implements OnInit {
     this.disponibleScholars.forEach((scholar: Scholar) => {
       this.namePlayerOptions.push(scholar.name);
     });
-
   }
   async cargarDatos(roninAddress: string) {
     let scholarData = await this.dbService.getAllStory(roninAddress);
@@ -95,8 +94,13 @@ export class StoryComponent implements OnInit {
       this.addDataToTable(scholarsFirebase);
     }
   }
-  recalculateWholeHistorics() {
-    this.disponibleScholars.forEach(async (s) => {
+  async recalculateWholeHistorics() {
+    const todayArr: Scholar[] = await Promise.all(this.disponibleScholars.map(s => this.recalculateOneScholar(s)));
+    await this.dbService.updateDB(todayArr);
+    console.log('termino de recalcular');
+  }
+  recalculateOneScholar(s: Scholar):Promise<Scholar>{
+    return new Promise(async (resolve)=>{
       let scholarData = await this.dbService.getAllStory(s.roninAddress);
       let story = scholarData
         .map((scholar) => {
@@ -112,6 +116,7 @@ export class StoryComponent implements OnInit {
         promiseArray.push(this.storyService.updateStoryDay(day));
       });
       await Promise.all(promiseArray);
+      resolve(story[story.length - 1]);
     })
   }
 }
