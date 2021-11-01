@@ -41,6 +41,8 @@ import { LineChartComponent } from './line-chart/line-chart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { Auth, provideAuth } from '@angular/fire/auth';
 import { getAuth } from '@firebase/auth';
+import { AxiesModuleComponent } from './axies-module/axies-module.component';
+import { AxiesListComponent } from './axies-list/axies-list.component';
 
 
 @NgModule({
@@ -54,7 +56,9 @@ import { getAuth } from '@firebase/auth';
     LoadingComponent,
     StoryComponent,
     LineChartComponent,
-    LoginComponent
+    LoginComponent,
+    AxiesModuleComponent,
+    AxiesListComponent
   ],
   imports: [
     BrowserModule,

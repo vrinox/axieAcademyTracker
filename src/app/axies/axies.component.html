@@ -1,84 +1,69 @@
 <div class="menu-axies">
-
-    <div class="menu-axies__content">
-
-        <mat-form-field class="menu-axies__input--name" appearance="outline">
-            <mat-label>Name Player</mat-label>
-            <input type="text"
-                    placeholder="Pick one"
-                    aria-label="name axies player"
-                    matInput
-                    [formControl]="myControl"
-                    [matAutocomplete]="auto">
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
-                    (click)="filterName(option)">
-                    {{ option }}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-    
-        <button mat-stroked-button [matMenuTriggerFor]="menu"
-                class="menu-axies__btn">tipo: {{ typeAxieTitle }}</button>
-        <mat-menu #menu="matMenu">
-            <button *ngFor="let type of typeAxies" 
-                    class="menu-axies__btn--type"
-                    (click)="selecTypeAxie(type)" 
-                    (click)="startFilter()"
-                    mat-menu-item>{{ type }}
-                    <img *ngIf="type != 'Todos'" src="assets/svg/axies/{{type}}/{{type}}.svg" class="menu-axies__btn-img" alt="">
-            </button>
-        </mat-menu>
-    
-        <button mat-stroked-button [matMenuTriggerFor]="menu2"
-                class="menu-axies__btn">breed: {{ breedTitle }}</button>
-        <mat-menu #menu2="matMenu">
-            <button *ngFor="let bred of breed" (click)="selecBreed(bred)" 
-                    mat-menu-item>{{ bred }}</button>
-        </mat-menu>
-
-        <button mat-stroked-button class="menu-axies__btn" 
-        (click)="hasTotalPortafolio()">Valor del Portafolio</button>
-    
-        <mat-form-field class="menu-axies__cards" appearance="outline">
-            <mat-label>Partes</mat-label>
-            <mat-chip-list #chipList aria-label="Fruit selection">
-                <mat-chip
-                    *ngFor="let part of parts"
-                    [selectable]="selectable"
-                    [removable]="removable"
-                    (removed)="remove(part)">
-                    {{ part }}
-                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                </mat-chip>
-                <input
-                    placeholder="New Parts..."
-                    #cards
-                    [formControl]="partAxies"
-                    [matAutocomplete]="auto2"
-                    [matChipInputFor]="chipList"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                    (matChipInputTokenEnd)="add($event)">
-            </mat-chip-list>
-            <mat-autocomplete #auto2="matAutocomplete" 
-                    (optionSelected)="selected($event)">
-                <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
-                    {{ cards }}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-
+  <mat-card class="menu-axies__content">
+    <div class="menu-axies__clear">
+      <h2 class="menu-axies__clear-h2">Filtros</h2>
+      <button mat-stroked-button (click)="clearFilters()">Limpiar Filtros <mat-icon>clear</mat-icon></button>
     </div>
+    <div class="menu-axies__filters-menu">
+      <mat-form-field class="menu-axies__input--name" appearance="outline">
+        <mat-label>Name Player</mat-label>
+        <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="myControl"
+          [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="filterName(option)">
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
 
+      <button mat-stroked-button [matMenuTriggerFor]="menu" class="menu-axies__btn">tipo: {{ typeAxieTitle }}</button>
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let type of typeAxies" class="menu-axies__btn--type" (click)="selecTypeAxie(type)"
+          (click)="startFilter()" mat-menu-item>{{ type }}
+          <img *ngIf="type != 'Todos'" src="assets/svg/axies/{{type}}/{{type}}.svg" class="menu-axies__btn-img" alt="">
+        </button>
+      </mat-menu>
+
+      <button mat-stroked-button [matMenuTriggerFor]="menu2" class="menu-axies__btn">breed: {{ breedTitle }}</button>
+      <mat-menu #menu2="matMenu">
+        <button *ngFor="let bred of breed" (click)="selecBreed(bred)" mat-menu-item>{{ bred }}</button>
+      </mat-menu>
+
+      <button mat-stroked-button 
+            [disabled]="calculatePortafolio"
+            class="menu-axies__btn" 
+            (click)="calculateTotalPortafolio()">
+            Valor del Portafolio</button>
+
+      <mat-form-field class="menu-axies__cards" appearance="outline" style=" margin-bottom: -1.25em">
+        <mat-label>Partes</mat-label>
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let part of parts" [selectable]="selectable" [removable]="removable" (removed)="remove(part)">
+            {{ part }}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="New Parts..." #cards [formControl]="partAxies" [matAutocomplete]="auto2"
+            [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
+            {{ cards }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)">Axies en venta</button>
+    </div>
+    </mat-card>
 </div>
 
-<div class="portafolio" *ngIf="valuePortafolio">
+<mat-card class="portafolio" *ngIf="valuePortafolio">
   <div class="portafolio__totals portafolio__totals--prices">
     <p>$ {{ totalPortafolio.totalUsd }}</p>
     <p><i class="cf cf-eth"></i>{{ totalPortafolio.totalEth }}</p>
     <p>Total Becados: {{ totalPortafolio.totalBecados }}</p>
     <p>Total Axies: {{ totalPortafolio.totalAxies }}</p>
-    <p>Total N/A: {{ totalPortafolio.na }}</p>
+    <p (click)="getNA()">Total N/A: {{ totalPortafolio.na }}</p>
   </div>
 
   <div class="portafolio__totals portafolio__totals--icons">
@@ -88,79 +73,29 @@
       </div>
     </div>
   </div>
+</mat-card>
+
+<div class="menu-change">
+  <div>
+    <button mat-button (click)="list = true">
+      <mat-icon>reorder</mat-icon>
+    </button>
+    <button mat-button (click)="viewModule()">
+      <mat-icon>view_module</mat-icon>
+    </button>
+  </div>
 </div>
 
-
-<div class="container-axies">
+<div class="axie-list" *ngIf="list">
   <mat-accordion class="container-axies__acordion" multi>
-    <mat-expansion-panel *ngFor="let axies of axiesData">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ axies.name }}
-        </mat-panel-title>
+    <app-axies-list [axie]="axie" *ngFor="let axie of axiesData"></app-axies-list>
+  </mat-accordion>
+</div>
 
-                <mat-panel-description class="container-axies__description">
-                    {{ axies.axie.name }}
-                    <img *ngIf="axies.axie.class != null" 
-                          src="assets/svg/axies/{{axies.axie.class}}/{{axies.axie.class}}.svg" 
-                          alt="">
-                </mat-panel-description>
-            </mat-expansion-panel-header>
+<div class="axies-module" *ngIf="!list">
+  <app-axies-module class="axies-module__axie" [axie]="axie" *ngFor="let axie of axiesData"></app-axies-module>
+</div>
 
-      <div class="container-axies__expasion">
-        <div class="container-axies__sub-content" [class.container-axies__egg]="axies.axie.class === null">
-          <img class="container-axies__sub-img" [class.container-axies__egg-img]="axies.axie.class === null" 
-                [src]="axies.axie.image">
-
-          <div class="container-axies__price" 
-          *ngIf="axies.price != undefined">
-            <div class="container-axies__price-content">
-              <p class="container-axies__icon-usd">$</p> <p> {{ axies.price }}</p>
-            </div>
-            <div class="container-axies__price-content">
-              <p class="container-axies__icon-eth"><i class="cf cf-eth"></i></p> <p> {{ axies.eth }}</p>
-            </div>
-          </div>
-
-          <div class="container-axies__sub-stast" *ngIf="axies.axie.class != null" >
-            <div class="container-axies__icons-stast">
-              <img src="assets/svg/hp.svg" height="24" width="24" alt="">
-              <p class="container-axies__icon-text">
-                {{ axies.stats.hp }}</p>
-            </div>
-            <div class="container-axies__icons-stast">
-              <img src="assets/svg/speed.svg" height="24" width="24" alt="">
-              <p class="container-axies__icon-text">
-                {{ axies.stats.speed }}</p>
-            </div>
-            <div class="container-axies__icons-stast">
-              <img src="assets/svg/skill.svg" height="24" width="24" alt="">
-              <p class="container-axies__icon-text">
-                {{ axies.stats.skill }}</p>
-            </div>
-            <div class="container-axies__icons-stast">
-              <img src="assets/svg/morale.svg" height="24" width="24" alt="">
-              <p class="container-axies__icon-text">
-                {{ axies.stats.morale }}</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="container-axies__parts" 
-              *ngIf="axies.axie.class != null">
-          <div *ngFor="let parts of axies.parts" class="container-axies__sub-parts">
-            <img class="container-axies__parts-img" 
-                  src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
-            <p>{{ parts.name }}</p>
-          </div>
-        </div>
-      </div>
-
-        </mat-expansion-panel>
-    </mat-accordion>
-
-    <div class="container-axies__loading" *ngIf="loading">
-        <app-loading></app-loading>
-    </div>
-    
+<div class="loading" *ngIf="loading">
+  <app-loading></app-loading>
 </div>

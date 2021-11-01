@@ -35,6 +35,7 @@ export class SessionsService {
     if(cachedSesion){
       this.start(cachedSesion.user, cachedSesion.infinity, cachedSesion.communities) 
     } else {
+      this.setLoading(false);
       this.router.navigate(['/login'], {replaceUrl:true});
     }
   }

@@ -12,7 +12,7 @@ export class GetAxiesService {
   constructor(private http: HttpClient) { }
 
   get(roningAdress: string, nameUser: string): Promise<AxiesData[]>{
-    return new Promise((resolve)=>{
+    return new Promise((resolve, reject)=>{
       let test: any = {
         "operationName": "GetAxieLatest",
         "variables": {
@@ -28,31 +28,35 @@ export class GetAxiesService {
       .subscribe((res: any)=>{
         let axiesData: AxiesData[] = [];
         let axieDataOficial: AxiesOficialData = res;
-        axieDataOficial.data.axies.results.forEach((Result: AxiesResultsOficialData)=>{
-          let axiesParse: AxiesParseData = this.parseAxies(Result);
-          axiesData.push({
-            roning: roningAdress,
-            name: nameUser,
-            axie: axiesParse.axies,
-            parts: axiesParse.parts,
-            stats: axiesParse.stats
-          });
-        })
+        if(axieDataOficial.data != null){
+          axieDataOficial.data.axies.results.forEach((Result: AxiesResultsOficialData)=>{
+            let axiesParse: AxiesParseData = this.parseAxies(Result, roningAdress, nameUser);
+            axiesData.push(axiesParse);
+          })
+        }
         resolve(axiesData);
+      }, (error)=>{
+        reject();
       });
+
     });
   }
 
-  private parseAxies(axiesParse: AxiesResultsOficialData): AxiesParseData{
+  private parseAxies(axiesParse: AxiesResultsOficialData, roningAdress: string, nameUser: string): AxiesParseData{
     let axiesData: AxiesParseData = {
-      axies: {
-        name: axiesParse.name,
-        class: axiesParse.class,
-        image: axiesParse.image,
-        breedCount: axiesParse.breedCount
-      },
-      stats: axiesParse.stats,
-      parts: axiesParse.parts
+      roning: roningAdress,
+      namePlayer: nameUser,
+      name: axiesParse.name,
+      image: axiesParse.image,
+      breedCount: axiesParse.breedCount,
+      id: axiesParse.id,
+      class: axiesParse.class,
+      hp: axiesParse.stats.hp,
+      morale: axiesParse.stats.morale,
+      speed: axiesParse.stats.speed,
+      skill: axiesParse.stats.skill,
+      parts: axiesParse.parts,
+      auction: (axiesParse.auction)?axiesParse.auction:undefined
     }
     
     return axiesData

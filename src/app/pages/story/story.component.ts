@@ -32,7 +32,6 @@ export class StoryComponent implements OnInit {
 
   async ngOnInit() {
     const memberAddressList = await this.communityService.getMembersAddressList(this.communityService.activeCommunity.id);
-    
     this.disponibleScholars = await this.dbService.getScholarsByAddressList(memberAddressList);
     this.disponibleScholars.forEach((scholar: Scholar)=>{
       this.namePlayerOptions.push(scholar.name);

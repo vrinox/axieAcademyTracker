@@ -60,8 +60,8 @@ export class FormularioBecadoComponent implements OnInit {
   }
 
   async enviarDatos(): Promise<void>{
-    let newScholar = await this.insertNewScholar.insertNewScholar({...this.formBecado.value});
-    this.agregarBecado.setNewBecado(new Scholar(newScholar));
+    let newScholar: Scholar = await this.insertNewScholar.insertNewScholar({...this.formBecado.value});
+    this.agregarBecado.setNewBecado(newScholar);
   }
 
   

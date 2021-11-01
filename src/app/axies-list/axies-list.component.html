@@ -1,0 +1,72 @@
+<div class="container-axies">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ axie.namePlayer }}
+            </mat-panel-title>
+
+            <mat-panel-description class="container-axies__description">
+                <div><i class="cf cf-eth" *ngIf="axie.auction"></i>{{ axie.name }}</div>
+                <div class="container-axies__icon-price" *ngIf="axie.class != null" >
+                    <p class="container-axies__price-panel" 
+                    *ngIf="axie.price != undefined">$ {{ axie.price }}</p>
+                    <img src="assets/svg/axies/{{axie.class}}/{{axie.class}}.svg" alt="">
+                </div>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="container-axies__expasion">
+            <div class="container-axies__sub-content" [class.container-axies__egg]="axie.class === null">
+            <a class="container-axies__a" 
+                href="https://marketplace.axieinfinity.com/axie/{{axie.id}}"
+                target="__blanck">
+                <img class="container-axies__sub-img" [class.container-axies__egg-img]="axie.class === null" 
+                [src]="axie.image">
+            </a>
+
+            <div class="container-axies__price" 
+            *ngIf="axie.price != undefined">
+                <div class="container-axies__price-content">
+                    <p class="container-axies__icon-usd">$</p> <p> {{ axie.price }}</p>
+                </div>
+                <div class="container-axies__price-content">
+                    <p class="container-axies__icon-eth"><i class="cf cf-eth"></i></p> <p> {{ axie.eth }}</p>
+                </div>
+            </div>
+
+            <div class="container-axies__sub-stast" *ngIf="axie.class != null" >
+                <div class="container-axies__icons-stast">
+                    <img src="assets/svg/hp.svg" height="24" width="24" alt="">
+                    <p class="container-axies__icon-text">
+                    {{ axie.hp }}</p>
+                </div>
+                <div class="container-axies__icons-stast">
+                    <img src="assets/svg/speed.svg" height="24" width="24" alt="">
+                    <p class="container-axies__icon-text">
+                    {{ axie.speed }}</p>
+                </div>
+                <div class="container-axies__icons-stast">
+                    <img src="assets/svg/skill.svg" height="24" width="24" alt="">
+                    <p class="container-axies__icon-text">
+                    {{ axie.skill }}</p>
+                </div>
+                <div class="container-axies__icons-stast">
+                    <img src="assets/svg/morale.svg" height="24" width="24" alt="">
+                    <p class="container-axies__icon-text">
+                    {{ axie.morale }}</p>
+                </div>
+                </div>
+            </div>
+
+            <div class="container-axies__parts" 
+                    *ngIf="axie.class != null">
+                <div *ngFor="let parts of axie.parts" class="container-axies__sub-parts">
+                <img class="container-axies__parts-img" 
+                        src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
+                <p>{{ parts.name }}</p>
+                </div>
+            </div>
+        </div>
+
+    </mat-expansion-panel>
+</div>

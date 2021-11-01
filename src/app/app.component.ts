@@ -14,14 +14,13 @@ export class AppComponent implements OnInit{
   viewModal: boolean = false;
   loading: boolean = true;
 
-  constructor(public sesion: SessionsService){
-    this.sesion.appStart();
-  }
+  constructor(public sesion: SessionsService){}
 
   ngOnInit(){
     this.sesion.getLoading().subscribe(viewLoading=>{
       this.loading = viewLoading;
     })
+    this.sesion.appStart();
   }
   
   offModal(event: boolean){
