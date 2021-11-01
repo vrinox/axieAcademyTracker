@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, query, QueryDocumentSnapshot, where } from 'firebase/firestore';
-import { scholarFirebaseI } from 'src/app/models/interfaces';
+import { scholarFirebaseI, scholarOfficialData } from 'src/app/models/interfaces';
 import { Subject } from 'rxjs';
 import { Scholar } from 'src/app/models/scholar';
 import { Axie } from 'src/app/models/axie';
-import { updateDoc } from '@angular/fire/firestore';
+import { addDoc, deleteDoc, updateDoc } from '@angular/fire/firestore';
+import * as moment from 'moment';
 
 const app = initializeApp(environment.firebase);
 
@@ -63,21 +64,21 @@ export class DatabaseService {
       uid: dbUserLink.uid
     }
   }
-  async getScholarsByAddressList(membersAddressList: string[]):Promise<Scholar[]>{
+  async getScholarsByAddressList(membersAddressList: string[]): Promise<Scholar[]> {
     let batches = [];
-    while (membersAddressList.length) {      
+    while (membersAddressList.length) {
       const batch = membersAddressList.splice(0, 10);
       batches.push(
         new Promise(response => {
-          getDocs(query(collection(this.db, 'scholars'),where('roninAddress', 'in', batch)))
-            .then(results => response(results.docs.map(result => ({ ...result.data()}) )))
+          getDocs(query(collection(this.db, 'scholars'), where('roninAddress', 'in', batch)))
+            .then(results => response(results.docs.map(result => ({ ...result.data() }))))
         })
       )
     }
     let scholars = await Promise.all(batches).then(content => {
       const all: any = []
       content.forEach((rawScholars: any) => {
-        rawScholars.forEach((raw:any)=>{
+        rawScholars.forEach((raw: any) => {
           all.push(new Scholar(raw))
         })
       });
@@ -85,19 +86,24 @@ export class DatabaseService {
     })
     return scholars;
   }
-  
-  async updateDB(scholars: Scholar[]):Promise<void>{
-  return new Promise((resolve)=>{
-    const dbRef = collection(this.db, "scholars");
-    scholars.forEach(async (scholar: Scholar) => {
-      const insertData:any = scholar.getValues();
-      insertData.todaySLP = 0;
-      const snapshot = await getDocs(query(dbRef, where("roninAddress", "==", scholar.roninAddress)));
-      snapshot.forEach(async (doc)=>{
-        await updateDoc(doc.ref,insertData);
+
+  async updateDB(scholars: Scholar[]): Promise<void> {
+    return new Promise((resolve) => {
+      const dbRef = collection(this.db, "scholars");
+      scholars.forEach(async (scholar: Scholar) => {
+        const insertData: any = scholar.getValues();
+        insertData.todaySLP = 0;
+        const snapshot = await getDocs(query(dbRef, where("roninAddress", "==", scholar.roninAddress)));
+        snapshot.forEach(async (doc) => {
+          await updateDoc(doc.ref, insertData);
+        });
       });
+      resolve();
     });
-    resolve();
-  });
-};
+  };
+  
+  async addScholar(scholar:Scholar) {
+    const dbRef = await addDoc(collection(this.db,"scholars"), scholar.getValues());
+    return dbRef.id;
+  }
 }

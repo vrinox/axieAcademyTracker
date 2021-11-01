@@ -63,54 +63,53 @@ export interface Dataset {
 
 export interface AxiesData {
     roning: string
-    name: string
+    namePlayer: string
     price?: string
     eth?: string
-    axie: {
-        name: string
-        class: string
-        image: string
-        breedCount: number
-    }
-    stats: {
-        hp: number
-        speed: number
-        skill: number
-        morale: number
-    }
+    hp: number
+    speed: number
+    skill: number
+    morale: number
+    id: string
+    name: string
+    class: string
+    image: string
+    breedCount: number
     parts: [{
         id: string
         name: string
         type: string
         class: string
     }]
+    auction?: auction
 }
 
 export interface AxiesParseData {
-    axies: {
-        name: string
-        class: string
-        image: string
-        breedCount: number
-    }
-    stats: {
-        hp: number
-        speed: number
-        skill: number
-        morale: number
-    }
+    roning: string
+    namePlayer: string
+    name: string
+    class: string
+    image: string
+    breedCount: number
+    id: string
+    hp: number
+    speed: number
+    skill: number
+    morale: number
     parts: [{
         id: string
         name: string
         type: string
         class: string
     }]
+    auction?: auction
 }
 
 export interface AxiesOficialData {
     data: {
         axies: {
             results: [{
+                id: string
                 name: string
                 class: string
                 image: string
@@ -126,13 +125,15 @@ export interface AxiesOficialData {
                     name: string
                     type: string
                     class: string
-                }]
+                }],
+                auction?:auction
             }]
         }
     }
 }
 
 export interface AxiesResultsOficialData {
+    id: string
     name: string
     class: string
     image: string
@@ -149,8 +150,22 @@ export interface AxiesResultsOficialData {
         type: string
         class: string
     }]
+    auction?: auction
 }
-
+export interface auction {
+    startingPrice?: any
+    endingPrice?: any
+    startingTimestamp?: any
+    endingTimestamp?: any
+    duration?: any
+    timeLeft?: any
+    currentPriceUSD: string
+    currentPrice: string
+    suggestedPrice?: any
+    seller?: any
+    listingIndex?: any
+    state?: any
+}
 export interface communityRequest { from: string, communityId: string, id: string, fromName: string }
 export interface community {
     type: string;
@@ -190,29 +205,26 @@ export interface community {
     solicitudes?: any[];
 }
 
-export interface MarcketPlaceOficialData{
+export interface MarcketPlaceOficialData {
     data: {
         axies: {
             results: [{
-                auction: {
-                    currentPriceUSD: string
-                    currentPrice: string
-                }
+                auction: auction
             }]
         }
     }
 }
 
-export interface MarketPlacePrice{
+export interface MarketPlacePrice {
     price: string
     eth: string
 }
 
-export interface Portafolio{
+export interface Portafolio {
     totalUsd: number
     totalEth: number
     totalAxies: number
     totalBecados: number
-    na: number 
+    na: number
     totalTypeAxies: number[]
 }
