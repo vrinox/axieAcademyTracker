@@ -81,7 +81,7 @@ export class HistoricService {
   }
   async updateStoryDay(day: Scholar){
     const docRef = doc(this.db, 'historic', day.id);
-    // await updateDoc(docRef, day.getValues());
+    await updateDoc(docRef, day.getValues());
   }
   
   async recalculateStory(story: Scholar[]) {
