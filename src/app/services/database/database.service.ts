@@ -31,6 +31,7 @@ export class DatabaseService {
     const story = querySnapshot.docs.map((doc: QueryDocumentSnapshot) => {
       const rawScholar = doc.data();
       rawScholar.lastUpdate = rawScholar.lastUpdate.toDate();
+      rawScholar.id = doc.id;
       return new Scholar(rawScholar);
     })
     return story;

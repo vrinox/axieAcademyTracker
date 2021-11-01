@@ -1,0 +1,16 @@
+<div class="historial">
+    <mat-card class="historial__card mat-elevation-z4" *ngFor="let hist of historial">
+      <mat-card-title-group>
+        <mat-card-title class="historial__title">{{ hist.title }}</mat-card-title>
+        <mat-card-subtitle class="historial__sub-title">{{ hist.subTitleNumber }}</mat-card-subtitle>
+        <img class="historial__img" 
+              mat-card-sm-image 
+              [src]="hist.title != 'Best pvp' ? imageSrc : trofeoImgSrc" 
+              [alt]="hist.title != 'Best pvp' ? imageAlt : trofeoAlt"> 
+      </mat-card-title-group>
+      <mat-card-content class="historial__total">
+        {{ hist.nombre === undefined ? hist.usd + '$' :  hist.nombre }}
+        {{ hist.nombre !== undefined ? hist.mmr : '' }}
+      </mat-card-content>
+    </mat-card>
+</div>

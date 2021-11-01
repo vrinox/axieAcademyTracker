@@ -1,0 +1,28 @@
+@use '@angular/material' as mat
+.historial
+    width: 90%
+    margin: 0 0 10px 5%
+    display: flex
+    flex-wrap: wrap
+    font-size: 16px
+    &__card
+        flex: 2
+        margin: 5px
+        &:nth-child(1n+1)
+            flex: 3
+    &__title
+        font-size: 1.5em
+    &__sub-title
+        font-size: 1.25em
+    &__total
+        font-size: 1em
+    &__name
+        font-size: 0.8em
+    &__img
+        width: 5em
+        height: 5em
+
+
+@media screen and (max-width: 500px)
+    .historial
+        font-size: 14px

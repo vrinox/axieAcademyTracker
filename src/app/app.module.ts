@@ -41,6 +41,9 @@ import { LineChartComponent } from './line-chart/line-chart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { Auth, provideAuth } from '@angular/fire/auth';
 import { getAuth } from '@firebase/auth';
+import { StoryDayComponent } from './pages/story-day/story-day.component';
+import { TotalsComponent } from './components/totals/totals.component';
+import { ReportDailyGeneralComponent } from './pages/report-daily-general/report-daily-general.component';
 import { AxiesModuleComponent } from './axies-module/axies-module.component';
 import { AxiesListComponent } from './axies-list/axies-list.component';
 
@@ -57,6 +60,9 @@ import { AxiesListComponent } from './axies-list/axies-list.component';
     StoryComponent,
     LineChartComponent,
     LoginComponent,
+    StoryDayComponent,
+    TotalsComponent,
+    ReportDailyGeneralComponent,
     AxiesModuleComponent,
     AxiesListComponent
   ],
