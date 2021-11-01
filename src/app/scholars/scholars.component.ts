@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Scholar } from '../models/scholar';
 import { ScholarDataService } from 'src/app/services/scholarData/scholar-data.service';
 import { DatabaseService } from '../services/database/database.service';
-import { scholarOfficialData, scholarFirebaseI, community } from '../models/interfaces';
+import { scholarOfficialData, community } from '../models/interfaces';
 import { Observable, Subject } from 'rxjs';
 import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
 import { Router } from '@angular/router';

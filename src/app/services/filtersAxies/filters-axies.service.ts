@@ -5,7 +5,7 @@ import { AxiesData } from 'src/app/models/interfaces';
   providedIn: 'root'
 })
 export class FiltersAxiesService {
-  private axiesData: AxiesData[] = []
+  private dataAxies: AxiesData[] = []
   copyAxiesData: AxiesData[] = [];
 
   constructor() { }
@@ -17,7 +17,7 @@ export class FiltersAxiesService {
     if(auction){
       this.filterAuction();
     }
-    return this.axiesData
+    return this.dataAxies
   }
 
   namePlayer(value: string): AxiesData[]{
@@ -32,16 +32,16 @@ export class FiltersAxiesService {
 
   private filterTypeAxies(typeAxieTitle: string): void {
     if (typeAxieTitle === 'Todos') {
-      this.axiesData = [];
-      this.axiesData = [... this.copyAxiesData];
+      this.dataAxies = [];
+      this.dataAxies = [... this.copyAxiesData];
     } else {
-      this.axiesData = this.copyAxiesData.filter(axie => axie.class === typeAxieTitle);
+      this.dataAxies = this.copyAxiesData.filter(axie => axie.class === typeAxieTitle);
     }
   }
 
   private filterBreed(breedTitle: string): void {
     if (breedTitle !== 'Todos') {
-      this.axiesData = this.axiesData.filter(axie => {
+      this.dataAxies = this.dataAxies.filter(axie => {
         return axie.breedCount.toString().includes(breedTitle);
       });
     }
@@ -51,13 +51,13 @@ export class FiltersAxiesService {
     if (parts.length !== 0) {
       let axies: AxiesData[] = [];
 
-      this.axiesData.forEach(axie => {
+      this.dataAxies.forEach(axie => {
         if (this.hasPart(axie, parts)) {
           axies.push(axie);
         }
       });
 
-      this.axiesData = [...axies];
+      this.dataAxies = [...axies];
     }
   }
 
@@ -70,7 +70,7 @@ export class FiltersAxiesService {
   }
 
   private filterAuction(): void{
-    this.axiesData = this.copyAxiesData.filter(axie => {
+    this.dataAxies = this.copyAxiesData.filter(axie => {
       return axie.auction
     });
   }

@@ -9,6 +9,7 @@ import { totals } from 'src/app/models/Totals';
   templateUrl: './historial.component.html',
   styleUrls: ['./historial.component.sass']
 })
+
 export class HistorialComponent implements OnInit {
   historial: Historial[] = [];
   imageSrc: string = 'assets/img/SLP.png';

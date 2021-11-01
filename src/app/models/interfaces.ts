@@ -83,13 +83,23 @@ export interface AxiesOficialData {
     data: {
         axies: {
             results: [{
+                id: string
                 name: string
                 class: string
                 image: string
                 breedCount: number
-                id: string
-                stats: stats
-                parts: AxieParts[],
+                stats: {
+                    hp: number
+                    speed: number
+                    skill: number
+                    morale: number
+                }
+                parts: [{
+                    id: string
+                    name: string
+                    type: string
+                    class: string
+                }],
                 auction?:auction
             }]
         }
@@ -97,11 +107,11 @@ export interface AxiesOficialData {
 }
 
 export interface AxiesResultsOficialData {
+    id: string
     name: string
     class: string
     image: string
     breedCount: number
-    id: string
     auction?: auction
     stats: stats
     parts: AxieParts[]

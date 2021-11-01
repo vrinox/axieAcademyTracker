@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
 import { AxiesData } from '../models/interfaces';
@@ -19,7 +19,7 @@ import { CalculatedPortafolioService } from '../services/calculatedPortafolio/ca
   styleUrls: ['./axies.component.sass']
 })
 
-export class AxiesComponent implements OnInit {
+export class AxiesComponent implements OnInit, OnDestroy {
   myControl = new FormControl();
   partAxies = new FormControl();
 
@@ -64,6 +64,9 @@ export class AxiesComponent implements OnInit {
     this.filteredOptions = new Observable();
     this.cardsOptions = new Observable();
   }
+  ngOnDestroy(): void {
+    
+  }
 
   ngOnInit(): void {
     this.start();
@@ -103,10 +106,8 @@ export class AxiesComponent implements OnInit {
   start(): void {
     if (this.sessions.oneScholar.length === 1) {
       this.getAxieData(this.sessions.oneScholar)
-
     } else {
       this.getAxieData(this.sessions.scholar);
-
     };
   };
 
@@ -115,7 +116,6 @@ export class AxiesComponent implements OnInit {
     await Promise.all(
       scholars.map((scholar: Scholar) => {
         this.namePlayerOptions.push(scholar.name);
-
         return this.getAxies.get(scholar).then((axies: AxiesData[]) => {
           axies.forEach((DataAxie: AxiesData) => {
             this.filterAxies.copyAxiesData.push(DataAxie);
@@ -125,14 +125,13 @@ export class AxiesComponent implements OnInit {
             if (this.filter) {
               this.startFilter();
             }
-            return
+            return 
           });
         }).catch(() => {
           return
         });
       })
     )
-
     this.loading = false;
     this.calculatePortafolio = false;
     this.sessions.oneScholar = [];

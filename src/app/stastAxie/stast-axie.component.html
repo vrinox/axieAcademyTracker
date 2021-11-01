@@ -1,0 +1,6 @@
+<div class="container-stast">
+    <div class="container-stast__one" *ngFor="let name of nameStast; index as i">
+        <img src="{{svgFile}}{{name}}.svg" height="24" width="24" alt="">
+        <p class="container-stast__icon-text" [class.container-stast___opacity]="list">{{ stast[i] }}</p>
+    </div>
+</div>

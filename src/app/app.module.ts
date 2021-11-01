@@ -43,6 +43,7 @@ import { Auth, provideAuth } from '@angular/fire/auth';
 import { getAuth } from '@firebase/auth';
 import { AxiesModuleComponent } from './axies-module/axies-module.component';
 import { AxiesListComponent } from './axies-list/axies-list.component';
+import { StastAxieComponent } from './stastAxie/stast-axie.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { AxiesListComponent } from './axies-list/axies-list.component';
     LineChartComponent,
     LoginComponent,
     AxiesModuleComponent,
-    AxiesListComponent
+    AxiesListComponent,
+    StastAxieComponent
   ],
   imports: [
     BrowserModule,
