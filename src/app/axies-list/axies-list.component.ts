@@ -8,6 +8,7 @@ import { AxiesData } from '../models/interfaces';
 })
 export class AxiesListComponent implements OnInit {
   openPanel: boolean = false;
+  
   @Input() axie: AxiesData;
 
   constructor() { 
