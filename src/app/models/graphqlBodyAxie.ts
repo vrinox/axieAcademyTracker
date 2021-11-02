@@ -1,5 +1,6 @@
 import { GraphqlBody, Criteria, AxiesData } from './interfaces';
 import { Scholar } from 'src/app/models/scholar';
+import { A } from '@angular/cdk/keycodes';
 
 class GraphqlBodyAxie{
     private roning?: string;
@@ -59,13 +60,20 @@ class GraphqlBodyAxie{
     }
     
     private calculatePureness(AxiesData: AxiesData): number[]{
+        interface type{
+            class: string,
+            acc: number
+        }
         let pureness: number[] = [0];
+        let classArray: type[]  = [];
         AxiesData.parts.forEach(part=>{
-            if(AxiesData.class === part.class){
-            pureness[0] += 1; 
-            }
+            classArray = classArray.filter( c => c );
+            const axieClass = classArray.find( t => t.class === part.class);
+            (axieClass)? axieClass.acc++: classArray.push({class: part.class, acc: 1});
         });
-        return pureness
+        classArray.sort((a, b) => b.acc - a.acc);
+        pureness[0] = classArray[0].acc;
+        return pureness;
     }
 }
 

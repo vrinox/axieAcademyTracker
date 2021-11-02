@@ -19,6 +19,11 @@ export class FiltersAxiesService {
     }
     return this.dataAxies
   }
+  
+  addToCopy(DataAxie:any, quienLlama:any){
+    console.log(this.copyAxiesData.length, quienLlama);
+    this.copyAxiesData.push(DataAxie);
+  }
 
   namePlayer(value: string): AxiesData[]{
     if (value != '') {
@@ -26,7 +31,7 @@ export class FiltersAxiesService {
         return axie.namePlayer.toLowerCase().includes(value.toLowerCase());
       });
     } else {
-      return this.copyAxiesData
+      return [ ...this.copyAxiesData];
     }
   };
 
