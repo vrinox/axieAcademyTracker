@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
   title = 'axie';
   showFiller = false;
   viewModal: boolean = false;
-  loading: boolean = true;
+  loading: boolean = false;
 
   constructor(public sesion: SessionsService){}
 
