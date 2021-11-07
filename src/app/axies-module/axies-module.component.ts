@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AxiesData } from '../models/interfaces';
+import { AxiesData, MarketPlacePrice } from '../models/interfaces';
+import { MarketplaceService } from 'src/app/services/marketplace/marketplace.service'
 
 @Component({
   selector: 'app-axies-module',
@@ -9,7 +10,7 @@ import { AxiesData } from '../models/interfaces';
 export class AxiesModuleComponent implements OnInit {
   @Input() axie: AxiesData;
 
-  constructor() { 
+  constructor(private market: MarketplaceService) { 
     this.axie = {
       namePlayer: '',
       roning: '',
@@ -32,6 +33,14 @@ export class AxiesModuleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+
+  refreshNA(): void{
+    this.market.getPrice(this.axie).then((marketPrice: MarketPlacePrice)=>{
+      this.axie.eth = marketPrice.eth;
+      this.axie.price = marketPrice.price;
+    });
   }
 
 }
