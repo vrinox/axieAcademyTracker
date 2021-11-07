@@ -1,0 +1,56 @@
+<div #screen id="pdf">
+    <div class="container-table">
+        <div class="container-table__title">
+            <h2 (click)="donwloadPdf()">Comunidad X</h2>
+        </div>
+        
+        <mat-card class="container-table__head">
+            <p class="container-table__p">Total Axies: {{ contentpdf.totalAxie }}</p>
+            <p class="container-table__p">Total Becados: {{ contentpdf.totalbecados }}</p>
+            <p class="container-table__p">Proxidamo en usd: {{ contentpdf.totalPortafolio }}</p>
+        </mat-card>
+        
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">  
+        <ng-container matColumnDef="Tipo" sticky>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-button color="primary">
+                    {{ element.type }}
+                </button>
+                <button mat-button color="primary">
+                    <img src="assets/svg/axies/{{element.type}}/{{element.type}}.svg" class="container-table__icon" alt="">
+                </button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+            <td mat-cell *matCellDef="let element"> {{ element.totalType }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Usd">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usd </th>
+            <td mat-cell *matCellDef="let element"> {{ element.totalUsd }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Valor Promedio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor Promedio </th>
+            <td mat-cell *matCellDef="let element"> {{ element.averageValue }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Valor Minimo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor Minimo </th>
+            <td mat-cell *matCellDef="let element"> {{ element.minValue }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Valor Maximo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor Maximo </th>
+            <td mat-cell *matCellDef="let element"> {{ element.maxValue }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+    </div>
+</div>

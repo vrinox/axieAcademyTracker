@@ -47,6 +47,7 @@ import { ReportDailyGeneralComponent } from './pages/report-daily-general/report
 import { AxiesModuleComponent } from './axies-module/axies-module.component';
 import { AxiesListComponent } from './axies-list/axies-list.component';
 import { StastAxieComponent } from './stastAxie/stast-axie.component';
+import { DonwloadPdfComponent } from './donwload-pdf/donwload-pdf.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { StastAxieComponent } from './stastAxie/stast-axie.component';
     ReportDailyGeneralComponent,
     AxiesModuleComponent,
     AxiesListComponent,
-    StastAxieComponent
+    StastAxieComponent,
+    DonwloadPdfComponent
   ],
   imports: [
     BrowserModule,

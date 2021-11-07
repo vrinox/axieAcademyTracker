@@ -60,6 +60,7 @@
 
 </mat-card>
 
+<app-donwload-pdf *ngIf="valuePortafolio" [axiesData]="axiesData" (loadPdf)="pdfDonwload($event)"></app-donwload-pdf>
 
 <mat-card class="portafolio" *ngIf="valuePortafolio">
   <div class="portafolio__totals portafolio__totals--prices">
@@ -80,6 +81,9 @@
 </mat-card>
 
 <div class="menu-change">
+  <div>
+    <button  mat-raised-button color="warn" *ngIf="donwloadPdf" (click)="savePdf()">descargar PDF</button>
+  </div>
   <div>
     <button mat-button (click)="list = true">
       <mat-icon>reorder</mat-icon>
