@@ -31,27 +31,8 @@
         </a>
     </div>
 
-    <div class="axies-module__footer-stast" *ngIf="axie.class != null">
-        <div class="axies-module__icons-stast">
-            <img src="assets/svg/axiesModule/hp.svg" height="24" width="24" alt="">
-            <p class="axies-module__opacity axies-module__icon-text">{{ axie.hp }}</p>
-        </div>
-        <div class="axies-module__icons-stast">
-            <img src="assets/svg/axiesModule/speed.svg" height="24" width="24" alt="">
-            <p class="axies-module__opacity axies-module__icon-text">{{ axie.speed }}</p>
-        </div>
-        <div class="axies-module__icons-stast">
-            <img src="assets/svg/axiesModule/skill.svg" height="24" width="24" alt="">
-            <p class="axies-module__opacity axies-module__icon-text">{{ axie.skill }}</p>
-        </div>
-        <div class="axies-module__icons-stast">
-            <img src="assets/svg/axiesModule/morale.svg" height="24" width="24" alt="">
-            <p class="axies-module__opacity axies-module__icon-text">{{ axie.morale }}</p>
-        </div>
-    </div>
-
-    <div class="axies-module__footer-egg" *ngIf="axie.class === null">
-        
+    <div class="axies-module__footer-stast" [class.axies-module__footer-egg]="axie.class === null">
+        <app-stast-axie *ngIf="axie.class != null" [stast]="[axie.hp, axie.speed, axie.skill, axie.morale]" [list]="false"></app-stast-axie>
     </div>
 
     <div class="axies-module__footer-price">
