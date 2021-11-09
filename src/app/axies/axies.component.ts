@@ -128,7 +128,6 @@ export class AxiesComponent implements OnInit, OnDestroy {
             return 
           });
         }).catch((scholar: Scholar) => {
-          console.log(scholar)
           this.axiesRetry.push(scholar);
           return
         });
