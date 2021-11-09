@@ -236,6 +236,7 @@ export interface contentpdf{
     totalbecados: number
     totalPortafolio: number
     totalAxie: number
+    totalPortafolioEth: number
     axiesTypes: axiestypesPdf[]
 }
 
@@ -246,4 +247,5 @@ export interface axiestypesPdf{
     averageValue: number,
     maxValue: number,
     minValue: number,
+    tototalEth: number
 }

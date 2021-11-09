@@ -3,6 +3,7 @@ import { contentpdf, axiestypesPdf, AxiesData } from 'src/app/models/interfaces'
 import { MatTableDataSource } from '@angular/material/table';
 import { CalculatedPortafolioService } from '../services/calculatedPortafolio/calculated-portafolio.service';
 import { SessionsService } from '../services/sessions/sessions.service';
+import { ComunityService } from '../services/community.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -17,19 +18,20 @@ export class DonwloadPdfComponent implements OnInit {
     totalAxie: this.portafolio.total.axies,
     totalPortafolio: this.portafolio.total.usd,
     totalbecados: this.portafolio.total.becados,
+    totalPortafolioEth: this.portafolio.total.eth,
     axiesTypes: [
-    { type: 'Beast', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0 },
-    { type: 'Aquatic', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0 },  
-    { type: 'Plant', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0 },
-    { type: 'Bird', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0 },
-    { type: 'Bug', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0 },  
-    { type: 'Reptile', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0 },
-    { type: 'Mech', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0 },
-    { type: 'Dawn', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0 },  
-    { type: 'Dusk', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0 }]
+    { type: 'Beast', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 },
+    { type: 'Aquatic', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 },  
+    { type: 'Plant', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 },
+    { type: 'Bird', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 },
+    { type: 'Bug', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 },  
+    { type: 'Reptile', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 },
+    { type: 'Mech', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 },
+    { type: 'Dawn', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 },  
+    { type: 'Dusk', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 }]
   }
 
-  displayedColumns: string[] = ['Tipo', 'Total', 'Valor Promedio', 'Valor Maximo', 'Valor Minimo', 'Usd'];
+  displayedColumns: string[] = ['Tipo', 'Total', 'Valor Promedio', 'Valor Maximo', 'Valor Minimo', 'Usd', 'Eth'];
 
   dataSource: MatTableDataSource<axiestypesPdf> = new MatTableDataSource();
 
@@ -39,7 +41,8 @@ export class DonwloadPdfComponent implements OnInit {
 
   constructor(
     private portafolio: CalculatedPortafolioService,
-    private sessions: SessionsService
+    private sessions: SessionsService,
+    public comunity: ComunityService
   ) { }
   
   ngOnInit(): void {
@@ -65,6 +68,7 @@ export class DonwloadPdfComponent implements OnInit {
       if(axie.class === type){
         this.contentpdf.axiesTypes[index - 1].totalType += 1;
         this.contentpdf.axiesTypes[index - 1].totalUsd += axie.price != 'N/A' ? parseFloat(axie.price!) : 0;
+        this.contentpdf.axiesTypes[index - 1].tototalEth += axie.eth != 'N/A' ? parseFloat(axie.eth!) : 0;
         this.compareMinMax(parseFloat(axie.price!), index);
         this.calculateAverage();
       }
@@ -96,6 +100,7 @@ export class DonwloadPdfComponent implements OnInit {
       type.maxValue = parseFloat(type.maxValue.toFixed(2))
       type.minValue = parseFloat(type.minValue.toFixed(2))
       type.totalUsd = parseFloat(type.totalUsd.toFixed(2))
+      type.tototalEth = parseFloat(type.tototalEth.toFixed(2))
     })
   }
 
