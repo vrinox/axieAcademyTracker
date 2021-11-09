@@ -17,6 +17,7 @@ export class SessionsService {
   scholar: Scholar[] = [];
   oneScholar: Scholar[] = [];
   private scholar$: Subject<Scholar[]> = new Subject;
+  donwloadPdf: Subject<boolean> = new Subject;
   
   private loadingHome: Subject<boolean> = new Subject;
 
@@ -39,6 +40,7 @@ export class SessionsService {
       this.router.navigate(['/login'], {replaceUrl:true});
     }
   }
+
   setScholar(scholars: Scholar[]): void{
     this.scholar = scholars;
     this.scholar$.next(scholars);
@@ -88,5 +90,13 @@ export class SessionsService {
     this.user = undefined;
     this.communities = [];
     this.router.navigate(['/login'], {replaceUrl:true});
+  }
+
+  getDonwloadPdf(): Observable<boolean>{
+    return this.donwloadPdf
+  }
+
+  setDonwloadPdf(value: boolean){
+    this.donwloadPdf.next(value);
   }
 }

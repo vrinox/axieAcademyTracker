@@ -12,7 +12,6 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import * as cards from '../../assets/json/cards.json';
 import { FiltersAxiesService } from '../services/filtersAxies/filters-axies.service';
 import { CalculatedPortafolioService } from '../services/calculatedPortafolio/calculated-portafolio.service';
-
 @Component({
   selector: 'app-axies',
   templateUrl: './axies.component.html',
@@ -56,6 +55,8 @@ export class AxiesComponent implements OnInit, OnDestroy {
 
   breed: string[] = ['Todos', '0', '1', '2', '3', '4', '5', '6'];
   breedTitle: string = this.breed[0];
+
+  donwloadPdf = false;
 
   constructor(
     private getAxies: GetAxiesService,
@@ -226,5 +227,15 @@ export class AxiesComponent implements OnInit, OnDestroy {
     this.parts = [];
     this.myControl.setValue('');
     this.axiesData = [... this.filterAxies.copyAxiesData];
+  }
+
+  pdfDonwload(value: boolean){
+    if(value){
+      this.donwloadPdf = true
+    }
+  }
+
+  savePdf(){
+    this.sessions.setDonwloadPdf(true);
   }
 }

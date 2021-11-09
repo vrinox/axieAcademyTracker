@@ -231,3 +231,21 @@ export interface Criteria{
     classes: string[],
     pureness: number[]
 }
+
+export interface contentpdf{
+    totalbecados: number
+    totalPortafolio: number
+    totalAxie: number
+    totalPortafolioEth: number
+    axiesTypes: axiestypesPdf[]
+}
+
+export interface axiestypesPdf{
+    type: string,
+    totalType: number
+    totalUsd: number,
+    averageValue: number,
+    maxValue: number,
+    minValue: number,
+    tototalEth: number
+}
