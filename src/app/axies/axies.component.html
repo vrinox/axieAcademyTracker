@@ -60,7 +60,8 @@
 
 </mat-card>
 
-<app-donwload-pdf *ngIf="valuePortafolio" [axiesData]="axiesData" (loadPdf)="pdfDonwload($event)"></app-donwload-pdf>
+<!-- <app-donwload-pdf *ngIf="valuePortafolio" [axiesData]="axiesData" (loadPdf)="pdfDonwload($event)"></app-donwload-pdf> -->
+<app-donwload-pdf [axiesData]="axiesData" (loadPdf)="pdfDonwload($event)"></app-donwload-pdf>
 
 <mat-card class="portafolio" *ngIf="valuePortafolio">
   <div class="portafolio__totals portafolio__totals--prices">

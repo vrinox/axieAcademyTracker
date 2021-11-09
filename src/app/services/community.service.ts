@@ -17,7 +17,7 @@ export class ComunityService {
   ) { }
 
   
-  async addScholarToComunity(roninAddress: string, comunityId:string ) {
+  async addScholarToComunity(roninAddress: string, comunityId: string) {
     const querySnapshot = await getDocs(query(collection(this.db, "scholar-communities"), where('community', "==", comunityId)));
     const docRef: DocumentReference = querySnapshot.docs[0].ref;
     if (docRef) {
