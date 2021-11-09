@@ -8,7 +8,7 @@
             </div>
             <p class="container-table__disclaimer-text">
                 El valor del portafolio depende del valor actual del eth,
-                esto puede causar variantes de precios a lo largo de los días.
+                esto puede causar variantes de precios a lo largo del tiempo.
             </p>
         </div>
 
@@ -22,8 +22,8 @@
         <mat-card class="container-table__head">
             <p class="container-table__p">Total Axies: {{ contentpdf.totalAxie }}</p>
             <p class="container-table__p">Total Becados: {{ contentpdf.totalbecados }}</p>
-            <p class="container-table__p">Aproxidamo en usd: {{ contentpdf.totalPortafolio }}</p>
-            <p class="container-table__p">Aproxidamo en eth: {{ contentpdf.totalPortafolioEth }}</p>
+            <p class="container-table__p">Aproxidamo en usd: <span class="container-table__icon-usd">$</span> {{ contentpdf.totalPortafolio }}</p>
+            <p class="container-table__p">Aproxidamo en eth: <i class="cf cf-eth"></i> {{ contentpdf.totalPortafolioEth }}</p>
         </mat-card>
         
         <table mat-table [dataSource]="dataSource" matSort>  
@@ -44,12 +44,12 @@
 
             <ng-container matColumnDef="Usd">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Usd </th>
-                <td mat-cell *matCellDef="let element"> {{ element.totalUsd }} </td>
+                <td mat-cell *matCellDef="let element"> <span class="container-table__icon-usd">$</span> {{ element.totalUsd }} </td>
             </ng-container>
 
             <ng-container matColumnDef="Eth">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Eth </th>
-                <td mat-cell *matCellDef="let element"> {{ element.tototalEth }} </td>
+                <td mat-cell *matCellDef="let element"> <i class="cf cf-eth"></i> {{ element.tototalEth }} </td>
             </ng-container>
 
             <ng-container matColumnDef="Valor Promedio">

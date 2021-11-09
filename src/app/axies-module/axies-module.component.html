@@ -35,7 +35,7 @@
         <app-stast-axie *ngIf="axie.class != null" [stast]="[axie.hp, axie.speed, axie.skill, axie.morale]" [list]="false"></app-stast-axie>
     </div>
 
-    <div class="axies-module__footer-price">
+    <div class="axies-module__footer-price" (click)="refreshNA()">
         <div class="axies-module__price axies-module__price--left">
             <p class="axies-module__opacity">$ {{ axie.price }}</p>
         </div>

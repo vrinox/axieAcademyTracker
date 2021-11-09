@@ -20,8 +20,7 @@ export class FiltersAxiesService {
     return this.dataAxies
   }
   
-  addToCopy(DataAxie:any, quienLlama:any){
-    console.log(this.copyAxiesData.length, quienLlama);
+  addToCopy(DataAxie:any){
     this.copyAxiesData.push(DataAxie);
   }
 

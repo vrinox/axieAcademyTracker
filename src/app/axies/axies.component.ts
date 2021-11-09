@@ -119,7 +119,7 @@ export class AxiesComponent implements OnInit, OnDestroy {
         this.namePlayerOptions.push(scholar.name);
         return this.getAxies.get(scholar).then((axies: AxiesData[]) => {
           axies.forEach((DataAxie: AxiesData) => {
-            this.filterAxies.addToCopy(DataAxie,'getAxieData')
+            this.filterAxies.addToCopy(DataAxie)
             if (!this.filterNameCtrl) {
               this.axiesData.push(DataAxie);
             }
