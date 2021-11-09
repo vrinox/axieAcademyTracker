@@ -22,6 +22,8 @@ export class AxiesComponent implements OnInit, OnDestroy {
   myControl = new FormControl();
   partAxies = new FormControl();
 
+  axiesRetry: Scholar[] = [];
+
   list: boolean = true;
 
   loading: boolean = true;
@@ -111,6 +113,7 @@ export class AxiesComponent implements OnInit, OnDestroy {
   };
 
   async getAxieData(scholars: Scholar[]) {
+    this.axiesRetry = [];
     await Promise.all(
       scholars.map((scholar: Scholar) => {
         this.namePlayerOptions.push(scholar.name);
@@ -125,14 +128,19 @@ export class AxiesComponent implements OnInit, OnDestroy {
             }
             return 
           });
-        }).catch(() => {
+        }).catch((scholar: Scholar) => {
+          this.axiesRetry.push(scholar);
           return
         });
       })
     )
-    this.loading = false;
-    this.calculatePortafolio = false;
-    this.sessions.oneScholar = [];
+    if(this.axiesRetry.length === 0){
+      this.loading = false;
+      this.calculatePortafolio = false;
+      this.sessions.oneScholar = [];
+    }else{
+      this.getAxieData(this.axiesRetry);
+    }
   }
 
   setAllParts(): void {

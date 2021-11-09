@@ -25,7 +25,7 @@ export class GetAxiesService {
         }
         resolve(axiesData);
       }, (error)=>{
-        reject();
+        reject(scholar);
       });
 
     });
