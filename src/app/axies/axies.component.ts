@@ -238,4 +238,10 @@ export class AxiesComponent implements OnInit, OnDestroy {
   savePdf(){
     this.sessions.setDonwloadPdf(true);
   }
+
+  async refreshNa(){
+    if(this.valuePortafolio){
+      this.axiesData = await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
+    }
+  }
 }

@@ -65,7 +65,6 @@ export class ReportDailyGeneralComponent implements OnInit {
     const membersAddressList = await this.communityService.getMembersAddressList(this.communityService.activeCommunity.id);
     this.membersAddressList = membersAddressList.map(r => r);
     const data = await this.storyService.getHistoricDay(startOfDay, endOfDay, this.membersAddressList.map(r => r));
-    console.log(data);
     if(data.length !== 0){
       data.sort((a: any, b: any) => {
         return a.lastUpdate - b.lastUpdate;
@@ -106,8 +105,7 @@ export class ReportDailyGeneralComponent implements OnInit {
     return await this.dbService.getScholarsByAddressList(membersAddressList);
   }
   buscar() {
-    this.init(this.Months.value)
-    console.log(this.Months.value)
+    this.init(this.Months.value);
   }
 
   getMonthActivity(scholars: Scholar[]){

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AxiesData, MarketPlacePrice } from '../models/interfaces';
 import { MarketplaceService } from 'src/app/services/marketplace/marketplace.service'
 
@@ -9,6 +9,7 @@ import { MarketplaceService } from 'src/app/services/marketplace/marketplace.ser
 })
 export class AxiesModuleComponent implements OnInit {
   @Input() axie: AxiesData;
+  @Output() refresh = new EventEmitter();
 
   constructor(private market: MarketplaceService) { 
     this.axie = {
@@ -40,6 +41,7 @@ export class AxiesModuleComponent implements OnInit {
     this.market.getPrice(this.axie).then((marketPrice: MarketPlacePrice)=>{
       this.axie.eth = marketPrice.eth;
       this.axie.price = marketPrice.price;
+      this.refresh.emit(true);
     });
   }
 

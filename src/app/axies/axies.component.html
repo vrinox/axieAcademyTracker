@@ -102,7 +102,7 @@
 </div>
 
 <div class="axies-module" *ngIf="!list">
-  <app-axies-module class="axies-module__axie" [axie]="axie" *ngFor="let axie of axiesData"></app-axies-module>
+  <app-axies-module class="axies-module__axie" [axie]="axie" (refresh)="refreshNa()" *ngFor="let axie of axiesData"></app-axies-module>
 </div>
 
 <div class="loading" *ngIf="loading">
