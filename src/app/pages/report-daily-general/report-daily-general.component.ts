@@ -25,6 +25,9 @@ export class ReportDailyGeneralComponent implements OnInit {
   dias: any[] = [];
   membersAddressList: string[] = [];
   Months = new FormControl();
+  MonthsAbbreviation: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  monthsValue: number[] = []
+
   constructor(
     private dbService: DatabaseService,
     private sessions: SessionsService,
@@ -40,6 +43,7 @@ export class ReportDailyGeneralComponent implements OnInit {
     const initDate = new Date().getMonth() + 1;
     this.init(initDate.toString());
   }
+
   public createLabels(data: Scholar[]) {
     this.storyLabels = data
       .sort((a, b) => {
@@ -52,6 +56,7 @@ export class ReportDailyGeneralComponent implements OnInit {
         }
       });
   };
+
   async init(month: string) {
     const baseDate = new Date(month+'-01-2021');
     const startOfDay: Date = moment(baseDate).startOf('month').toDate();
@@ -60,6 +65,7 @@ export class ReportDailyGeneralComponent implements OnInit {
     const membersAddressList = await this.communityService.getMembersAddressList(this.communityService.activeCommunity.id);
     this.membersAddressList = membersAddressList.map(r => r);
     const data = await this.storyService.getHistoricDay(startOfDay, endOfDay, this.membersAddressList.map(r => r));
+    console.log(data);
     if(data.length !== 0){
       data.sort((a: any, b: any) => {
         return a.lastUpdate - b.lastUpdate;
@@ -91,6 +97,7 @@ export class ReportDailyGeneralComponent implements OnInit {
       })
       this.dataSource = new MatTableDataSource(this.scholars);
       this.dataSource.sort = this.sort!;
+      this.getMonthActivity(data)
     }    
   }
   async obtainDataFromDB() {
@@ -100,5 +107,24 @@ export class ReportDailyGeneralComponent implements OnInit {
   }
   buscar() {
     this.init(this.Months.value)
+    console.log(this.Months.value)
+  }
+
+  getMonthActivity(scholars: Scholar[]){
+    let months: number[] = [];
+    let sizeMonths: number = 0;
+    scholars.forEach((scholar: Scholar)=>{
+      if(months.length === 0){
+        months.push(scholar.lastUpdate.getMonth());
+      }else if(months[sizeMonths] !== scholar.lastUpdate.getMonth()){
+        months.push(scholar.lastUpdate.getMonth());
+        sizeMonths++
+      }
+    });
+    this.parseMonth(months)
+  }
+
+  parseMonth(months: number[]){
+    this.monthsValue = months.map((month: number) => month += 1);
   }
 }
