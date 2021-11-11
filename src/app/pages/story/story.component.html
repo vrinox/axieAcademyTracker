@@ -1,28 +1,33 @@
-<mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Name Player</mat-label>
-    <mat-select [formControl]="myControl">
-        <mat-option *ngFor="let option of namePlayerOptions " [value]="option">
-            {{ option }}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
-<mat-form-field appearance="fill" *ngIf="myControl.value">
-    <mat-label>Month and Year</mat-label>
-    <input matInput [matDatepicker]="dp" [formControl]="date">
-    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-    <mat-datepicker #dp
-                    startView="multi-year"
-                    (yearSelected)="chosenYearHandler($event)"
-                    (monthSelected)="chosenMonthHandler($event, dp)"
-                    panelClass="example-month-picker">
+<mat-card class="menu-month">
+    <mat-form-field class="menu-month__input" appearance="fill">
+        <mat-label>Name Player</mat-label>
+        <mat-select [formControl]="myControl">
+            <mat-option *ngFor="let option of namePlayerOptions " [value]="option">
+                {{ option }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="menu-month__input" appearance="fill" *ngIf="myControl.value">
+        <mat-label>Month and Year</mat-label>
+        <input matInput [matDatepicker]="dp" [formControl]="date">
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp
+        startView="multi-year"
+        (yearSelected)="chosenYearHandler($event)"
+        (monthSelected)="chosenMonthHandler($event, dp)"
+        panelClass="example-month-picker">
     </mat-datepicker>
-</mat-form-field>
-<button mat-button color="primary" (click)="buscar()" [disabled]="!date.value">
-    buscar
-</button>
-<button mat-button color="primary" (click)="recalculateWholeHistorics()" >
-    Recalcular Todos los historicos
-</button>
+    </mat-form-field>
+
+    <button mat-button color="primary" (click)="buscar()" [disabled]="!date.value">
+        buscar
+    </button>
+
+    <button mat-button color="primary" (click)="recalculateWholeHistorics()" >
+        Recalcular Todos los historicos
+    </button>
+</mat-card>
 
 <div class="container-table">
 
