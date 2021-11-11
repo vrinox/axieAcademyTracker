@@ -64,7 +64,7 @@ export class ReportDailyGeneralComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.date.setValue('')
     const initDate = new Date().getMonth() + 1;
-    this.init(initDate.toString());
+    this.init(initDate.toString(), new Date().getFullYear().toString());
   }
 
   public createLabels(data: Scholar[]) {
@@ -80,8 +80,8 @@ export class ReportDailyGeneralComponent implements OnInit {
       });
   };
 
-  async init(month: string) {
-    const baseDate = new Date(month+'-01-2021');
+  async init(month: string, year: string) {
+    const baseDate = new Date(month+'-01-'+year);
     const startOfDay: Date = moment(baseDate).startOf('month').toDate();
     const endOfDay = moment(baseDate).endOf('month').toDate();
     
@@ -128,7 +128,7 @@ export class ReportDailyGeneralComponent implements OnInit {
     return await this.dbService.getScholarsByAddressList(membersAddressList);
   }
   buscar() {
-    this.init(moment(this.date.value._d).format('MM'));
+    this.init(moment(this.date.value._d).format('MM'), moment(this.date.value._d).format('YYYY'));
   }
 
   getMonthActivity(scholars: Scholar[]){
