@@ -8,14 +8,40 @@ import { SessionsService } from '../../services/sessions/sessions.service';
 import { ComunityService } from '../../services/community.service';
 import { FormControl } from '@angular/forms';
 import { HistoricService } from 'src/app/services/historic/historic.service';
-import * as moment from 'moment';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
+import * as _moment from 'moment';
+import {default as _rollupMoment, Moment} from 'moment';
+
+
+const moment = _rollupMoment || _moment;
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @Component({
   selector: 'app-report-daily-general',
   templateUrl: './report-daily-general.component.html',
-  styleUrls: ['./report-daily-general.component.sass']
+  styleUrls: ['./report-daily-general.component.sass'],
+  providers: [{
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class ReportDailyGeneralComponent implements OnInit {
-
+  date = new FormControl(moment());
   scholars: Scholar[] = [];
   displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'average', 'yesterdaySLP', 'monthSLP', 'weekSLP'];
   @ViewChild(MatSort, { static: false }) sort?: MatSort;
@@ -24,13 +50,9 @@ export class ReportDailyGeneralComponent implements OnInit {
   myControl = new FormControl();
   dias: any[] = [];
   membersAddressList: string[] = [];
-  Months = new FormControl();
-  MonthsAbbreviation: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  monthsValue: number[] = []
 
   constructor(
     private dbService: DatabaseService,
-    private sessions: SessionsService,
     private communityService: ComunityService,
     private storyService: HistoricService
   ) {
@@ -40,6 +62,7 @@ export class ReportDailyGeneralComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.date.setValue('')
     const initDate = new Date().getMonth() + 1;
     this.init(initDate.toString());
   }
@@ -105,7 +128,7 @@ export class ReportDailyGeneralComponent implements OnInit {
     return await this.dbService.getScholarsByAddressList(membersAddressList);
   }
   buscar() {
-    this.init(this.Months.value);
+    this.init(moment(this.date.value._d).format('MM'));
   }
 
   getMonthActivity(scholars: Scholar[]){
@@ -119,10 +142,18 @@ export class ReportDailyGeneralComponent implements OnInit {
         sizeMonths++
       }
     });
-    this.parseMonth(months)
   }
 
-  parseMonth(months: number[]){
-    this.monthsValue = months.map((month: number) => month += 1);
+  chosenYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.date.value;
+    ctrlValue.year(normalizedYear.year());
+    this.date.setValue(ctrlValue);
+  }
+
+  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value;
+    ctrlValue.month(normalizedMonth.month());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
   }
 }
