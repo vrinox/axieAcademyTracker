@@ -35,12 +35,15 @@
         <app-stast-axie *ngIf="axie.class != null" [stast]="[axie.hp, axie.speed, axie.skill, axie.morale]" [list]="false"></app-stast-axie>
     </div>
 
-    <div class="axies-module__footer-price" (click)="refreshNA()">
+    <div class="axies-module__footer-price" [class.axies-module__footer-refesh]="axie.price === 'N/A'" (click)="refreshNA()">
         <div class="axies-module__price axies-module__price--left">
             <p class="axies-module__opacity">$ {{ axie.price }}</p>
         </div>
         <div class="axies-module__price axies-module__price--rigth">
             <p class="axies-module__opacity"><i class="cf cf-eth"></i> {{ axie.eth }}</p>
+        </div>
+        <div class="axies-module__footer-tooltip" *ngIf="axie.price === 'N/A'">
+            <p class="axies-module__footer-text">Recalcular Precio</p>
         </div>
     </div>
 </div>

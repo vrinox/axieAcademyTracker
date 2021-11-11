@@ -238,6 +238,7 @@ export interface contentpdf{
     totalAxie: number
     totalPortafolioEth: number
     axiesTypes: axiestypesPdf[]
+    
 }
 
 export interface axiestypesPdf{

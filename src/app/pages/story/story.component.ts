@@ -7,17 +7,42 @@ import { Observable, Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { ComunityService } from '../../services/community.service';
 import { HistoricService } from 'src/app/services/historic/historic.service';
-import * as moment from 'moment';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
+import * as _moment from 'moment';
+import { default as _rollupMoment, Moment } from 'moment';
 
+const moment = _rollupMoment || _moment;
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @Component({
   selector: 'app-story',
   templateUrl: './story.component.html',
-  styleUrls: ['./story.component.sass']
+  styleUrls: ['./story.component.sass'],
+  providers: [{
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class StoryComponent implements OnInit {
   disponibleScholars: Scholar[] = [];
   myControl = new FormControl();
-  Months = new FormControl();
+  date = new FormControl(moment());
   namePlayerOptions: string[] = [];
   filteredOptions: Observable<string[]>;;
   scholars: Scholar[] = [];
@@ -27,6 +52,7 @@ export class StoryComponent implements OnInit {
   dataSource: MatTableDataSource<Scholar> = new MatTableDataSource();
   storyLabels: any[] = [];
   wholeData: Scholar[] = [];
+
   constructor(
     private dbService: DatabaseService,
     private communityService: ComunityService,
@@ -37,6 +63,7 @@ export class StoryComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.date.setValue('')
     const memberAddressList = await this.communityService.getMembersAddressList(this.communityService.activeCommunity.id);
     this.disponibleScholars = await this.dbService.getScholarsByAddressList(memberAddressList);
     this.disponibleScholars.forEach((scholar: Scholar) => {
@@ -57,7 +84,7 @@ export class StoryComponent implements OnInit {
     return this.filterData(scholarsFirebase);
   }
   public filterData(data: Scholar[]) {
-    let dates = this.storyService.getMonthBoundaries(this.Months.value, 2021);
+    let dates = this.storyService.getMonthBoundaries(parseInt(moment(this.date.value._d).format('MM')), parseInt(moment(this.date.value._d).format('YYYY')));
 
     return data.filter((scholar: Scholar) => {
       return moment(scholar.lastUpdate).isBetween(dates.start, dates.end, 'days', '[]')
@@ -117,5 +144,18 @@ export class StoryComponent implements OnInit {
       await Promise.all(promiseArray);
       resolve(story[story.length - 1]);
     })
+  }
+
+  chosenYearHandler(normalizedYear: Moment) {
+    const ctrlValue = this.date.value;
+    ctrlValue.year(normalizedYear.year());
+    this.date.setValue(ctrlValue);
+  }
+
+  chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
+    const ctrlValue = this.date.value;
+    ctrlValue.month(normalizedMonth.month());
+    this.date.setValue(ctrlValue);
+    datepicker.close();
   }
 }
