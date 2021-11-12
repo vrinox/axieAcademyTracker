@@ -11,6 +11,8 @@ export class AxiesModuleComponent implements OnInit {
   @Input() axie: AxiesData;
   @Output() refresh = new EventEmitter();
 
+  await: boolean = false;
+
   constructor(private market: MarketplaceService) { 
     this.axie = {
       namePlayer: '',
@@ -37,12 +39,19 @@ export class AxiesModuleComponent implements OnInit {
   }
 
 
-  refreshNA(): void{
-    this.market.getPrice(this.axie).then((marketPrice: MarketPlacePrice)=>{
-      this.axie.eth = marketPrice.eth;
-      this.axie.price = marketPrice.price;
-      this.refresh.emit(true);
-    });
+  async refreshNA(): Promise<void>{
+    if(!this.await){
+      this.await = true;
+      console.log('hola')
+      let marketPrice: MarketPlacePrice = await this.market.getPrice(this.axie)
+      if(marketPrice.price != 'N/A'){
+        this.axie.eth = marketPrice.eth;
+        this.axie.price = marketPrice.price;
+        this.refresh.emit(true);
+      }else{
+        this.await = false;
+      }
+    }
   }
 
 }
