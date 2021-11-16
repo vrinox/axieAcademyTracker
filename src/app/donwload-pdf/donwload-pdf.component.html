@@ -1,22 +1,13 @@
 <div #screen id="pdf">
     <div class="container-table">
-        <div class="container-table__disclaimer">
-            <div class="container-table__disclaimer-title">
-                <mat-icon class="container-table__disclaimer-icon">warning</mat-icon>
-                <h1 class="container-table__disclaimer-aviso">Aviso</h1>
-                <mat-icon class="container-table__disclaimer-icon">warning</mat-icon>
-            </div>
-            <p class="container-table__disclaimer-text">
-                El valor del portafolio depende del valor actual del eth,
-                esto puede causar variantes de precios a lo largo del tiempo.
-            </p>
-        </div>
-
         <div class="container-table__title">
             <div class="container-table__logo">
                 <img src="assets/img/logoaxie.webp" alt="">
             </div>
             <h2 (click)="donwloadPdf()" class="container-table__name-community">{{ comunity.activeCommunity.name }}</h2>
+            <div class="container-table__date">
+                <p>{{ fecha }} {{ hora }}</p>
+            </div>
         </div>
         
         <mat-card class="container-table__head">
@@ -24,6 +15,8 @@
             <p class="container-table__p">Total Becados: {{ contentpdf.totalbecados }}</p>
             <p class="container-table__p">Aproxidamo en usd: <span class="container-table__icon-usd">$</span> {{ contentpdf.totalPortafolio }}</p>
             <p class="container-table__p">Aproxidamo en eth: <i class="cf cf-eth"></i> {{ contentpdf.totalPortafolioEth }}</p>
+            <p class="container-table__p">Total N/A: {{ contentpdf.totalNa }}</p>
+            <p class="container-table__p">Total Egg: {{ contentpdf.totalEgg }}</p>
         </mat-card>
         
         <table mat-table [dataSource]="dataSource" matSort>  
@@ -78,6 +71,24 @@
             </div>
 
             <button mat-raised-button color="warn">Gift me a coffee</button>
+        </div>
+
+        <mat-card class="container-table__price">
+            <p>Precio Slp: {{ crytoPrice.slp }}$</p>
+            <p>Precio Axs: {{ crytoPrice.axs }}$</p>
+            <p>Precio Ethereum: {{ crytoPrice.etherium }}$</p>
+        </mat-card>
+
+        <div class="container-table__disclaimer">
+            <div class="container-table__disclaimer-title">
+                <mat-icon class="container-table__disclaimer-icon">warning</mat-icon>
+                <h1 class="container-table__disclaimer-aviso">Aviso</h1>
+                <mat-icon class="container-table__disclaimer-icon">warning</mat-icon>
+            </div>
+            <p class="container-table__disclaimer-text">
+                El valor del portafolio depende del valor actual del eth,
+                esto puede causar variantes de precios a lo largo del tiempo.
+            </p>
         </div>
     </div>
 </div>

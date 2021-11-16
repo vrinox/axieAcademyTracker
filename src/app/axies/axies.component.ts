@@ -244,4 +244,8 @@ export class AxiesComponent implements OnInit, OnDestroy {
       this.axiesData = await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
     }
   }
+
+  getNa(){
+    this.axiesData = this.filterAxies.getNA(this.axiesData);
+  }
 }

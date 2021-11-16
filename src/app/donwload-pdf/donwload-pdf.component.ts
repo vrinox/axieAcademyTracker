@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
-import { contentpdf, axiestypesPdf, AxiesData } from 'src/app/models/interfaces';
+import { contentpdf, axiestypesPdf, AxiesData, PriceCryto } from 'src/app/models/interfaces';
 import { MatTableDataSource } from '@angular/material/table';
+import { GetPriceService } from '../services/getPriceCripto/get-price.service';
 import { CalculatedPortafolioService } from '../services/calculatedPortafolio/calculated-portafolio.service';
 import { SessionsService } from '../services/sessions/sessions.service';
 import { ComunityService } from '../services/community.service';
@@ -19,6 +20,8 @@ export class DonwloadPdfComponent implements OnInit {
     totalPortafolio: this.portafolio.total.usd,
     totalbecados: this.portafolio.total.becados,
     totalPortafolioEth: this.portafolio.total.eth,
+    totalNa: this.portafolio.total.na,
+    totalEgg: 0,
     axiesTypes: [
     { type: 'Beast', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 },
     { type: 'Aquatic', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 },  
@@ -31,6 +34,15 @@ export class DonwloadPdfComponent implements OnInit {
     { type: 'Dusk', averageValue: 0, maxValue: 0, minValue: 0, totalUsd: 0, totalType: 0, tototalEth: 0 }]
   }
 
+  crytoPrice: PriceCryto = {
+    axs: 0,
+    etherium: 0,
+    slp: 0
+  }
+
+  fecha: string = '';
+  hora: string = '';
+
   displayedColumns: string[] = ['Tipo', 'Total', 'Valor Promedio', 'Valor Maximo', 'Valor Minimo', 'Usd', 'Eth'];
 
   dataSource: MatTableDataSource<axiestypesPdf> = new MatTableDataSource();
@@ -42,7 +54,8 @@ export class DonwloadPdfComponent implements OnInit {
   constructor(
     private portafolio: CalculatedPortafolioService,
     private sessions: SessionsService,
-    public comunity: ComunityService
+    public comunity: ComunityService,
+    private cryto: GetPriceService
   ) { }
   
   ngOnInit(): void {
@@ -61,6 +74,8 @@ export class DonwloadPdfComponent implements OnInit {
       this.calculateAxiesType(axie);
     })
     this.parseContentPdf();
+    this.getCrytoPrice();
+    this.dateCurrent();
   }
 
   calculateAxiesType(axie: AxiesData): void{
@@ -71,6 +86,9 @@ export class DonwloadPdfComponent implements OnInit {
         this.contentpdf.axiesTypes[index - 1].tototalEth += axie.eth != 'N/A' ? parseFloat(axie.eth!) : 0;
         this.compareMinMax(parseFloat(axie.price!), index);
         this.calculateAverage();
+      }
+      if(axie.class === null){
+        this.contentpdf.totalEgg += 1; 
       }
     })
   }
@@ -102,6 +120,21 @@ export class DonwloadPdfComponent implements OnInit {
       type.totalUsd = parseFloat(type.totalUsd.toFixed(2))
       type.tototalEth = parseFloat(type.tototalEth.toFixed(2))
     })
+  }
+
+  async getCrytoPrice(){
+    let cryto = await this.cryto.get('smooth-love-potion');
+    this.crytoPrice.slp = parseFloat(cryto['smooth-love-potion'].usd.toFixed(2));
+    cryto = await this.cryto.get('axie-infinity');
+    this.crytoPrice.axs = parseFloat(cryto['axie-infinity'].usd.toFixed(2));
+    cryto = await this.cryto.get('ethereum');
+    this.crytoPrice.etherium = parseFloat(cryto['ethereum'].usd.toFixed(2));
+  }
+
+  dateCurrent(){
+    let date = new Date();
+    this.fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+    this.hora = `${date.getHours()}:${date.getMinutes()}`;
   }
 
   donwloadPdf(): void{
