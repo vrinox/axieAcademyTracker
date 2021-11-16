@@ -79,8 +79,8 @@ export class FiltersAxiesService {
     });
   }
 
-  getNA(axies: AxiesData[]): void{
-    axies = this.copyAxiesData.filter(axie => {
+  getNA(axies: AxiesData[]): AxiesData[]{
+    return axies = this.copyAxiesData.filter(axie => {
       return axie.price === 'N/A';
     });
   }

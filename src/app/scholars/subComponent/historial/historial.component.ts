@@ -31,8 +31,7 @@ export class HistorialComponent implements OnInit {
 
 
   async getPriceSlp(){
-    let cryto = await this.getPrice.get('smooth-love-potion');
-    this.slpPrice = parseFloat(cryto['smooth-love-potion'].usd.toFixed(2));
+    this.slpPrice = await this.getPrice.get('smooth-love-potion');
   }
 
 }

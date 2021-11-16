@@ -237,8 +237,9 @@ export interface contentpdf{
     totalPortafolio: number
     totalAxie: number
     totalPortafolioEth: number
+    totalNa: number
+    totalEgg: number
     axiesTypes: axiestypesPdf[]
-    
 }
 
 export interface axiestypesPdf{
@@ -249,4 +250,14 @@ export interface axiestypesPdf{
     maxValue: number,
     minValue: number,
     tototalEth: number
+}
+
+export interface PriceCryto{
+    slp: number
+    etherium: number
+    axs: number
+}
+
+export interface PriceGoingeko{
+    usd: number
 }
