@@ -257,3 +257,7 @@ export interface PriceCryto{
     etherium: number
     axs: number
 }
+
+export interface PriceGoingeko{
+    usd: number
+}

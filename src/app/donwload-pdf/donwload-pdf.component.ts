@@ -123,12 +123,9 @@ export class DonwloadPdfComponent implements OnInit {
   }
 
   async getCrytoPrice(){
-    let cryto = await this.cryto.get('smooth-love-potion');
-    this.crytoPrice.slp = parseFloat(cryto['smooth-love-potion'].usd.toFixed(2));
-    cryto = await this.cryto.get('axie-infinity');
-    this.crytoPrice.axs = parseFloat(cryto['axie-infinity'].usd.toFixed(2));
-    cryto = await this.cryto.get('ethereum');
-    this.crytoPrice.etherium = parseFloat(cryto['ethereum'].usd.toFixed(2));
+    this.crytoPrice.slp = await this.cryto.get('smooth-love-potion');
+    this.crytoPrice.axs = await this.cryto.get('axie-infinity');
+    this.crytoPrice.etherium = await this.cryto.get('ethereum');
   }
 
   dateCurrent(){
