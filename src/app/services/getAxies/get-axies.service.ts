@@ -19,8 +19,8 @@ export class GetAxiesService {
         let axiesData: AxiesData[] = [];
         let axieDataOficial: AxiesOficialData = res;
         if(axieDataOficial.data != null){
-          axieDataOficial.data.axies.results.forEach((Result: AxiesResultsOficialData)=>{
-            axiesData.push(this.setAxieData(Result, scholar.roninAddress, scholar.name));
+          axieDataOficial.data.axies.results.forEach((result: AxiesResultsOficialData)=>{
+            axiesData.push(this.setAxieData(result, scholar.roninAddress, scholar.name));
           })
         }
         resolve(axiesData);
@@ -45,6 +45,7 @@ export class GetAxiesService {
       speed: axiesParse.stats.speed,
       skill: axiesParse.stats.skill,
       parts: axiesParse.parts,
+      genes: axiesParse.genes,
       auction: (axiesParse.auction)? axiesParse.auction : undefined
     };
   }

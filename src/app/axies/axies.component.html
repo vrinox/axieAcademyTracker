@@ -92,6 +92,10 @@
     <button mat-button (click)="viewModule()">
       <mat-icon>view_module</mat-icon>
     </button>
+    <button mat-raised-button [matMenuTriggerFor]="menu5">{{ viewMenu }}</button>
+    <mat-menu #menu5="matMenu">
+      <button mat-menu-item *ngFor="let viewOpntios of filterViewOptions" (click)="selecViewMenu(viewOpntios)" >{{ viewOpntios }}</button>
+    </mat-menu>
   </div>
 </div>
 

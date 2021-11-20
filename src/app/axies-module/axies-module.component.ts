@@ -26,6 +26,7 @@ export class AxiesModuleComponent implements OnInit {
       skill: 0,
       speed: 0,
       breedCount: 0,
+      genes: '',
       parts: [{
         class: '',
         id: '',

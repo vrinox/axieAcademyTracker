@@ -76,6 +76,7 @@ export interface AxiesData {
     image: string
     breedCount: number
     auction?: auction
+    genes: string
     parts: AxieParts[]
 }
 
@@ -88,6 +89,7 @@ export interface AxiesOficialData {
                 class: string
                 image: string
                 breedCount: number
+                genes: string,
                 stats: {
                     hp: number
                     speed: number
@@ -114,6 +116,7 @@ export interface AxiesResultsOficialData {
     breedCount: number
     auction?: auction
     stats: stats
+    genes: string
     parts: AxieParts[]
 }
 

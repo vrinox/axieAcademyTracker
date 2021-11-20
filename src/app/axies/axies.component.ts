@@ -58,6 +58,11 @@ export class AxiesComponent implements OnInit, OnDestroy {
 
   donwloadPdf = false;
 
+  viewMenuOptions: string[] = ['Basic Menu', 'Arena View', 'Breed View', 'Complete View'];
+  filterViewOptions: string[] = [];
+
+  viewMenu: string = 'Basic Menu';
+
   constructor(
     private getAxies: GetAxiesService,
     private sessions: SessionsService,
@@ -76,6 +81,8 @@ export class AxiesComponent implements OnInit, OnDestroy {
       startWith(''),
       map(value => this._filter(value))
     );
+
+    this.selecViewMenu(this.viewMenu);
 
     this.cardsOptions = this.partAxies.valueChanges.pipe(
       startWith(null),
@@ -243,6 +250,11 @@ export class AxiesComponent implements OnInit, OnDestroy {
     if(this.valuePortafolio){
       this.axiesData = await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
     }
+  }
+
+  selecViewMenu(option: string){
+    this.filterViewOptions = this.viewMenuOptions.filter(options => options != option);
+    this.viewMenu = option;
   }
 
   getNa(){

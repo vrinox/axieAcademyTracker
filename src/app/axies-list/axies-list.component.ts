@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AxiesData } from '../models/interfaces';
-
 @Component({
   selector: 'app-axies-list',
   templateUrl: './axies-list.component.html',
@@ -24,6 +23,7 @@ export class AxiesListComponent implements OnInit {
       skill: 0,
       speed: 0,
       breedCount: 0,
+      genes: '',
       parts: [{
         class: '',
         id: '',

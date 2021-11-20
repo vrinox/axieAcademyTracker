@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "agp-npm": "^1.0.9",
     "chart.js": "^3.5.1",
     "firebase": "^9.0.1",
     "jspdf": "^2.4.0",

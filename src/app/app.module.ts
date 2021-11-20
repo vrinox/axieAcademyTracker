@@ -48,6 +48,7 @@ import { AxiesModuleComponent } from './axies-module/axies-module.component';
 import { AxiesListComponent } from './axies-list/axies-list.component';
 import { StastAxieComponent } from './stastAxie/stast-axie.component';
 import { DonwloadPdfComponent } from './donwload-pdf/donwload-pdf.component';
+import { GenesComponent } from './components/genes/genes/genes.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { DonwloadPdfComponent } from './donwload-pdf/donwload-pdf.component';
     AxiesModuleComponent,
     AxiesListComponent,
     StastAxieComponent,
-    DonwloadPdfComponent
+    DonwloadPdfComponent,
+    GenesComponent
   ],
   imports: [
     BrowserModule,
