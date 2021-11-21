@@ -21,8 +21,12 @@
             <img class="axies-module__img-class" 
                 src="assets/svg/axies/{{axie.class}}/{{axie.class}}.svg"  alt="">
         </div>
+        <div class="axies-module__purity" *ngIf="purity != 0">
+            <p class="axies-module__purity-p">Pureza: {{purity}}%</p>
+        </div>
     </div>
-    <div class="axies-module__content">
+
+    <div class="axies-module__content" *ngIf="menuView === 'Basic Menu'">
         <a class="axies-module__content-a" 
             href="https://marketplace.axieinfinity.com/axie/{{axie.id}}"
             target="__blanck">
@@ -31,8 +35,12 @@
         </a>
     </div>
 
-    <div class="axies-module__footer-stast" [class.axies-module__footer-egg]="axie.class === null">
+    <div class="axies-module__footer-stast" [class.axies-module__footer-egg]="axie.class === null" *ngIf="menuView === 'Basic Menu'">
         <app-stast-axie *ngIf="axie.class != null" [stast]="[axie.hp, axie.speed, axie.skill, axie.morale]" [list]="false"></app-stast-axie>
+    </div>
+
+    <div class="axies-module__genes" *ngIf="menuView === 'Breed View'"> 
+        <app-genes [AxieGen]="axie.genes" [viewChange]="true" (puress)="setPurress($event)"></app-genes>
     </div>
 
     <div class="axies-module__footer-price" [class.axies-module__footer-refesh]="axie.price === 'N/A'" (click)="refreshNA()">

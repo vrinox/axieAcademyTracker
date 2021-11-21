@@ -58,6 +58,11 @@ export class AxiesComponent implements OnInit, OnDestroy {
 
   donwloadPdf = false;
 
+  viewMenuOptions: string[] = ['Basic Menu', 'Breed View'];
+  filterViewOptions: string[] = [];
+
+  viewMenu: string = 'Basic Menu';
+
   constructor(
     private getAxies: GetAxiesService,
     private sessions: SessionsService,
@@ -76,6 +81,8 @@ export class AxiesComponent implements OnInit, OnDestroy {
       startWith(''),
       map(value => this._filter(value))
     );
+
+    this.selecViewMenu(this.viewMenu);
 
     this.cardsOptions = this.partAxies.valueChanges.pipe(
       startWith(null),
@@ -248,4 +255,11 @@ export class AxiesComponent implements OnInit, OnDestroy {
   getNa(){
     this.axiesData = this.filterAxies.getNA(this.axiesData);
   }
+
+  selecViewMenu(option: string){
+    this.filterViewOptions = this.viewMenuOptions.filter(options => options != option);
+    this.viewMenu = option;
+    this.sessions.setMenuAxieView(option);
+  }
+  
 }

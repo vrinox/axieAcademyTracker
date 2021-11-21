@@ -18,6 +18,9 @@ export class SessionsService {
   oneScholar: Scholar[] = [];
   private scholar$: Subject<Scholar[]> = new Subject;
   donwloadPdf: Subject<boolean> = new Subject;
+
+  menuAxieView: Subject<string> = new Subject;
+  
   communityChange: Subject<community> = new Subject;
   private loadingHome: Subject<boolean> = new Subject;
 
@@ -99,5 +102,13 @@ export class SessionsService {
 
   setDonwloadPdf(value: boolean){
     this.donwloadPdf.next(value);
+  }
+
+  getMenuAxieView(): Observable<string>{
+    return this.menuAxieView;
+  }
+
+  setMenuAxieView(viewAxie :string){
+    this.menuAxieView.next(viewAxie);
   }
 }

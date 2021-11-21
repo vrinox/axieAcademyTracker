@@ -1,0 +1,39 @@
+<div class="genes">
+    <div class="genes__parts" *ngFor="let gen of genes">
+        <div class="genes__content-left">
+            <img class="genes__img" [class.genes__img-module]="viewChange" src="assets/svg/axies/{{gen.d.class}}/{{gen.d.type}}.svg" alt="">
+            <p class="genes__p" [class.genes__p-module]="viewChange"
+                [ngClass]="{'genes__Plant': gen.d.class === 'Plant',
+                'genes__Aquatic': gen.d.class === 'Aquatic',
+                'genes__Bird': gen.d.class === 'Bird',
+                'genes__Dawn': gen.d.class === 'Dawn',
+                'genes__Mech': gen.d.class === 'Mech',
+                'genes__Reptile': gen.d.class === 'Reptile',
+                'genes__Beast': gen.d.class === 'Beast',
+                'genes__Bug': gen.d.class === 'Bug',
+                'genes__Dusk': gen.d.class === 'Dusk' }">
+                                            {{ gen.d.partName }}</p>
+        </div>
+        <p class="genes__p" [class.genes__p-module]="viewChange"
+            [ngClass]="{'genes__Plant': gen.r1.class === 'plant',
+            'genes__Aquatic': gen.r1.class === 'aquatic',
+            'genes__Bird': gen.r1.class === 'bird',
+            'genes__Dawn': gen.r1.class === 'dawn',
+            'genes__Mech': gen.r1.class === 'mech',
+            'genes__Reptile': gen.r1.class === 'reptile',
+            'genes__Beast': gen.r1.class === 'beast',
+            'genes__Bug': gen.r1.class === 'bug',
+            'genes__Dusk': gen.r1.class === 'dusk' }">
+                                        {{ gen.r1.partName }}</p>
+        <p class="genes__p" [class.genes__p-module]="viewChange"
+            [ngClass]="{'genes__Plant': gen.r2.class === 'plant',
+            'genes__Aquatic': gen.r2.class === 'aquatic',
+            'genes__Bird': gen.r2.class === 'bird',
+            'genes__Dawn': gen.r2.class === 'dawn',
+            'genes__Mech': gen.r2.class === 'mech',
+            'genes__Reptile': gen.r2.class === 'reptile',
+            'genes__Beast': gen.r2.class === 'beast',
+            'genes__Bug': gen.r2.class === 'bug',
+            'genes__Dusk': gen.r2.class === 'dusk' }">{{ gen.r2.partName }}</p>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AxiesData, MarketPlacePrice } from '../models/interfaces';
 import { MarketplaceService } from 'src/app/services/marketplace/marketplace.service'
+import { SessionsService } from '../services/sessions/sessions.service';
 
 @Component({
   selector: 'app-axies-module',
@@ -9,11 +10,14 @@ import { MarketplaceService } from 'src/app/services/marketplace/marketplace.ser
 })
 export class AxiesModuleComponent implements OnInit {
   @Input() axie: AxiesData;
+  @Input() viewMenu: string = ''
   @Output() refresh = new EventEmitter();
 
   await: boolean = false;
+  purity: number = 0;
+  menuView: string = ''
 
-  constructor(private market: MarketplaceService) { 
+  constructor(private market: MarketplaceService, private sessions: SessionsService) { 
     this.axie = {
       namePlayer: '',
       roning: '',
@@ -26,6 +30,7 @@ export class AxiesModuleComponent implements OnInit {
       skill: 0,
       speed: 0,
       breedCount: 0,
+      genes: '',
       parts: [{
         class: '',
         id: '',
@@ -36,6 +41,10 @@ export class AxiesModuleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.menuView = this.viewMenu;
+    this.sessions.getMenuAxieView().subscribe(view=>{
+      this.menuView = view;
+    })
   }
 
 
@@ -52,6 +61,10 @@ export class AxiesModuleComponent implements OnInit {
         this.await = false;
       }
     }
+  }
+
+  setPurress(puress: any){
+    this.purity = puress;
   }
 
 }
