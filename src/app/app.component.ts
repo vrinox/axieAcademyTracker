@@ -13,7 +13,7 @@ export class AppComponent implements OnInit{
   showFiller = false;
   viewModal: boolean = false;
   loading: boolean = false;
-
+  communityName: string = "";
   constructor(public sesion: SessionsService){}
 
   ngOnInit(){
@@ -21,6 +21,11 @@ export class AppComponent implements OnInit{
       this.loading = viewLoading;
     })
     this.sesion.appStart();
+    this.sesion.communityChange.subscribe((community)=>{
+      if(community){
+        this.communityName = community.name;
+      }
+    });
   }
   
   offModal(event: boolean){
