@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, query, QueryDocumentSnapshot, where } from 'firebase/firestore';
-import { scholarFirebaseI, scholarOfficialData } from 'src/app/models/interfaces';
+import { scholarFirebaseI, scholarOfficialData, userLink } from 'src/app/models/interfaces';
 import { Subject } from 'rxjs';
 import { Scholar } from 'src/app/models/scholar';
 import { Axie } from 'src/app/models/axie';
-import { addDoc, deleteDoc, updateDoc } from '@angular/fire/firestore';
+import { addDoc, deleteDoc, getDoc, updateDoc } from '@angular/fire/firestore';
 import * as moment from 'moment';
 
 const app = initializeApp(environment.firebase);
@@ -63,6 +63,11 @@ export class DatabaseService {
       roninAddress: dbUserLink.roninAddress,
       uid: dbUserLink.uid
     }
+  }  
+  async addUserLink(userLinkData: userLink): Promise<string>{
+    const dbRef = await addDoc(collection(this.db,"userLink"), userLinkData);
+    const doc = await getDoc(dbRef);
+    return doc.data()!.uid;
   }
   async getScholarsByAddressList(membersAddressList: string[]): Promise<Scholar[]> {
     let batches = [];

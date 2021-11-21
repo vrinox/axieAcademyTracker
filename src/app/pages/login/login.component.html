@@ -1,39 +1,69 @@
 <div class="container">
   <div class="fondo"></div>
-  <mat-card  class="form-becado">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Login</mat-card-title>
-    </mat-card-header>
+  <mat-card  class="form-becado" *ngIf="!showRegisterForm">
+    <mat-toolbar > 
+      <span>Login</span>
+    </mat-toolbar>
     <mat-card-content>
-      <form [formGroup]="formBecado">
-
+      <form [formGroup]="form">
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
           <mat-label>User</mat-label>
           <input formControlName="user" matInput placeholder="Victor">
-          <mat-icon matSuffix class="form-becado__check" *ngIf="formBecado.controls.user.valid">
-            check_circle_outline
-          </mat-icon>
-          <mat-icon matSuffix class="form-becado__off" *ngIf="!formBecado.controls.user.valid">highlight_off
-          </mat-icon>
-          <mat-error *ngIf="formBecado.controls.user.hasError('required')">El campo no puede estar vacio
-          </mat-error>
-          <mat-error *ngIf="formBecado.controls.user.hasError('pattern')">Solo se permiten letras</mat-error>
+          <mat-icon matSuffix class="form-becado__check" *ngIf="form.controls.user.valid">check_circle_outline</mat-icon>
+          <mat-icon matSuffix class="form-becado__off" *ngIf="!form.controls.user.valid">highlight_off</mat-icon>
+          <mat-error *ngIf="form.controls.user.hasError('required')">El campo no puede estar vacio</mat-error>
+          <mat-error *ngIf="form.controls.user.hasError('pattern')">Solo se permiten letras</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
           <mat-label>Password</mat-label>
           <input formControlName="password" matInput type="password" placeholder="Leon">
-          <mat-icon matSuffix class="form-becado__check" *ngIf="formBecado.controls.password.valid">
-            check_circle_outline</mat-icon>
-          <mat-icon matSuffix class="form-becado__off" *ngIf="!formBecado.controls.password.valid">highlight_off
-          </mat-icon>
-          <mat-error *ngIf="formBecado.controls.password.hasError('required')">El campo no puede estar vacio
-          </mat-error>
-          <mat-error *ngIf="formBecado.controls.password.hasError('pattern')">Solo se permiten letras</mat-error>
+          <mat-icon matSuffix class="form-becado__check" *ngIf="form.controls.password.valid">check_circle_outline</mat-icon>
+          <mat-icon matSuffix class="form-becado__off" *ngIf="!form.controls.password.valid">highlight_off</mat-icon>
+          <mat-error *ngIf="form.controls.password.hasError('required')">El campo no puede estar vacio</mat-error>
+          <mat-error *ngIf="form.controls.password.hasError('pattern')">Solo se permiten letras</mat-error>
         </mat-form-field>
-        <button (click)="revisarValido()" class="form-becado__btn" mat-raised-button color="primary">Enviar</button>
-        <button class="form-becado__btn" mat-raised-button>Cancelar</button>
+        <button (click)="revisarValido()" class="form-becado__btn" mat-raised-button color="primary">Send</button>
+        <button (click)="showRegisterForm = !showRegisterForm" class="form-becado__btn" mat-raised-button>register</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card  class="form-register" *ngIf="showRegisterForm">
+    <mat-toolbar> 
+      <span>Register</span>
+    </mat-toolbar>
+    <mat-card-content>
+      <form [formGroup]="registerForm">
+        <mat-form-field appearance="outline" class="form-register__contenedor-inputs">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput placeholder="Email">
+          <mat-icon matSuffix class="form-register__check" *ngIf="registerForm.controls.email.valid">check_circle_outline</mat-icon>
+          <mat-icon matSuffix class="form-register__off" *ngIf="!registerForm.controls.email.valid">highlight_off</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-register__contenedor-inputs">
+          <mat-label>Password</mat-label>
+          <input formControlName="password" matInput type="password" >
+          <mat-icon matSuffix class="form-register__check" *ngIf="registerForm.controls.password.valid">check_circle_outline</mat-icon>
+          <mat-icon matSuffix class="form-register__off" *ngIf="!registerForm.controls.password.valid">highlight_off</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-register__contenedor-inputs">
+          <mat-label>Confirm Password</mat-label>
+          <input formControlName="confirm_pass" matInput type="password">
+          <mat-icon matSuffix class="form-register__check" *ngIf="registerForm.controls.confirm_pass.valid">check_circle_outline</mat-icon>
+          <mat-icon matSuffix class="form-register__off" *ngIf="!registerForm.controls.confirm_pass.valid">highlight_off</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-register__contenedor-inputs">
+          <mat-label>Community</mat-label>
+          <input formControlName="community" matInput type="text" >
+          <mat-icon matSuffix class="form-register__check" *ngIf="registerForm.controls.community.valid">check_circle_outline</mat-icon>
+          <mat-icon matSuffix class="form-register__off" *ngIf="!registerForm.controls.community.valid">highlight_off</mat-icon>
+        </mat-form-field>
+        <button (click)="registerNewUser()" class="form-register__btn" mat-raised-button color="primary">Enviar</button>
+        <button (click)="showRegisterForm = !showRegisterForm" class="form-register__btn" mat-raised-button>Cancelar</button>
       </form>
     </mat-card-content>
   </mat-card>

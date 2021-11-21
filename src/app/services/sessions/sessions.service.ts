@@ -18,7 +18,7 @@ export class SessionsService {
   oneScholar: Scholar[] = [];
   private scholar$: Subject<Scholar[]> = new Subject;
   donwloadPdf: Subject<boolean> = new Subject;
-  
+  communityChange: Subject<community> = new Subject;
   private loadingHome: Subject<boolean> = new Subject;
 
   constructor(
@@ -59,6 +59,7 @@ export class SessionsService {
     this.infinity = scholar;
     this.communities = communities;
     this.communityservice.activeCommunity = communities[0];
+    this.communityChange.next(communities[0]);
     this.setSesionToLocalStorage();
     this.init = true;
     this.router.navigate(['/scholars'], {replaceUrl:true});
