@@ -264,3 +264,22 @@ export interface PriceCryto{
 export interface PriceGoingeko{
     usd: number
 }
+
+
+export interface Genes{
+    d: {
+        class: string,
+        type: string,
+        partName: string,
+    }
+    r1: {
+        class: string,
+        type: string,
+        partName: string,
+    }
+    r2: {
+        class: string,
+        type: string,
+        partName: string,
+    }
+}

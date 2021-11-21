@@ -1,38 +1,39 @@
 <div class="genes">
-    <div class="genes__parts">
-        <img src="assets/svg/axies/{{axieGenes.genes.eyes.d.cls}}/{{axieGenes.genes.eyes.d.type}}.svg" alt="">
-        <p>{{axieGenes.genes.eyes.d.name}}</p>
-        <p>{{axieGenes.genes.eyes.r1.name}}</p>
-        <p>{{axieGenes.genes.eyes.r1.name}}</p>
-    </div>
-    <div class="genes__parts">
-        <img src="assets/svg/axies/{{axieGenes.genes.ears.d.cls}}/{{axieGenes.genes.ears.d.type}}.svg" alt="">
-        <p>{{axieGenes.genes.ears.d.name}}</p>
-        <p>{{axieGenes.genes.ears.r1.name}}</p>
-        <p>{{axieGenes.genes.ears.r1.name}}</p>
-    </div>
-    <div class="genes__parts">
-        <img src="assets/svg/axies/{{axieGenes.genes.back.d.cls}}/{{axieGenes.genes.back.d.type}}.svg" alt="">
-        <p>{{axieGenes.genes.back.d.name}}</p>
-        <p>{{axieGenes.genes.back.r1.name}}</p>
-        <p>{{axieGenes.genes.back.r1.name}}</p>
-    </div>
-    <div class="genes__parts">
-        <img src="assets/svg/axies/{{axieGenes.genes.horn.d.cls}}/{{axieGenes.genes.horn.d.type}}.svg" alt="">
-        <p>{{axieGenes.genes.horn.d.name}}</p>
-        <p>{{axieGenes.genes.horn.r1.name}}</p>
-        <p>{{axieGenes.genes.horn.r1.name}}</p>
-    </div>
-    <div class="genes__parts">
-        <img src="assets/svg/axies/{{axieGenes.genes.mouth.d.cls}}/{{axieGenes.genes.mouth.d.type}}.svg" alt="">
-        <p>{{axieGenes.genes.mouth.d.name}}</p>
-        <p>{{axieGenes.genes.mouth.r1.name}}</p>
-        <p>{{axieGenes.genes.mouth.r1.name}}</p>
-    </div>
-    <div class="genes__parts">
-        <img src="assets/svg/axies/{{axieGenes.genes.tail.d.cls}}/{{axieGenes.genes.tail.d.type}}.svg" alt="">
-        <p>{{axieGenes.genes.tail.d.name}}</p>
-        <p>{{axieGenes.genes.tail.r1.name}}</p>
-        <p>{{axieGenes.genes.tail.r1.name}}</p>
+    <div class="genes__parts" *ngFor="let gen of genes">
+        <div class="genes__content-left">
+            <img class="genes__img" [class.genes__img-module]="viewChange" src="assets/svg/axies/{{gen.d.class}}/{{gen.d.type}}.svg" alt="">
+            <p class="genes__p" [class.genes__p-module]="viewChange"
+                [ngClass]="{'genes__Plant': gen.d.class === 'Plant',
+                'genes__Aquatic': gen.d.class === 'Aquatic',
+                'genes__Bird': gen.d.class === 'Bird',
+                'genes__Dawn': gen.d.class === 'Dawn',
+                'genes__Mech': gen.d.class === 'Mech',
+                'genes__Reptile': gen.d.class === 'Reptile',
+                'genes__Beast': gen.d.class === 'Beast',
+                'genes__Bug': gen.d.class === 'Bug',
+                'genes__Dusk': gen.d.class === 'Dusk' }">
+                                            {{ gen.d.partName }}</p>
+        </div>
+        <p class="genes__p" [class.genes__p-module]="viewChange"
+            [ngClass]="{'genes__Plant': gen.r1.class === 'plant',
+            'genes__Aquatic': gen.r1.class === 'aquatic',
+            'genes__Bird': gen.r1.class === 'bird',
+            'genes__Dawn': gen.r1.class === 'dawn',
+            'genes__Mech': gen.r1.class === 'mech',
+            'genes__Reptile': gen.r1.class === 'reptile',
+            'genes__Beast': gen.r1.class === 'beast',
+            'genes__Bug': gen.r1.class === 'bug',
+            'genes__Dusk': gen.r1.class === 'dusk' }">
+                                        {{ gen.r1.partName }}</p>
+        <p class="genes__p" [class.genes__p-module]="viewChange"
+            [ngClass]="{'genes__Plant': gen.r2.class === 'plant',
+            'genes__Aquatic': gen.r2.class === 'aquatic',
+            'genes__Bird': gen.r2.class === 'bird',
+            'genes__Dawn': gen.r2.class === 'dawn',
+            'genes__Mech': gen.r2.class === 'mech',
+            'genes__Reptile': gen.r2.class === 'reptile',
+            'genes__Beast': gen.r2.class === 'beast',
+            'genes__Bug': gen.r2.class === 'bug',
+            'genes__Dusk': gen.r2.class === 'dusk' }">{{ gen.r2.partName }}</p>
     </div>
 </div>

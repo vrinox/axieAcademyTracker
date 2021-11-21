@@ -101,12 +101,12 @@
 
 <div class="axie-list" *ngIf="list">
   <mat-accordion class="container-axies__acordion" multi>
-    <app-axies-list [axie]="axie" *ngFor="let axie of axiesData"></app-axies-list>
+    <app-axies-list [axie]="axie" [viewMenu]="viewMenu" *ngFor="let axie of axiesData"></app-axies-list>
   </mat-accordion>
 </div>
 
 <div class="axies-module" *ngIf="!list">
-  <app-axies-module class="axies-module__axie" [axie]="axie" (refresh)="refreshNa()" *ngFor="let axie of axiesData"></app-axies-module>
+  <app-axies-module class="axies-module__axie" [axie]="axie" [viewMenu]="viewMenu" (refresh)="refreshNa()" *ngFor="let axie of axiesData"></app-axies-module>
 </div>
 
 <div class="loading" *ngIf="loading">

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AxiesData } from '../models/interfaces';
+import { SessionsService } from '../services/sessions/sessions.service';
 @Component({
   selector: 'app-axies-list',
   templateUrl: './axies-list.component.html',
@@ -7,10 +8,13 @@ import { AxiesData } from '../models/interfaces';
 })
 export class AxiesListComponent implements OnInit {
   openPanel: boolean = false;
+
+  menuView: string = ''
   
   @Input() axie: AxiesData;
+  @Input() viewMenu: string = ''
 
-  constructor() { 
+  constructor(private sessions: SessionsService) { 
     this.axie = {
       namePlayer: '',
       roning: '',
@@ -34,6 +38,12 @@ export class AxiesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.menuView = this.viewMenu;
+    this.sessions.getMenuAxieView().subscribe(view=>{
+      this.menuView = view;
+    })
   }
+
+
 
 }

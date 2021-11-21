@@ -58,7 +58,7 @@ export class AxiesComponent implements OnInit, OnDestroy {
 
   donwloadPdf = false;
 
-  viewMenuOptions: string[] = ['Basic Menu', 'Arena View', 'Breed View', 'Complete View'];
+  viewMenuOptions: string[] = ['Basic Menu', 'Breed View'];
   filterViewOptions: string[] = [];
 
   viewMenu: string = 'Basic Menu';
@@ -252,12 +252,14 @@ export class AxiesComponent implements OnInit, OnDestroy {
     }
   }
 
-  selecViewMenu(option: string){
-    this.filterViewOptions = this.viewMenuOptions.filter(options => options != option);
-    this.viewMenu = option;
-  }
-
   getNa(){
     this.axiesData = this.filterAxies.getNA(this.axiesData);
   }
+
+  selecViewMenu(option: string){
+    this.filterViewOptions = this.viewMenuOptions.filter(options => options != option);
+    this.viewMenu = option;
+    this.sessions.setMenuAxieView(option);
+  }
+  
 }
