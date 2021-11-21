@@ -72,6 +72,7 @@ export class DonwloadPdfComponent implements OnInit {
   travelInAxiesData(): void{
     this.axiesData.forEach(axie=>{
       this.calculateAxiesType(axie);
+      this.calculateEgg(axie)
     })
     this.parseContentPdf();
     this.getCrytoPrice();
@@ -87,10 +88,13 @@ export class DonwloadPdfComponent implements OnInit {
         this.compareMinMax(parseFloat(axie.price!), index);
         this.calculateAverage();
       }
-      if(axie.class === null){
-        this.contentpdf.totalEgg += 1; 
-      }
     })
+  }
+
+  calculateEgg(axie: AxiesData){
+    if(axie.class === null){
+      this.contentpdf.totalEgg += 1; 
+    }
   }
 
   compareMinMax(price: number, index: number): void{

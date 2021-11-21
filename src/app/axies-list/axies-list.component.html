@@ -40,7 +40,7 @@
             </div>
 
             <div class="container-axies__parts" 
-                    *ngIf="axie.class != null && menuView === 'Basic Menu'">
+                    *ngIf="axie.class != null && menuView === 'Basic Menu' || menuView === 'Completed View'">
                 <div *ngFor="let parts of axie.parts" class="container-axies__sub-parts">
                 <img class="container-axies__parts-img" 
                         src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
@@ -53,5 +53,8 @@
             </div>
         </div>
 
+        <div class="container-axies__genes container-axies__genes-completed" *ngIf="menuView === 'Completed View'"> 
+            <app-genes [AxieGen]="axie.genes"></app-genes>
+        </div>
     </mat-expansion-panel>
 </div>

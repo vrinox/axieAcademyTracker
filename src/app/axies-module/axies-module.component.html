@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="axies-module__content" *ngIf="menuView === 'Basic Menu'">
+    <div class="axies-module__content" *ngIf="menuView === 'Basic Menu' || menuView === 'Completed View'">
         <a class="axies-module__content-a" 
             href="https://marketplace.axieinfinity.com/axie/{{axie.id}}"
             target="__blanck">
@@ -35,11 +35,11 @@
         </a>
     </div>
 
-    <div class="axies-module__footer-stast" [class.axies-module__footer-egg]="axie.class === null" *ngIf="menuView === 'Basic Menu'">
+    <div class="axies-module__footer-stast" [class.axies-module__footer-egg]="axie.class === null" *ngIf="menuView === 'Basic Menu' || menuView === 'Completed View'">
         <app-stast-axie *ngIf="axie.class != null" [stast]="[axie.hp, axie.speed, axie.skill, axie.morale]" [list]="false"></app-stast-axie>
     </div>
 
-    <div class="axies-module__genes" *ngIf="menuView === 'Breed View'"> 
+    <div class="axies-module__genes" *ngIf="menuView === 'Breed View' || menuView === 'Completed View'"> 
         <app-genes [AxieGen]="axie.genes" [viewChange]="true" (puress)="setPurress($event)"></app-genes>
     </div>
 

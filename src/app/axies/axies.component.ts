@@ -58,7 +58,7 @@ export class AxiesComponent implements OnInit, OnDestroy {
 
   donwloadPdf = false;
 
-  viewMenuOptions: string[] = ['Basic Menu', 'Breed View'];
+  viewMenuOptions: string[] = ['Basic Menu', 'Breed View', 'Completed View'];
   filterViewOptions: string[] = [];
 
   viewMenu: string = 'Basic Menu';
