@@ -23,15 +23,13 @@ export class AuthService {
   loginComplete(uid: string) {
     console.log('login complete',uid);
   }
-  async emailSignup(form: { email: string, password: string, roninAddress: string, avatar: string }):Promise<any> {
+  async emailSignup(form: { email: string, password: string}):Promise<any> {
     return new Promise((resolve, reject)=>{
       createUserWithEmailAndPassword(this.afAuth, form.email, form.password)
       .then((value) => {
         console.log('userCreated',value);
         resolve({
-          uid: value.user.uid,
-          avatar: form.avatar,
-          roninAddress: this.parseRonin(form.roninAddress)
+          uid: value.user.uid
         });
       })
       .catch(async error => {

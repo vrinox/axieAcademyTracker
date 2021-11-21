@@ -4,7 +4,6 @@ import { Scholar } from 'src/app/models/scholar';
 import { ComunityService } from '../community.service';
 import { DatabaseService } from '../database/database.service';
 import { ScholarDataService } from '../scholarData/scholar-data.service';
-import { SessionsService } from '../sessions/sessions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +13,21 @@ export class InsertScholarsService {
   constructor(
     private dbService: DatabaseService,   
     private schDataService: ScholarDataService,
-    private communiyService: ComunityService,
-    private sesion: SessionsService
+    private communiyService: ComunityService
   ) { }
 
   insertNewScholar(newScholar: DatosFormulario): Promise<Scholar> {
-    const parsedRonin = this.parseRonin(newScholar.roninAddress);
+    const parsedRonin = this.parseRonin(newScholar.roninAddress);    
     return new Promise(async (resolve) => {
-      let scholarsUpdated: scholarOfficialData = await this.schDataService.getOne(parsedRonin);
-      scholarsUpdated.ronin_address = parsedRonin;      
-      const parsedScholar = new Scholar();
-      parsedScholar.parse(scholarsUpdated);
-      parsedScholar.name = newScholar.name;
+      let parsedScholar = await this.dbService.getScholar('roninAddress',newScholar.roninAddress);
+      if(parsedScholar.roninAddress !== ''){
+        let scholarsUpdated: scholarOfficialData = await this.schDataService.getOne(parsedRonin);
+        scholarsUpdated.ronin_address = parsedRonin;      
+        parsedScholar = new Scholar();
+        parsedScholar.parse(scholarsUpdated);
+        parsedScholar.name = newScholar.name;
+      }
+      
       const id = await this.dbService.addScholar(parsedScholar);
       parsedScholar.id = id;
       await this.communiyService.addScholarToComunity(parsedScholar.roninAddress, this.communiyService.activeCommunity.id);
