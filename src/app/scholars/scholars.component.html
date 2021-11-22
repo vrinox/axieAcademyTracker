@@ -2,10 +2,10 @@
 
 <mat-form-field appearance="outline" class="container-table__filter">
   <mat-label>Busqueda de becados</mat-label>
-  <input matInput (keyup)="filterName($event)" placeholder="Ex. Mia" #input>
+  <input matInput (keyup)="filterName($event)" placeholder="Nombre de un becado" #input>
 </mat-form-field>
-<div class="container-table">
 
+<div class="container-table">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">  
     <ng-container class="container-table__name" matColumnDef="name" sticky>
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>

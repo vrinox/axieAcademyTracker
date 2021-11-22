@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Scholar } from '../models/scholar';
 import { ScholarDataService } from 'src/app/services/scholarData/scholar-data.service';
 import { DatabaseService } from '../services/database/database.service';
@@ -17,7 +17,7 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './scholars.component.html',
   styleUrls: ['./scholars.component.sass']
 })
-export class ScholarsComponent implements OnInit, AfterViewInit {
+export class ScholarsComponent implements OnInit {
   scholars: Scholar[] = [];
   scholars$: Subject<Scholar[]> = new Subject();
   displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
@@ -37,10 +37,6 @@ export class ScholarsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.cargarDatos();
     this.newBecado();
-  }
-
-  ngAfterViewInit(): void {
-    
   }
 
   async cargarDatos() {

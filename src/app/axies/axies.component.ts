@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
 import { AxiesData } from '../models/interfaces';
@@ -18,7 +18,7 @@ import { CalculatedPortafolioService } from '../services/calculatedPortafolio/ca
   styleUrls: ['./axies.component.sass']
 })
 
-export class AxiesComponent implements OnInit, OnDestroy {
+export class AxiesComponent implements OnInit, AfterViewInit {
   myControl = new FormControl();
   partAxies = new FormControl();
 
@@ -62,6 +62,7 @@ export class AxiesComponent implements OnInit, OnDestroy {
   filterViewOptions: string[] = [];
 
   viewMenu: string = 'Basic Menu';
+  movil: boolean = true;
 
   constructor(
     private getAxies: GetAxiesService,
@@ -72,9 +73,12 @@ export class AxiesComponent implements OnInit, OnDestroy {
     this.filteredOptions = new Observable();
     this.cardsOptions = new Observable();
   }
-  ngOnDestroy(): void {
-    
+  ngAfterViewInit(): void {
+    if(window.innerWidth < 500){
+
+    }
   }
+
   ngOnInit(): void {
     this.start();
     this.filteredOptions = this.myControl.valueChanges.pipe(
