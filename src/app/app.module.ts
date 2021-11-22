@@ -49,6 +49,7 @@ import { AxiesListComponent } from './axies-list/axies-list.component';
 import { StastAxieComponent } from './stastAxie/stast-axie.component';
 import { DonwloadPdfComponent } from './donwload-pdf/donwload-pdf.component';
 import { GenesComponent } from './components/genes/genes/genes.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -96,6 +97,7 @@ import { GenesComponent } from './components/genes/genes/genes.component';
     MatChipsModule,
     MatSelectModule,
     MatListModule,
+    MatPaginatorModule,
     MatBadgeModule,
     MatDividerModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),

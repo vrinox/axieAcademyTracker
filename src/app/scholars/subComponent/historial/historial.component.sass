@@ -1,7 +1,7 @@
 @use '@angular/material' as mat
 .historial
-    width: 90%
-    margin: 0 0 10px 5%
+    width: calc(100% - 140px)
+    margin: 10px 70px 
     display: flex
     flex-wrap: wrap
     font-size: 16px
@@ -22,6 +22,10 @@
         width: 5em
         height: 5em
 
+@media screen and (max-width: 800px) 
+    .historial
+        width: calc(100% - 40px)
+        margin: 5px 20px 
 
 @media screen and (max-width: 500px)
     .historial
