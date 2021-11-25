@@ -264,8 +264,6 @@ export interface PriceCryto{
 export interface PriceGoingeko{
     usd: number
 }
-
-
 export interface Genes{
     d: {
         class: string,

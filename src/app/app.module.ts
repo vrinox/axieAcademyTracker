@@ -29,6 +29,9 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -83,8 +86,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSidenavModule,
     MatButtonModule,
     MatToolbarModule,
+    MatCheckboxModule,
     MatIconModule,
+    MatRadioModule,
     MatFormFieldModule,
+    MatButtonToggleModule,
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,

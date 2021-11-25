@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
 import { AxiesData } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
@@ -7,18 +6,17 @@ import { SessionsService } from '../services/sessions/sessions.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
 import * as cards from '../../assets/json/cards.json';
 import { FiltersAxiesService } from '../services/filtersAxies/filters-axies.service';
 import { CalculatedPortafolioService } from '../services/calculatedPortafolio/calculated-portafolio.service';
+import { MatCheckboxChange } from '@angular/material/checkbox'; 
 @Component({
   selector: 'app-axies',
   templateUrl: './axies.component.html',
   styleUrls: ['./axies.component.sass']
 })
 
-export class AxiesComponent implements OnInit, AfterViewInit {
+export class AxiesComponent implements OnInit {
   myControl = new FormControl();
   partAxies = new FormControl();
 
@@ -36,9 +34,6 @@ export class AxiesComponent implements OnInit, AfterViewInit {
   namePlayerOptions: string[] = [];
   filteredOptions: Observable<string[]>;;
 
-  selectable = true;
-  removable = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
   cardsOptions: Observable<string[]>;
   parts: string[] = [];
   allParts: string[] = [];
@@ -46,15 +41,17 @@ export class AxiesComponent implements OnInit, AfterViewInit {
   calculatePortafolio: boolean = true;
 
   @ViewChild('cards', { static: true }) Cards!: ElementRef<HTMLInputElement>;
+  @ViewChildren('checks') ChecksboxType!: QueryList<MatCheckboxChange>;
 
   axiesData: AxiesData[] = [];
 
-  typeAxies: string[] = ['Todos', 'Beast', 'Aquatic', 'Plant', 'Bird', 'Bug',
+  typeAxies: string[] = ['Beast', 'Aquatic', 'Plant', 'Bird', 'Bug',
     'Reptile', 'Mech', 'Dawn', 'Dusk'];
-  typeAxieTitle: string = this.typeAxies[0];
+  typeAxieTitle: string = 'Todos';
 
-  breed: string[] = ['Todos', '0', '1', '2', '3', '4', '5', '6'];
-  breedTitle: string = this.breed[0];
+  breed: string[] = ['0', '1', '2', '3', '4', '5', '6'];
+
+  breedTitle: string = 'Todos';
 
   donwloadPdf = false;
 
@@ -73,30 +70,23 @@ export class AxiesComponent implements OnInit, AfterViewInit {
     this.filteredOptions = new Observable();
     this.cardsOptions = new Observable();
   }
-  ngAfterViewInit(): void {
-    if(window.innerWidth < 500){
-
-    }
-  }
 
   ngOnInit(): void {
+    this.filterAxies.copyAxiesData = [];
     this.start();
+
+    this.cardsOptions = this.partAxies.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterParts(value))
+    );
+
+
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
     );
 
     this.selecViewMenu(this.viewMenu);
-
-    this.cardsOptions = this.partAxies.valueChanges.pipe(
-      startWith(null),
-      map((name: string | null) => {
-        if (name == null) {
-          return this.allParts
-        } else {
-          return this._filterParts(name)
-        };
-      }));
 
     this.setAllParts();
   }
@@ -111,19 +101,48 @@ export class AxiesComponent implements OnInit, AfterViewInit {
     return this.namePlayerOptions.filter(name => name.toLowerCase().includes(filterValue));
   }
 
-  filterName(filterValue: string){
+  selectCheckType(type: MatCheckboxChange, index: number): void{
+    if(this.ChecksboxType.toArray()[index].checked === false){
+      this.typeAxieTitle = 'Todos';
+    }else{
+      this.ChecksboxType.toArray().forEach((checkbox, i: number) =>{
+        if(i != index){
+          checkbox.checked = false;
+        }
+      })
+      this.typeAxieTitle = type.source.value;
+    }
+    this.startFilter();
+  }
+
+  selectRadioBreed(value: string): void{
+    this.breedTitle = value;
+    this.startFilter()
+  }
+
+  private _filterParts(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    if(value != ''){
+      this.filterNameCtrl = true;
+    }else{
+      this.filterNameCtrl = false;
+    }
+    return this.allParts.filter(partName => partName.toLowerCase().includes(filterValue));
+  }
+
+  filterName(filterValue: string): void{
     this.axiesData = this.filterAxies.namePlayer(filterValue);
   }
 
   start(): void {
     if (this.sessions.oneScholar.length === 1) {
-      this.getAxieData(this.sessions.oneScholar)
+      this.getAxieData(this.sessions.oneScholar);
     } else {
       this.getAxieData(this.sessions.scholar);
     };
   };
 
-  async getAxieData(scholars: Scholar[]) {
+  async getAxieData(scholars: Scholar[]){
     this.axiesRetry = [];
     await Promise.all(
       scholars.map((scholar: Scholar) => {
@@ -162,53 +181,10 @@ export class AxiesComponent implements OnInit, AfterViewInit {
     })
   }
 
-  selecTypeAxie(type: string): void {
-    this.typeAxieTitle = type;
-  };
-
-  selecBreed(breed: string): void {
-    this.breedTitle = breed;
-    this.startFilter();
+  setPart(partName: string){
+    this.parts.push(partName);
+    this.partAxies.setValue('');
   }
-
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-
-    if (value) {
-      this.parts.push(value);
-      this.startFilter();
-    }
-    event.chipInput!.clear();
-
-    this.partAxies.setValue(null);
-  }
-
-  remove(fruit: string): void {
-    const index = this.parts.indexOf(fruit);
-
-    if (index >= 0) {
-      this.parts.splice(index, 1);
-    }
-    this.startFilter();
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.parts.push(event.option.viewValue);
-    this.Cards.nativeElement.value = '';
-    this.partAxies.setValue(null);
-    this.startFilter();
-  }
-
-  private _filterParts(value: string): string[] {
-    if (typeof (value) === 'string') {
-      const filterValue = value.toLowerCase();
-
-      return this.allParts.filter(name => name.toLowerCase().includes(filterValue));
-    } else {
-      return this.allParts
-    }
-  }
-
 
   startFilter(auction?: boolean): void {
     if (this.typeAxieTitle != 'Todos' || this.breedTitle != 'Todos' || this.parts.length != 0) {
@@ -234,7 +210,7 @@ export class AxiesComponent implements OnInit, AfterViewInit {
 
   clearFilters(){
     this.typeAxieTitle = this.typeAxies[0];
-    this.breedTitle = this.breed[0];
+    this.breedTitle = 'Todos';
     this.parts = [];
     this.myControl.setValue('');
     this.axiesData = [... this.filterAxies.copyAxiesData];
