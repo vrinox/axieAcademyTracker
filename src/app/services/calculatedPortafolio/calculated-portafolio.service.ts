@@ -28,7 +28,11 @@ export class CalculatedPortafolioService {
   
       await Promise.all(
         axiesData.map(async axieData => {
-          return (axieData.class != null) ? this.calculateAxiePrice(axieData) : Promise.resolve(axieData);
+          if(axieData.price === undefined || axieData.price === 'N/A'){
+            return (axieData.class != null) ? this.calculateAxiePrice(axieData) : Promise.resolve(axieData);
+          }else{
+            return Promise.resolve(axieData);
+          }
         })
       ).then((axiesData: AxiesData[])=>{
         axiesData.forEach((axieData)=>{
@@ -79,7 +83,7 @@ export class CalculatedPortafolioService {
   private totalAxiesTypes(classAxie: string): void {
     this.typeAxies.forEach((type: string, i: number) => {
       if (type === classAxie) {
-        this.total.typeAxies[i - 1] += 1;
+        this.total.typeAxies[i] += 1;
       }
     })
   }

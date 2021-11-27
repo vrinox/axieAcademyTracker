@@ -82,9 +82,9 @@ export class DonwloadPdfComponent implements OnInit {
   calculateAxiesType(axie: AxiesData): void{
     this.portafolio.typeAxies.forEach((type: string, index: number) =>{
       if(axie.class === type){
-        this.contentpdf.axiesTypes[index - 1].totalType += 1;
-        this.contentpdf.axiesTypes[index - 1].totalUsd += axie.price != 'N/A' ? parseFloat(axie.price!) : 0;
-        this.contentpdf.axiesTypes[index - 1].tototalEth += axie.eth != 'N/A' ? parseFloat(axie.eth!) : 0;
+        this.contentpdf.axiesTypes[index].totalType += 1;
+        this.contentpdf.axiesTypes[index].totalUsd += axie.price != 'N/A' ? parseFloat(axie.price!) : 0;
+        this.contentpdf.axiesTypes[index].tototalEth += axie.eth != 'N/A' ? parseFloat(axie.eth!) : 0;
         this.compareMinMax(parseFloat(axie.price!), index);
         this.calculateAverage();
       }
@@ -98,13 +98,13 @@ export class DonwloadPdfComponent implements OnInit {
   }
 
   compareMinMax(price: number, index: number): void{
-    if(price > this.contentpdf.axiesTypes[index - 1].maxValue){
-      this.contentpdf.axiesTypes[index - 1].maxValue = price;
-    }else if(price < this.contentpdf.axiesTypes[index - 1].minValue){
-      this.contentpdf.axiesTypes[index - 1].minValue = price;
+    if(price > this.contentpdf.axiesTypes[index].maxValue){
+      this.contentpdf.axiesTypes[index].maxValue = price;
+    }else if(price < this.contentpdf.axiesTypes[index].minValue){
+      this.contentpdf.axiesTypes[index].minValue = price;
     };
-    if(this.contentpdf.axiesTypes[index - 1].minValue === 0 && !isNaN(price)){
-      this.contentpdf.axiesTypes[index - 1].minValue = price;
+    if(this.contentpdf.axiesTypes[index].minValue === 0 && !isNaN(price)){
+      this.contentpdf.axiesTypes[index].minValue = price;
     }
   }
 

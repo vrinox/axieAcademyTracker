@@ -10,6 +10,7 @@ import * as cards from '../../assets/json/cards.json';
 import { FiltersAxiesService } from '../services/filtersAxies/filters-axies.service';
 import { CalculatedPortafolioService } from '../services/calculatedPortafolio/calculated-portafolio.service';
 import { MatCheckboxChange } from '@angular/material/checkbox'; 
+
 @Component({
   selector: 'app-axies',
   templateUrl: './axies.component.html',
@@ -22,7 +23,7 @@ export class AxiesComponent implements OnInit {
 
   axiesRetry: Scholar[] = [];
 
-  list: boolean = true;
+  list: boolean = false;
 
   loading: boolean = true;
 
@@ -44,7 +45,8 @@ export class AxiesComponent implements OnInit {
   @ViewChild('cards', { static: true }) Cards!: ElementRef<HTMLInputElement>;
   @ViewChildren('checks') ChecksboxType!: QueryList<MatCheckboxChange>;
   @ViewChild('menuAxies') MenuAxies!: ElementRef;
-
+  @ViewChild('btnRadioTodos', { static: true }) BtnRadioTodos!: any;
+  
   axiesData: AxiesData[] = [];
 
   typeAxies: string[] = ['Beast', 'Aquatic', 'Plant', 'Bird', 'Bug',
@@ -102,9 +104,7 @@ export class AxiesComponent implements OnInit {
   }
 
   movilChange(): void{
-    console.log(window.innerWidth)
     if(window.innerWidth < 480){
-      this.list = false;
       this.movil = true;
     }
   }
@@ -186,16 +186,14 @@ export class AxiesComponent implements OnInit {
         this.namePlayerOptions.push(scholar.name);
         return this.getAxies.get(scholar).then((axies: AxiesData[]) => {
           axies.forEach((DataAxie: AxiesData) => {
-            this.filterAxies.addToCopy(DataAxie)
             if (!this.filterNameCtrl) {
               this.axiesData.push(DataAxie);
             }
             if (this.filter) {
               this.startFilter();
             }
-            if(this.movil || this.funViewModule){
-              this.portafolio.calculateAxiePrice(DataAxie)
-            }
+            this.portafolio.calculateAxiePrice(DataAxie);
+            this.filterAxies.addToCopy(DataAxie);
             return 
           });
         }).catch((scholar: Scholar) => {
@@ -211,7 +209,6 @@ export class AxiesComponent implements OnInit {
     }else{
       this.getAxieData(this.axiesRetry);
     }
-    console.log('termino')
   }
 
   setAllParts(): void {
@@ -245,8 +242,6 @@ export class AxiesComponent implements OnInit {
   }
 
   async viewModule(): Promise<void>{
-    console.log('hola')
-    this.funViewModule = true;
     if(!this.valuePortafolio){
       this.axiesData = await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
     }
@@ -254,11 +249,15 @@ export class AxiesComponent implements OnInit {
   }
 
   clearFilters(){
-    this.typeAxieTitle = this.typeAxies[0];
+    this.typeAxieTitle = 'Todos';
     this.breedTitle = 'Todos';
     this.parts = [];
     this.myControl.setValue('');
     this.axiesData = [... this.filterAxies.copyAxiesData];
+    this.BtnRadioTodos.checked = true;
+    this.ChecksboxType.toArray().forEach(btnCheck=>{
+      btnCheck.checked = false;
+    })
   }
 
   pdfDonwload(value: boolean){
