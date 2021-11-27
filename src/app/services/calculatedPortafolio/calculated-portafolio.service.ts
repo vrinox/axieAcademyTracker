@@ -50,7 +50,7 @@ export class CalculatedPortafolioService {
       this.total.typeAxies = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   }
 
-  private calculateAxiePrice(axieData: AxiesData): Promise<AxiesData>{
+  public calculateAxiePrice(axieData: AxiesData): Promise<AxiesData>{
     return new Promise(async (resolve)=>{
       try{        
         let marketPrice: MarketPlacePrice = await this.martketPlace.getPrice(axieData);

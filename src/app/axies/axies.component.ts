@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, Renderer2 } from '@angular/core';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
 import { AxiesData } from '../models/interfaces';
 import { Scholar } from 'src/app/models/scholar';
@@ -30,6 +30,7 @@ export class AxiesComponent implements OnInit {
 
   filter: boolean = false;
   filterNameCtrl: boolean = false;
+  removable = true;
 
   namePlayerOptions: string[] = [];
   filteredOptions: Observable<string[]>;;
@@ -42,6 +43,7 @@ export class AxiesComponent implements OnInit {
 
   @ViewChild('cards', { static: true }) Cards!: ElementRef<HTMLInputElement>;
   @ViewChildren('checks') ChecksboxType!: QueryList<MatCheckboxChange>;
+  @ViewChild('menuAxies') MenuAxies!: ElementRef;
 
   axiesData: AxiesData[] = [];
 
@@ -59,13 +61,20 @@ export class AxiesComponent implements OnInit {
   filterViewOptions: string[] = [];
 
   viewMenu: string = 'Basic Menu';
-  movil: boolean = true;
+  movil: boolean = false;
+
+  menuFilter: string = 'General';
+
+  arrowFilter: boolean = true;
+
+  funViewModule: boolean = false;
 
   constructor(
     private getAxies: GetAxiesService,
     private sessions: SessionsService,
     public filterAxies: FiltersAxiesService,
-    public portafolio: CalculatedPortafolioService
+    public portafolio: CalculatedPortafolioService,
+    private renderer: Renderer2
   ) {
     this.filteredOptions = new Observable();
     this.cardsOptions = new Observable();
@@ -73,13 +82,13 @@ export class AxiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.filterAxies.copyAxiesData = [];
+    this.movilChange();
     this.start();
 
     this.cardsOptions = this.partAxies.valueChanges.pipe(
       startWith(''),
       map(value => this._filterParts(value))
     );
-
 
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -89,6 +98,33 @@ export class AxiesComponent implements OnInit {
     this.selecViewMenu(this.viewMenu);
 
     this.setAllParts();
+
+  }
+
+  movilChange(): void{
+    console.log(window.innerWidth)
+    if(window.innerWidth < 480){
+      this.list = false;
+      this.movil = true;
+    }
+  }
+
+  setMenuFilterAxies(optionMenu: string): void{
+    this.menuFilter = optionMenu;
+  }
+
+  remove(fruit: string): void {
+    const index = this.parts.indexOf(fruit);
+
+    if (index >= 0) {
+      this.parts.splice(index, 1);
+    }
+  }
+
+  ChipsAddEntrer(key: KeyboardEvent): void {
+    if(key.keyCode === 13){
+      this.setPart(this.partAxies.value);
+    }
   }
 
   private _filter(value: string): string[] {
@@ -102,10 +138,11 @@ export class AxiesComponent implements OnInit {
   }
 
   selectCheckType(type: MatCheckboxChange, index: number): void{
-    if(this.ChecksboxType.toArray()[index].checked === false){
+    let check: MatCheckboxChange[] = this.ChecksboxType.toArray();
+    if(check[index].checked === false){
       this.typeAxieTitle = 'Todos';
     }else{
-      this.ChecksboxType.toArray().forEach((checkbox, i: number) =>{
+      check.forEach((checkbox, i: number) =>{
         if(i != index){
           checkbox.checked = false;
         }
@@ -156,6 +193,9 @@ export class AxiesComponent implements OnInit {
             if (this.filter) {
               this.startFilter();
             }
+            if(this.movil || this.funViewModule){
+              this.portafolio.calculateAxiePrice(DataAxie)
+            }
             return 
           });
         }).catch((scholar: Scholar) => {
@@ -171,6 +211,7 @@ export class AxiesComponent implements OnInit {
     }else{
       this.getAxieData(this.axiesRetry);
     }
+    console.log('termino')
   }
 
   setAllParts(): void {
@@ -181,9 +222,10 @@ export class AxiesComponent implements OnInit {
     })
   }
 
-  setPart(partName: string){
+  setPart(partName: string): void{
     this.parts.push(partName);
     this.partAxies.setValue('');
+    this.startFilter();
   }
 
   startFilter(auction?: boolean): void {
@@ -194,14 +236,17 @@ export class AxiesComponent implements OnInit {
   }
 
   async totalPortafolio(): Promise<void>{
-    this.axiesData = await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
+    this.axiesData = await this.portafolio.getTotalPortafolio(this.filterAxies.copyAxiesData, this.typeAxies);
     if(!this.filter){
       this.filterAxies.copyAxiesData = [... this.axiesData];
     }
     this.valuePortafolio = true;
+    this.clearFilters();
   }
 
   async viewModule(): Promise<void>{
+    console.log('hola')
+    this.funViewModule = true;
     if(!this.valuePortafolio){
       this.axiesData = await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
     }
@@ -240,6 +285,16 @@ export class AxiesComponent implements OnInit {
     this.filterViewOptions = this.viewMenuOptions.filter(options => options != option);
     this.viewMenu = option;
     this.sessions.setMenuAxieView(option);
+  }
+
+
+  menuFilterShow(): void{
+    if(this.arrowFilter){
+      this.renderer.setStyle(this.MenuAxies.nativeElement, 'display', 'block');
+    }else{
+      this.renderer.removeStyle(this.MenuAxies.nativeElement, 'display');
+    }
+    this.arrowFilter = !this.arrowFilter;
   }
   
 }
