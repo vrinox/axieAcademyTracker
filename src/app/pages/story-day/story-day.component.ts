@@ -9,6 +9,7 @@ import { ComunityService } from '../../services/community.service';
 import { FormControl } from '@angular/forms';
 import { HistoricService } from 'src/app/services/historic/historic.service';
 import * as moment from 'moment';
+import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-story-day',
   templateUrl: './story-day.component.html',
@@ -19,6 +20,7 @@ export class StoryDayComponent implements OnInit {
   displayedColumns: string[] = ['name', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'monthlyRank', 'MMR'];
   @ViewChild(MatSort, { static: false }) sort?: MatSort;
   dataSource: MatTableDataSource<Scholar> = new MatTableDataSource();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   myControl = new FormControl();
   dias: any[] = [];
@@ -51,6 +53,7 @@ export class StoryDayComponent implements OnInit {
     });
     this.sessions.setScholar(this.scholars);
     this.dataSource = new MatTableDataSource(this.scholars);
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort!;
     this.sessions.setLoading(false);
   }
@@ -71,4 +74,12 @@ export class StoryDayComponent implements OnInit {
     });
   }
 
+  filterName(event: Event){
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

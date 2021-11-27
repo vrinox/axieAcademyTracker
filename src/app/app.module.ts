@@ -29,6 +29,9 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -49,6 +52,7 @@ import { AxiesListComponent } from './axies-list/axies-list.component';
 import { StastAxieComponent } from './stastAxie/stast-axie.component';
 import { DonwloadPdfComponent } from './donwload-pdf/donwload-pdf.component';
 import { GenesComponent } from './components/genes/genes/genes.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -82,8 +86,11 @@ import { GenesComponent } from './components/genes/genes/genes.component';
     MatSidenavModule,
     MatButtonModule,
     MatToolbarModule,
+    MatCheckboxModule,
     MatIconModule,
+    MatRadioModule,
     MatFormFieldModule,
+    MatButtonToggleModule,
     MatInputModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
@@ -96,6 +103,7 @@ import { GenesComponent } from './components/genes/genes/genes.component';
     MatChipsModule,
     MatSelectModule,
     MatListModule,
+    MatPaginatorModule,
     MatBadgeModule,
     MatDividerModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),

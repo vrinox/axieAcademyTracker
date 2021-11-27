@@ -1,114 +1,142 @@
-<mat-card class="menu-axies">
-  <div class="menu-axies__filters-menu">
-    <h2 class="menu-axies__title-h2">Filtros</h2>
-    <button mat-stroked-button (click)="clearFilters()">Limpiar Filtros 
-      <mat-icon>clear</mat-icon>
-    </button>
-  </div>
+<div class="content-axies">
 
-  <div class="menu-axies__filters-menu">
-    <mat-form-field class="menu-axies__input--name" appearance="outline">
-      <mat-label>Name Player</mat-label>
-      <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="myControl"
-        [matAutocomplete]="auto">
-      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="filterName(option)">
-          {{ option }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-
-    <button mat-stroked-button [matMenuTriggerFor]="menu" class="menu-axies__btn">tipo: {{ typeAxieTitle }}</button>
-    <mat-menu #menu="matMenu">
-      <button *ngFor="let type of typeAxies" class="menu-axies__btn--type" (click)="selecTypeAxie(type)"
-        (click)="startFilter()" mat-menu-item>{{ type }}
-        <img *ngIf="type != 'Todos'" src="assets/svg/axies/{{type}}/{{type}}.svg" class="menu-axies__btn-img" alt="">
-      </button>
-    </mat-menu>
-
-    <button mat-stroked-button [matMenuTriggerFor]="menu2" class="menu-axies__btn">breed: {{ breedTitle }}</button>
-    <mat-menu #menu2="matMenu">
-      <button *ngFor="let bred of breed" (click)="selecBreed(bred)" mat-menu-item>{{ bred }}</button>
-    </mat-menu>
-
-    <button mat-stroked-button 
+  <div  class="menu-axies__hidden" #menuAxies>
+    <mat-card class="menu-axies">
+      <div class="menu-axies__filters-title">
+        <label class="menu-axies__title-p">Filtros</label>
+        <button mat-button  color="primary" (click)="clearFilters()">Limpiar 
+          <mat-icon>clear</mat-icon>
+        </button>
+      </div>
+  
+      <mat-button-toggle-group class="menu-axies__options">
+        <mat-button-toggle checked="true" class="menu-axies__option" (click)="setMenuFilterAxies('General')">General</mat-button-toggle>
+        <mat-button-toggle class="menu-axies__option" (click)="setMenuFilterAxies('Partes')">Partes</mat-button-toggle>
+      </mat-button-toggle-group>
+    
+      <div class="menu-axies__filters-menu">
+        <mat-form-field class="menu-axies__input--name" appearance="outline">
+          <mat-label>Name Player</mat-label>
+          <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="myControl"
+            [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="filterName(option)">
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+  
+        <div *ngIf="menuFilter === 'General'">
+          <label class="menu-axies__label">Class</label>
+          <section class="menu-axies__section-checks">
+            <mat-checkbox class="menu-axies__check" *ngFor="let type of typeAxies; index as i" 
+            [value]="type" #checks (change)="selectCheckType($event, i)">
+              <img *ngIf="type != 'Todos'" src="assets/svg/axies/{{type}}/{{type}}.svg" class="menu-axies__check-img" alt="">
+              {{ type }}
+            </mat-checkbox>
+          </section>
+    
+          <label class="menu-axies__label">Breed</label>
+          <section>
+            <mat-radio-group>
+              <mat-radio-button class="menu-axies__breed-select" [checked]="true" value="Todos" (click)="selectRadioBreed('Todos')">Todos</mat-radio-button>
+              <mat-radio-button class="menu-axies__breed-select" *ngFor="let bd of breed" [value]="bd"  #test  (change)="selectRadioBreed(bd)">{{ bd }}</mat-radio-button>
+            </mat-radio-group>
+          </section>
+  
+          <button mat-stroked-button 
           [disabled]="calculatePortafolio"
           class="menu-axies__btn" 
           (click)="totalPortafolio()">
           Valor del Portafolio</button>
-
-    <mat-form-field class="menu-axies__cards" appearance="outline" style=" margin-bottom: -1.25em">
-      <mat-label>Partes</mat-label>
-      <mat-chip-list #chipList>
-        <mat-chip *ngFor="let part of parts" [selectable]="selectable" [removable]="removable" (removed)="remove(part)">
-          {{ part }}
-          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-        </mat-chip>
-        <input placeholder="New Parts..." #cards [formControl]="partAxies" [matAutocomplete]="auto2"
-          [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          (matChipInputTokenEnd)="add($event)">
-      </mat-chip-list>
-      <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event)">
-        <mat-option *ngFor="let cards of cardsOptions | async" [value]="parts">
-          {{ cards }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+  
+          <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)">Axies en venta</button>
+        </div>
+  
+        <div *ngIf="menuFilter === 'Partes'">
+          <mat-form-field class="menu-axies__parts" appearance="outline">
+            <mat-label>Partes</mat-label>
+            <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="partAxies"
+              [matAutocomplete]="auto2" (keyup)="ChipsAddEntrer($event)">
+            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
+              <mat-option *ngFor="let cardOption of cardsOptions | async" [value]="cardOption" (click)="setPart(cardOption)">
+                {{ cardOption }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field> 
+          <mat-chip-list aria-label="Fish selection">
+            <mat-chip class="menu-axies__cards" *ngFor="let part of parts; index as i"
+              [removable]="removable" (removed)="remove(part)" selected  color="primary">
+              {{part}}
+              <button matChipRemove *ngIf="removable">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
     
-    <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)">Axies en venta</button>
+    </mat-card>
   </div>
-
-</mat-card>
-
-<app-donwload-pdf *ngIf="valuePortafolio" [axiesData]="axiesData" (loadPdf)="pdfDonwload($event)"></app-donwload-pdf>
-
-
-<mat-card class="portafolio" *ngIf="valuePortafolio">
-  <div class="portafolio__totals portafolio__totals--prices">
-    <p>$ {{ portafolio.total.usd }}</p>
-    <p><i class="cf cf-eth"></i>{{ portafolio.total.eth }}</p>
-    <p>Total Becados: {{ portafolio.total.becados }}</p>
-    <p>Total Axies: {{ portafolio.total.axies }}</p>
-    <p (click)="getNa()">Total N/A: {{ portafolio.total.na }}</p>
-  </div>
-
-  <div class="portafolio__totals portafolio__totals--icons">
-    <div *ngFor="let type of typeAxies | slice:1; index as i">
-      <div [matBadge]="portafolio.total.typeAxies[i]" matBadgeOverlap="false">
-        <img class="portafolio__img" src="assets/svg/axies/{{type}}/{{type}}.svg" alt="">
+  
+  <div class="content-axies__content">
+    <app-donwload-pdf *ngIf="valuePortafolio" [axiesData]="axiesData" (loadPdf)="pdfDonwload($event)"></app-donwload-pdf>
+    
+    
+    <mat-card class="portafolio" *ngIf="valuePortafolio">
+      <div class="portafolio__totals portafolio__totals--prices">
+        <p>$ {{ portafolio.total.usd }}</p>
+        <p><i class="cf cf-eth"></i>{{ portafolio.total.eth }}</p>
+        <p>Total Becados: {{ portafolio.total.becados }}</p>
+        <p>Total Axies: {{ portafolio.total.axies }}</p>
+        <p (click)="getNa()">Total N/A: {{ portafolio.total.na }}</p>
+      </div>
+    
+      <div class="portafolio__totals portafolio__totals--icons">
+        <div *ngFor="let type of typeAxies | slice:1; index as i">
+          <div [matBadge]="portafolio.total.typeAxies[i]" matBadgeOverlap="false">
+            <img class="portafolio__img" src="assets/svg/axies/{{type}}/{{type}}.svg" alt="">
+          </div>
+        </div>
+      </div>
+    </mat-card>
+    
+    <div class="menu-change">
+      <div class="menu-change__btn-filter menu-change__btn-filter-list">
+        <button mat-stroked-button color="primary" (click)="menuFilterShow()">
+          Filtros
+          <mat-icon>{{ arrowFilter ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+        </button>
+      </div>
+      <div>
+        <button  mat-raised-button color="warn" *ngIf="donwloadPdf" (click)="savePdf()">descargar PDF</button>
+      </div>
+      <div>
+        <button mat-button (click)="list = true" *ngIf="!movil">
+          <mat-icon>reorder</mat-icon>
+        </button>
+        <button mat-button (click)="viewModule()" *ngIf="!movil">
+          <mat-icon>view_module</mat-icon>
+        </button>
+        <button mat-raised-button [matMenuTriggerFor]="menu5">{{ viewMenu }}</button>
+        <mat-menu #menu5="matMenu">
+          <button mat-menu-item *ngFor="let viewOpntios of filterViewOptions" (click)="selecViewMenu(viewOpntios)" >{{ viewOpntios }}</button>
+        </mat-menu>
       </div>
     </div>
+    
+    <div class="axie-list" *ngIf="list">
+      <mat-accordion class="container-axies__acordion" multi>
+        <app-axies-list [axie]="axie" [viewMenu]="viewMenu" *ngFor="let axie of axiesData"></app-axies-list>
+      </mat-accordion>
+    </div>
+    
+    <div class="axies-module" *ngIf="!list">
+      <app-axies-module class="axies-module__axie" [axie]="axie" [viewMenu]="viewMenu" (refresh)="refreshNa()" *ngFor="let axie of axiesData"></app-axies-module>
+    </div>
+    
+    <div class="loading" *ngIf="loading">
+      <app-loading></app-loading>
+    </div>
   </div>
-</mat-card>
-
-<div class="menu-change">
-  <div>
-    <button  mat-raised-button color="warn" *ngIf="donwloadPdf" (click)="savePdf()">descargar PDF</button>
-  </div>
-  <div>
-    <button mat-button (click)="list = true">
-      <mat-icon>reorder</mat-icon>
-    </button>
-    <button mat-button (click)="viewModule()">
-      <mat-icon>view_module</mat-icon>
-    </button>
-    <button mat-raised-button [matMenuTriggerFor]="menu5">{{ viewMenu }}</button>
-    <mat-menu #menu5="matMenu">
-      <button mat-menu-item *ngFor="let viewOpntios of filterViewOptions" (click)="selecViewMenu(viewOpntios)" >{{ viewOpntios }}</button>
-    </mat-menu>
-  </div>
-</div>
-
-<div class="axie-list" *ngIf="list">
-  <mat-accordion class="container-axies__acordion" multi>
-    <app-axies-list [axie]="axie" [viewMenu]="viewMenu" *ngFor="let axie of axiesData"></app-axies-list>
-  </mat-accordion>
-</div>
-
-<div class="axies-module" *ngIf="!list">
-  <app-axies-module class="axies-module__axie" [axie]="axie" [viewMenu]="viewMenu" (refresh)="refreshNa()" *ngFor="let axie of axiesData"></app-axies-module>
-</div>
-
-<div class="loading" *ngIf="loading">
-  <app-loading></app-loading>
 </div>

@@ -27,12 +27,14 @@
         justify-content: center
     &__sub-img
         width: 50%
+        min-width: 180px
     &__egg-img
         width: 25%
     &__sub-stast
-        width: 40%
+        width: 60%
     &__parts
         width: 50%
+        min-width: 304px
         display: flex
         justify-content: space-between
         flex-wrap: wrap
@@ -48,9 +50,13 @@
         width: 40%
     &__genes
         width: 50%
+        min-width: 304px
         border-radius: 15px
         padding: 20px
         background:#15171E
+    &__genes-completed
+        width: 100%
+        box-sizing: border-box
     &__price
         position: absolute
         left: 3px
@@ -61,3 +67,37 @@
         color: #5e5e5e
     &__price-content
         display: flex
+    &__genes, &__sub-content, &__parts
+        box-sizing: border-box
+
+@media screen and (max-width: 800px)
+    .container-axies
+        &__sub-content
+            width: 35%
+            margin-right: 15%
+            align-items: start
+
+@media screen and (max-width: 740px)
+    .container-axies
+        &__sub-content
+            margin-right: 7%
+
+@media screen and (max-width: 930px)
+    .container-axies
+        &__expasion
+            flex-direction: column
+        &__genes, &__sub-content, &__parts
+            width: 100%
+            height: 200px
+        &__sub-content
+            align-items: center
+        &__sub-img
+            width: 40%
+
+@media screen and (max-width: 700px)
+    .container-axies
+        min-width: 580px
+        &__expasion
+            flex-direction: row
+        &__sub-stast
+            width: 100%
