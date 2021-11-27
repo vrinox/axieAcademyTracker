@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyB4NF-O5Ps2e_cMgcTGcbTXOCTr4YT_Sio",
+    apiKey: "AIzaSyD-ZTONH0mNWzNT1-IHBOqdBf4qiYUYfQ8",
     authDomain: "axieacademytracker.firebaseapp.com",
     databaseURL: "https://axieacademytracker-default-rtdb.firebaseio.com",
     projectId: "axieacademytracker",

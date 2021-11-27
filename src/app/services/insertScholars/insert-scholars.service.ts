@@ -19,17 +19,16 @@ export class InsertScholarsService {
   insertNewScholar(newScholar: DatosFormulario): Promise<Scholar> {
     const parsedRonin = this.parseRonin(newScholar.roninAddress);    
     return new Promise(async (resolve) => {
-      let parsedScholar = await this.dbService.getScholar('roninAddress',newScholar.roninAddress);
-      if(parsedScholar.roninAddress !== ''){
+      let parsedScholar = await this.dbService.getScholar('roninAddress',parsedRonin);
+      if(parsedScholar.roninAddress === ''){
         let scholarsUpdated: scholarOfficialData = await this.schDataService.getOne(parsedRonin);
         scholarsUpdated.ronin_address = parsedRonin;      
         parsedScholar = new Scholar();
         parsedScholar.parse(scholarsUpdated);
         parsedScholar.name = newScholar.name;
+        const id = await this.dbService.addScholar(parsedScholar);
+        parsedScholar.id = id;
       }
-      
-      const id = await this.dbService.addScholar(parsedScholar);
-      parsedScholar.id = id;
       await this.communiyService.addScholarToComunity(parsedScholar.roninAddress, this.communiyService.activeCommunity.id);
       resolve(parsedScholar);
     })
