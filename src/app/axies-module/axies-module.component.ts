@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AxiesData, MarketPlacePrice } from '../models/interfaces';
 import { MarketplaceService } from 'src/app/services/marketplace/marketplace.service'
 import { SessionsService } from '../services/sessions/sessions.service';
+import { AxieGene } from 'agp-npm/dist/axie-gene';
 
 @Component({
   selector: 'app-axies-module',
@@ -16,6 +17,7 @@ export class AxiesModuleComponent implements OnInit {
   await: boolean = false;
   purity: number = 0;
   menuView: string = ''
+  axieGenes: any = ''
 
   constructor(private market: MarketplaceService, private sessions: SessionsService) { 
     this.axie = {
@@ -45,13 +47,13 @@ export class AxiesModuleComponent implements OnInit {
     this.sessions.getMenuAxieView().subscribe(view=>{
       this.menuView = view;
     })
+    this.setPurress();
   }
 
 
   async refreshNA(): Promise<void>{
     if(!this.await){
       this.await = true;
-      console.log('hola')
       let marketPrice: MarketPlacePrice = await this.market.getPrice(this.axie)
       if(marketPrice.price != 'N/A'){
         this.axie.eth = marketPrice.eth;
@@ -63,8 +65,9 @@ export class AxiesModuleComponent implements OnInit {
     }
   }
 
-  setPurress(puress: any){
-    this.purity = puress;
+  setPurress(){
+    this.axieGenes = new AxieGene(this.axie.genes);
+    this.purity = this.axieGenes.getGeneQuality();
   }
 
 }

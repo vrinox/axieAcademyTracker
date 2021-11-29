@@ -26,7 +26,7 @@
           </mat-autocomplete>
         </mat-form-field>
   
-        <div *ngIf="menuFilter === 'General'">
+        <div [class.menu-axies__general-off]="menuFilter === 'Partes'">
           <label class="menu-axies__label">Class</label>
           <section class="menu-axies__section-checks">
             <mat-checkbox class="menu-axies__check" *ngFor="let type of typeAxies; index as i" 
@@ -39,7 +39,7 @@
           <label class="menu-axies__label">Breed</label>
           <section>
             <mat-radio-group>
-              <mat-radio-button class="menu-axies__breed-select" [checked]="true" value="Todos" (click)="selectRadioBreed('Todos')">Todos</mat-radio-button>
+              <mat-radio-button class="menu-axies__breed-select" #btnRadioTodos [checked]="true" value="Todos" (click)="selectRadioBreed('Todos')">Todos</mat-radio-button>
               <mat-radio-button class="menu-axies__breed-select" *ngFor="let bd of breed" [value]="bd"  #test  (change)="selectRadioBreed(bd)">{{ bd }}</mat-radio-button>
             </mat-radio-group>
           </section>
@@ -53,7 +53,7 @@
           <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)">Axies en venta</button>
         </div>
   
-        <div *ngIf="menuFilter === 'Partes'">
+        <div  [class.menu-axies__general-off]="menuFilter === 'General'">
           <mat-form-field class="menu-axies__parts" appearance="outline">
             <mat-label>Partes</mat-label>
             <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="partAxies"
@@ -93,7 +93,7 @@
       </div>
     
       <div class="portafolio__totals portafolio__totals--icons">
-        <div *ngFor="let type of typeAxies | slice:1; index as i">
+        <div *ngFor="let type of typeAxies; index as i">
           <div [matBadge]="portafolio.total.typeAxies[i]" matBadgeOverlap="false">
             <img class="portafolio__img" src="assets/svg/axies/{{type}}/{{type}}.svg" alt="">
           </div>

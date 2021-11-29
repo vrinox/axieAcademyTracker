@@ -39,10 +39,10 @@ class GraphqlBodyAxie{
         this.criteria = {
             parts: this.parseParts(axiesData),
             breedCount: [0, 7],
-            hp: [axiesData!.hp, axiesData!.hp],
-            speed: [axiesData!.speed, axiesData!.speed],
-            skill: [axiesData!.skill, axiesData!.skill],
-            morale: [axiesData!.morale, axiesData!.morale],
+            hp: [axiesData!.hp, axiesData!.hp + 1],
+            speed: [axiesData!.speed, axiesData!.speed + 1],
+            skill: [axiesData!.skill, axiesData!.skill + 1],
+            morale: [axiesData!.morale, axiesData!.morale + 1],
             classes: [axiesData.class],
             pureness: this.calculatePureness(axiesData)
         }
