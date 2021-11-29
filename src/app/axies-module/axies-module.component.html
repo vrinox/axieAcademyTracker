@@ -21,7 +21,7 @@
             <img class="axies-module__img-class" 
                 src="assets/svg/axies/{{axie.class}}/{{axie.class}}.svg"  alt="">
         </div>
-        <div class="axies-module__purity" *ngIf="purity != 0">
+        <div class="axies-module__purity">
             <p class="axies-module__purity-p">Pureza: {{purity}}%</p>
         </div>
     </div>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="axies-module__genes" *ngIf="menuView === 'Breed View' || menuView === 'Completed View'"> 
-        <app-genes [AxieGen]="axie.genes" [viewChange]="true" (puress)="setPurress($event)"></app-genes>
+        <app-genes [AxieGen]="axie.genes" [viewChange]="true"></app-genes>
     </div>
 
     <div class="axies-module__footer-price" [class.axies-module__footer-refesh]="axie.price === 'N/A'" (click)="refreshNA()">

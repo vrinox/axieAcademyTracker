@@ -54,6 +54,8 @@
     &__filters-title
         display: flex
         justify-content: space-between
+    &__general-off
+        display: none
 
 .portafolio
     width: calc(100% - 40px)
@@ -86,12 +88,14 @@
     flex-wrap: wrap
     gap: 5px 5px
     padding: 20px
-    margin-bottom: 5px
+    height: calc(100vh - 121px)
+    overflow-y: scroll
     box-sizing: border-box
 
 .axie-list
     width: 100% 
-    margin-bottom: 5px
+    height: calc(100vh - 121px)
+    overflow-y: scroll
     box-sizing: border-box
 
 .menu-change

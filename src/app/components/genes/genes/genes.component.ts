@@ -23,7 +23,6 @@ export class GenesComponent implements OnInit {
     this.axieGenes = new AxieGene(this.AxieGen);
     this.parseGenes();
     this.uperCaseGenes();
-    this.puressSend();
   }
 
   parseGenes(){
@@ -56,9 +55,5 @@ export class GenesComponent implements OnInit {
       gen.d.class =  gen.d.class.slice(0,1).toLocaleUpperCase() + gen.d.class.slice(1);
       gen.d.type = gen.d.type.slice(0,1).toLocaleUpperCase() + gen.d.type.slice(1);
     })
-  }
-
-  puressSend(){
-    this.puress.emit(this.axieGenes.getGeneQuality());
   }
 }
