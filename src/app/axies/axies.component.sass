@@ -98,6 +98,9 @@
     overflow-y: scroll
     box-sizing: border-box
 
+.view-portafolio
+    height: calc(100vh - 237px)
+
 .menu-change
     width: calc(100% - 40px)
     margin-left: 20px 
@@ -107,6 +110,8 @@
     box-sizing: border-box
     &__btn-filter
         display: none
+    &__btn-menu
+        margin: 0px 5px
 
 @media screen and (max-width: 700px)
     .menu-axies
@@ -127,3 +132,6 @@
 @media screen and (max-width: 580px) 
     .axies-module
         padding: 0px
+    .menu-change
+        width: 100%
+        margin-left: 0

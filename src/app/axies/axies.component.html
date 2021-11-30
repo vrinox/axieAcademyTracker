@@ -47,7 +47,7 @@
           <button mat-stroked-button 
           [disabled]="calculatePortafolio"
           class="menu-axies__btn" 
-          (click)="totalPortafolio()">
+          (click)="valuePortafolio = true">
           Valor del Portafolio</button>
   
           <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)">Axies en venta</button>
@@ -118,25 +118,34 @@
         <button mat-button (click)="viewModule()" *ngIf="!movil">
           <mat-icon>view_module</mat-icon>
         </button>
-        <button mat-raised-button [matMenuTriggerFor]="menu5">{{ viewMenu }}</button>
+        <button class="menu-change__btn-menu" mat-raised-button [matMenuTriggerFor]="menu5">{{ viewMenu }}</button>
         <mat-menu #menu5="matMenu">
           <button mat-menu-item *ngFor="let viewOpntios of filterViewOptions" (click)="selecViewMenu(viewOpntios)" >{{ viewOpntios }}</button>
+        </mat-menu>
+        <button class="menu-change__btn-menu" mat-raised-button [matMenuTriggerFor]="menu6" [disabled]="!orderMenu">{{ orderTitle }}</button>
+        <mat-menu #menu6="matMenu">
+          <button mat-menu-item (click)="filterPrice('Asc', true)" (click)="setOrderTitle('Mayor Precio')">Mayor Precio</button>
+          <button mat-menu-item (click)="filterPrice('Desc', true)" (click)="setOrderTitle('Menor Precio')">Menor Precio</button>
+          <button mat-menu-item (click)="filterPrice('Asc', false)" (click)="setOrderTitle('Mayor Id')">Mayor Id</button>
+          <button mat-menu-item (click)="filterPrice('Desc', false)" (click)="setOrderTitle('Menor Id')">Menor Id</button>
         </mat-menu>
       </div>
     </div>
     
-    <div class="axie-list" *ngIf="list">
+    <div class="axie-list" [class.view-portafolio]="valuePortafolio" *ngIf="list">
       <mat-accordion class="container-axies__acordion" multi>
         <app-axies-list [axie]="axie" [viewMenu]="viewMenu" *ngFor="let axie of axiesData"></app-axies-list>
       </mat-accordion>
+      <div class="loading" *ngIf="loading">
+        <app-loading></app-loading>
+      </div>
     </div>
     
-    <div class="axies-module" *ngIf="!list">
+    <div class="axies-module" [class.view-portafolio]="valuePortafolio" *ngIf="!list">
       <app-axies-module class="axies-module__axie" [axie]="axie" [viewMenu]="viewMenu" (refresh)="refreshNa()" *ngFor="let axie of axiesData"></app-axies-module>
-    </div>
-    
-    <div class="loading" *ngIf="loading">
-      <app-loading></app-loading>
+      <div class="loading" *ngIf="loading">
+        <app-loading></app-loading>
+      </div>
     </div>
   </div>
 </div>
