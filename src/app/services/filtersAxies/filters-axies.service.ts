@@ -19,10 +19,6 @@ export class FiltersAxiesService {
     }
     return this.dataAxies
   }
-  
-  addToCopy(DataAxie:any){
-    this.copyAxiesData.push(DataAxie);
-  }
 
   namePlayer(value: string): AxiesData[]{
     if (value != '') {
@@ -82,6 +78,32 @@ export class FiltersAxiesService {
   getNA(axies: AxiesData[]): AxiesData[]{
     return axies = this.copyAxiesData.filter(axie => {
       return axie.price === 'N/A';
+    });
+  }
+
+  orderByPrice(axies: AxiesData[], order: string, priceOrId: boolean): AxiesData[]{
+    return axies.sort((a, b) => {
+      let filterA: number = 0;
+      let filterB: number = 0;
+      if(priceOrId){
+        if(a.price !== 'N/A'){
+          filterA = parseFloat(a.price!);
+        }
+      }else{
+        filterA = parseInt(a.id);
+      }
+      if(priceOrId){
+        if(b.price !== 'N/A'){
+          filterB = parseFloat(b.price!);
+        }
+      }else{
+        filterB = parseInt(b.id);
+      }
+      if(order === 'Asc'){
+        return filterB - filterA;
+      }else{
+        return filterA - filterB;
+      }
     });
   }
 }

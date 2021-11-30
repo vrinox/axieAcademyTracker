@@ -71,6 +71,12 @@ export class AxiesComponent implements OnInit {
 
   funViewModule: boolean = false;
 
+
+  orderTitle: string = 'Mayor Precio';
+  orderMenu: boolean = false;
+  priceOrId: boolean = true;
+  order: string = 'Asc'
+
   constructor(
     private getAxies: GetAxiesService,
     private sessions: SessionsService,
@@ -192,8 +198,6 @@ export class AxiesComponent implements OnInit {
             if (this.filter) {
               this.startFilter();
             }
-            this.portafolio.calculateAxiePrice(DataAxie);
-            this.filterAxies.addToCopy(DataAxie);
             return 
           });
         }).catch((scholar: Scholar) => {
@@ -204,11 +208,11 @@ export class AxiesComponent implements OnInit {
     )
     if(this.axiesRetry.length === 0){
       this.loading = false;
-      this.calculatePortafolio = false;
       this.sessions.oneScholar = [];
     }else{
       this.getAxieData(this.axiesRetry);
     }
+    this.totalPortafolio();
   }
 
   setAllParts(): void {
@@ -229,38 +233,51 @@ export class AxiesComponent implements OnInit {
     if (this.typeAxieTitle != 'Todos' || this.breedTitle != 'Todos' || this.parts.length != 0) {
       this.filter = true;
     };
-    this.axiesData = this.filterAxies.get(this.typeAxieTitle, this.breedTitle, this.parts, auction);
+    if(this.orderMenu){
+      this.axiesData = this.filterAxies.get(this.typeAxieTitle, this.breedTitle, this.parts, auction);
+    }
   }
 
-  async totalPortafolio(): Promise<void>{
-    this.axiesData = await this.portafolio.getTotalPortafolio(this.filterAxies.copyAxiesData, this.typeAxies);
-    if(!this.filter){
-      this.filterAxies.copyAxiesData = [... this.axiesData];
+  async totalPortafolio(view: boolean = false): Promise<void>{
+    await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
+    this.filterPrice();
+    this.filterAxies.copyAxiesData = [... this.axiesData];
+    this.orderMenu = true;
+    this.calculatePortafolio = false;
+    if(this.filter){
+      this.startFilter();
     }
-    this.valuePortafolio = true;
-    this.clearFilters();
+  }
+
+  setOrderTitle(valueMenu: string, valuePriceOrId: boolean, valueOrder: string): void{
+    this.orderTitle = valueMenu;
+    this.priceOrId = valuePriceOrId;
+    this.order = valueOrder;
+    this.filterPrice();
+  }
+
+  filterPrice(): void{
+    this.filterAxies.orderByPrice(this.axiesData, this.order, this.priceOrId);
   }
 
   async viewModule(): Promise<void>{
-    if(!this.valuePortafolio){
-      this.axiesData = await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
-    }
     this.list = false;
   }
 
-  clearFilters(){
+  clearFilters(): void{
     this.typeAxieTitle = 'Todos';
     this.breedTitle = 'Todos';
     this.parts = [];
     this.myControl.setValue('');
     this.axiesData = [... this.filterAxies.copyAxiesData];
+    this.filterPrice();
     this.BtnRadioTodos.checked = true;
     this.ChecksboxType.toArray().forEach(btnCheck=>{
       btnCheck.checked = false;
-    })
+    });
   }
 
-  pdfDonwload(value: boolean){
+  pdfDonwload(value: boolean): void{
     if(value){
       this.donwloadPdf = true
     }
