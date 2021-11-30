@@ -75,7 +75,9 @@ export class AxiesComponent implements OnInit {
   orderTitle: string = 'Mayor Precio';
   orderMenu: boolean = false;
   priceOrId: boolean = true;
-  order: string = 'Asc'
+  order: string = 'Desc';
+
+  sortMenu: boolean = false;
 
   constructor(
     private getAxies: GetAxiesService,
@@ -106,7 +108,6 @@ export class AxiesComponent implements OnInit {
     this.selecViewMenu(this.viewMenu);
 
     this.setAllParts();
-
   }
 
   movilChange(): void{
@@ -160,7 +161,7 @@ export class AxiesComponent implements OnInit {
 
   selectRadioBreed(value: string): void{
     this.breedTitle = value;
-    this.startFilter()
+    this.startFilter();
   }
 
   private _filterParts(value: string): string[] {
@@ -209,10 +210,11 @@ export class AxiesComponent implements OnInit {
     if(this.axiesRetry.length === 0){
       this.loading = false;
       this.sessions.oneScholar = [];
+      console.log('termino la traida de axies')
+      this.totalPortafolio();
     }else{
       this.getAxieData(this.axiesRetry);
     }
-    this.totalPortafolio();
   }
 
   setAllParts(): void {
@@ -238,7 +240,8 @@ export class AxiesComponent implements OnInit {
     }
   }
 
-  async totalPortafolio(view: boolean = false): Promise<void>{
+  async totalPortafolio(): Promise<void>{
+    console.log('comenzo el calculo de precio')
     await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
     this.filterPrice();
     this.filterAxies.copyAxiesData = [... this.axiesData];
@@ -287,10 +290,10 @@ export class AxiesComponent implements OnInit {
     this.sessions.setDonwloadPdf(true);
   }
 
-  async refreshNa(){
-    if(this.valuePortafolio){
-      this.axiesData = await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
-    }
+  async refreshNa(axie: AxiesData){
+    this.filterAxies.setCopyAxiesNewPrice(axie);
+    this.startFilter();
+    this.filterPrice();
   }
 
   getNa(){

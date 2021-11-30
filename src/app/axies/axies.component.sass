@@ -112,6 +112,8 @@
         display: none
     &__btn-menu
         margin: 0px 5px
+    &__sort
+        display: none
 
 @media screen and (max-width: 700px)
     .menu-axies
@@ -122,12 +124,29 @@
             position: absolute
             top: 53px
             z-index: 10
+        &__value-portafolio
+            top: 169px
     .content-axies
         &__content
             width: 100%
     .menu-change
         &__btn-filter-list
             display: block
+        &__sort-menu
+            position: relative
+        &__sort
+            display: block
+        &__sub-menu-off
+            display: none
+            padding: 5px
+            position: absolute
+            flex-direction: column
+            background: #fff
+            z-index: 40
+            right: 0px
+        &__sub-menu-on
+            display: flex
+
 
 @media screen and (max-width: 580px) 
     .axies-module

@@ -36,9 +36,15 @@ class GraphqlBodyAxie{
     }
 
     private setCriteria(axiesData: AxiesData): void{
+        let breed: number[];
+        if(axiesData.breedCount === 0){
+            breed = [0, 0];
+        }else{
+            breed = [0, 7];
+        };
         this.criteria = {
             parts: this.parseParts(axiesData),
-            breedCount: [0, 7],
+            breedCount: breed,
             hp: [axiesData!.hp, axiesData!.hp + 1],
             speed: [axiesData!.speed, axiesData!.speed + 1],
             skill: [axiesData!.skill, axiesData!.skill + 1],
