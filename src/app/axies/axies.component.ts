@@ -210,7 +210,6 @@ export class AxiesComponent implements OnInit {
     if(this.axiesRetry.length === 0){
       this.loading = false;
       this.sessions.oneScholar = [];
-      console.log('termino la traida de axies')
       this.totalPortafolio();
     }else{
       this.getAxieData(this.axiesRetry);
@@ -241,7 +240,6 @@ export class AxiesComponent implements OnInit {
   }
 
   async totalPortafolio(): Promise<void>{
-    console.log('comenzo el calculo de precio')
     await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
     this.filterPrice();
     this.filterAxies.copyAxiesData = [... this.axiesData];
