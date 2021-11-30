@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AxiesData, MarketPlacePrice, Portafolio } from 'src/app/models/interfaces';
+import { FiltersAxiesService } from '../filtersAxies/filters-axies.service';
 import { MarketplaceService } from '../marketplace/marketplace.service';
 import { SessionsService } from '../sessions/sessions.service';
 
@@ -19,8 +20,7 @@ export class CalculatedPortafolioService {
     typeAxies: [0, 0, 0, 0, 0, 0, 0, 0, 0]
   }
 
-  constructor(private martketPlace: MarketplaceService,
-  private sessions: SessionsService) { }
+  constructor(private martketPlace: MarketplaceService, private sessions: SessionsService) { }
 
   async getTotalPortafolio(axiesData: AxiesData[], axiesTypes: string[]): Promise<AxiesData[]>{
       this.cleanPortafolio();
@@ -56,10 +56,10 @@ export class CalculatedPortafolioService {
 
   public calculateAxiePrice(axieData: AxiesData): Promise<AxiesData>{
     return new Promise(async (resolve)=>{
-      try{        
+      try{     
         let marketPrice: MarketPlacePrice = await this.martketPlace.getPrice(axieData);
-        axieData.price = marketPrice.price;
-        axieData.eth = marketPrice.eth;        
+        axieData.price = marketPrice.price; 
+        axieData.eth = marketPrice.eth;     
         resolve(axieData);
       }catch(err){
         axieData.price = 'N/A';
