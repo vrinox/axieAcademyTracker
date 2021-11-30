@@ -124,10 +124,10 @@
         </mat-menu>
         <button class="menu-change__btn-menu" mat-raised-button [matMenuTriggerFor]="menu6" [disabled]="!orderMenu">{{ orderTitle }}</button>
         <mat-menu #menu6="matMenu">
-          <button mat-menu-item (click)="filterPrice('Asc', true)" (click)="setOrderTitle('Mayor Precio')">Mayor Precio</button>
-          <button mat-menu-item (click)="filterPrice('Desc', true)" (click)="setOrderTitle('Menor Precio')">Menor Precio</button>
-          <button mat-menu-item (click)="filterPrice('Asc', false)" (click)="setOrderTitle('Mayor Id')">Mayor Id</button>
-          <button mat-menu-item (click)="filterPrice('Desc', false)" (click)="setOrderTitle('Menor Id')">Menor Id</button>
+          <button mat-menu-item  (click)="setOrderTitle('Mayor Precio', true, 'Asc')">Mayor Precio</button>
+          <button mat-menu-item  (click)="setOrderTitle('Menor Precio', true, 'Desc')">Menor Precio</button>
+          <button mat-menu-item  (click)="setOrderTitle('Mayor Id', false, 'Asc')">Mayor Id</button>
+          <button mat-menu-item  (click)="setOrderTitle('Menor Id', false, 'Desc')">Menor Id</button>
         </mat-menu>
       </div>
     </div>

@@ -74,6 +74,8 @@ export class AxiesComponent implements OnInit {
 
   orderTitle: string = 'Mayor Precio';
   orderMenu: boolean = false;
+  priceOrId: boolean = true;
+  order: string = 'Asc'
 
   constructor(
     private getAxies: GetAxiesService,
@@ -238,7 +240,7 @@ export class AxiesComponent implements OnInit {
 
   async totalPortafolio(view: boolean = false): Promise<void>{
     await this.portafolio.getTotalPortafolio(this.axiesData, this.typeAxies);
-    this.filterPrice('Asc', true);
+    this.filterPrice();
     this.filterAxies.copyAxiesData = [... this.axiesData];
     this.orderMenu = true;
     this.calculatePortafolio = false;
@@ -247,31 +249,35 @@ export class AxiesComponent implements OnInit {
     }
   }
 
-  setOrderTitle(valueMenu: string){
+  setOrderTitle(valueMenu: string, valuePriceOrId: boolean, valueOrder: string): void{
     this.orderTitle = valueMenu;
+    this.priceOrId = valuePriceOrId;
+    this.order = valueOrder;
+    this.filterPrice();
   }
 
-  filterPrice(order: string, priceOrId: boolean): void{
-    this.filterAxies.orderByPrice(this.axiesData, order, priceOrId);
+  filterPrice(): void{
+    this.filterAxies.orderByPrice(this.axiesData, this.order, this.priceOrId);
   }
 
   async viewModule(): Promise<void>{
     this.list = false;
   }
 
-  clearFilters(){
+  clearFilters(): void{
     this.typeAxieTitle = 'Todos';
     this.breedTitle = 'Todos';
     this.parts = [];
     this.myControl.setValue('');
     this.axiesData = [... this.filterAxies.copyAxiesData];
+    this.filterPrice();
     this.BtnRadioTodos.checked = true;
     this.ChecksboxType.toArray().forEach(btnCheck=>{
       btnCheck.checked = false;
-    })
+    });
   }
 
-  pdfDonwload(value: boolean){
+  pdfDonwload(value: boolean): void{
     if(value){
       this.donwloadPdf = true
     }
