@@ -1,6 +1,6 @@
 <div class="content-axies">
 
-  <div  class="menu-axies__hidden" #menuAxies>
+  <div class="menu-axies__hidden" [class.menu-axies__value-portafolio]="valuePortafolio" #menuAxies>
     <mat-card class="menu-axies">
       <div class="menu-axies__filters-title">
         <label class="menu-axies__title-p">Filtros</label>
@@ -47,7 +47,8 @@
           <button mat-stroked-button 
           [disabled]="calculatePortafolio"
           class="menu-axies__btn" 
-          (click)="valuePortafolio = true">
+          (click)="valuePortafolio = true"
+          *ngIf="!movil">
           Valor del Portafolio</button>
   
           <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)">Axies en venta</button>
@@ -111,24 +112,27 @@
       <div>
         <button  mat-raised-button color="warn" *ngIf="donwloadPdf" (click)="savePdf()">descargar PDF</button>
       </div>
-      <div>
-        <button mat-button (click)="list = true" *ngIf="!movil">
-          <mat-icon>reorder</mat-icon>
-        </button>
-        <button mat-button (click)="viewModule()" *ngIf="!movil">
-          <mat-icon>view_module</mat-icon>
-        </button>
-        <button class="menu-change__btn-menu" mat-raised-button [matMenuTriggerFor]="menu5">{{ viewMenu }}</button>
-        <mat-menu #menu5="matMenu">
-          <button mat-menu-item *ngFor="let viewOpntios of filterViewOptions" (click)="selecViewMenu(viewOpntios)" >{{ viewOpntios }}</button>
-        </mat-menu>
-        <button class="menu-change__btn-menu" mat-raised-button [matMenuTriggerFor]="menu6" [disabled]="!orderMenu">{{ orderTitle }}</button>
-        <mat-menu #menu6="matMenu">
-          <button mat-menu-item  (click)="setOrderTitle('Mayor Precio', true, 'Asc')">Mayor Precio</button>
-          <button mat-menu-item  (click)="setOrderTitle('Menor Precio', true, 'Desc')">Menor Precio</button>
-          <button mat-menu-item  (click)="setOrderTitle('Mayor Id', false, 'Asc')">Mayor Id</button>
-          <button mat-menu-item  (click)="setOrderTitle('Menor Id', false, 'Desc')">Menor Id</button>
-        </mat-menu>
+      <div class="menu-change__sort-menu">
+        <button mat-raised-button class="menu-change__sort" (click)="sortMenu = !sortMenu">Clasificar</button>
+        <div class="menu-change__sub-menu-off" [class.menu-change__sub-menu-on]="sortMenu">
+          <button mat-button (click)="list = true" *ngIf="!movil">
+            <mat-icon>reorder</mat-icon>
+          </button>
+          <button mat-button (click)="viewModule()" *ngIf="!movil">
+            <mat-icon>view_module</mat-icon>
+          </button>
+          <button class="menu-change__btn-menu" mat-raised-button [matMenuTriggerFor]="menu5">{{ viewMenu }}</button>
+          <mat-menu #menu5="matMenu">
+            <button mat-menu-item *ngFor="let viewOpntios of filterViewOptions" (click)="selecViewMenu(viewOpntios)" >{{ viewOpntios }}</button>
+          </mat-menu>
+          <button class="menu-change__btn-menu" mat-raised-button [matMenuTriggerFor]="menu6" [disabled]="!orderMenu">{{ orderTitle }}</button>
+          <mat-menu #menu6="matMenu">
+            <button mat-menu-item  (click)="setOrderTitle('Mayor Precio', true, 'Desc')">Mayor Precio</button>
+            <button mat-menu-item  (click)="setOrderTitle('Menor Precio', true, 'Asc')">Menor Precio</button>
+            <button mat-menu-item  (click)="setOrderTitle('Mayor Id', false, 'Desc')">Mayor Id</button>
+            <button mat-menu-item  (click)="setOrderTitle('Menor Id', false, 'Asc')">Menor Id</button>
+          </mat-menu>
+        </div>
       </div>
     </div>
     
@@ -142,7 +146,7 @@
     </div>
     
     <div class="axies-module" [class.view-portafolio]="valuePortafolio" *ngIf="!list">
-      <app-axies-module class="axies-module__axie" [axie]="axie" [viewMenu]="viewMenu" (refresh)="refreshNa()" *ngFor="let axie of axiesData"></app-axies-module>
+      <app-axies-module class="axies-module__axie" [axie]="axie" [viewMenu]="viewMenu" (refresh)="refreshNa($event)" *ngFor="let axie of axiesData"></app-axies-module>
       <div class="loading" *ngIf="loading">
         <app-loading></app-loading>
       </div>

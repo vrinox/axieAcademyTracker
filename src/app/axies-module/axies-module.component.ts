@@ -58,7 +58,7 @@ export class AxiesModuleComponent implements OnInit {
       if(marketPrice.price != 'N/A'){
         this.axie.eth = marketPrice.eth;
         this.axie.price = marketPrice.price;
-        this.refresh.emit(true);
+        this.refresh.emit(this.axie);
       }else{
         this.await = false;
       }

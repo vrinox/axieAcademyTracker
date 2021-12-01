@@ -99,11 +99,21 @@ export class FiltersAxiesService {
       }else{
         filterB = parseInt(b.id);
       }
-      if(order === 'Asc'){
+
+      if(order === 'Desc'){
         return filterB - filterA;
       }else{
         return filterA - filterB;
       }
+    });
+  }
+
+  setCopyAxiesNewPrice(axie: AxiesData): void{
+    this.copyAxiesData.forEach(axies => {
+      if(axies.id === axies.id){
+        axies.price = axie.price;
+        axies.eth = axie.eth;
+      };
     });
   }
 }

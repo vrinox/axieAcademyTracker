@@ -45,7 +45,7 @@ export class CalculatedPortafolioService {
       this.parseEth();
       return axiesData
     }
-  
+
     private cleanPortafolio(): void{
       this.total.usd = 0;
       this.total.eth = 0;
