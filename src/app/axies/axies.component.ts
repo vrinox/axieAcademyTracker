@@ -290,6 +290,7 @@ export class AxiesComponent implements OnInit {
 
   async refreshNa(axie: AxiesData){
     this.filterAxies.setCopyAxiesNewPrice(axie);
+    this.portafolio.refreshNaNewPrice(axie);
     this.startFilter();
     this.filterPrice();
   }

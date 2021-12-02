@@ -109,10 +109,10 @@ export class FiltersAxiesService {
   }
 
   setCopyAxiesNewPrice(axie: AxiesData): void{
-    this.copyAxiesData.forEach(axies => {
-      if(axies.id === axies.id){
-        axies.price = axie.price;
-        axies.eth = axie.eth;
+    this.copyAxiesData.forEach(copyAxies => {
+      if(axie.id === copyAxies.id){
+        copyAxies.price = axie.price;
+        copyAxies.eth = axie.eth;
       };
     });
   }
