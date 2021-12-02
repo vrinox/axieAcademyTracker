@@ -24,6 +24,8 @@ export class SessionsService {
   communityChange: Subject<community> = new Subject;
   private loadingHome: Subject<boolean> = new Subject;
 
+  clear: Subject<string> = new Subject;
+
   constructor(
     public storage: StorageService,
     private communityservice: ComunityService,
@@ -110,5 +112,13 @@ export class SessionsService {
 
   setMenuAxieView(viewAxie :string){
     this.menuAxieView.next(viewAxie);
+  }
+
+  getClear(): Observable<string>{
+    return this.clear
+  }
+  
+  setClear(value: string): void{
+    this.clear.next(value);
   }
 }
