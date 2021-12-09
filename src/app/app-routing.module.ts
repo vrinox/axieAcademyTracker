@@ -7,6 +7,7 @@ import { StoryComponent } from './pages/story/story.component';
 import { LoginComponent } from './pages/login/login.component';
 import { StoryDayComponent } from './pages/story-day/story-day.component';
 import { ReportDailyGeneralComponent } from './pages/report-daily-general/report-daily-general.component';
+import { PerfilesComponent } from './perfiles/perfiles.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'story', component: StoryComponent },
   { path: 'storyDay', component: StoryDayComponent },
   { path: 'reportDailyGeneral', component: ReportDailyGeneralComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'prefiles', component: PerfilesComponent }
 ];
 
 

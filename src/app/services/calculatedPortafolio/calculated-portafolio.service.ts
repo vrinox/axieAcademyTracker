@@ -45,7 +45,7 @@ export class CalculatedPortafolioService {
       this.parseEth();
       return axiesData
     }
-  
+
     private cleanPortafolio(): void{
       this.total.usd = 0;
       this.total.eth = 0;
@@ -91,5 +91,11 @@ export class CalculatedPortafolioService {
   private parseEth(): void {
     let eth: number = parseFloat(this.total.eth.toFixed(3));
     this.total.eth = eth;
+  }
+
+  refreshNaNewPrice(axie: AxiesData){
+    this.total.eth += parseFloat(axie.eth!);
+    this.total.usd += parseInt(axie.price!);
+    this.total.na -= 1;
   }
 }
