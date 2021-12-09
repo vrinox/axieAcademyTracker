@@ -19,17 +19,32 @@
 
         <ng-container matColumnDef="slp">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Slp </th>
-            <td mat-cell *matCellDef="let element" class="container-table__colum-cryto"> {{element.slp}} </td>
+            <td mat-cell *matCellDef="let element" class="container-table__colum-cryto"> 
+                <label *ngIf="element.slp !== 'load'"> {{ element.slp }}  </label>
+                <div class="container-table__load" *ngIf="element.slp === 'load'">
+                    <app-loading></app-loading>
+                </div>
+            </td>
         </ng-container>
         
         <ng-container matColumnDef="axs">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> axs </th>
-            <td mat-cell *matCellDef="let element" class="container-table__colum-cryto"> {{element.axs}} </td>
+            <td mat-cell *matCellDef="let element" class="container-table__colum-cryto"> 
+                <label *ngIf="element.axs !== 'load'"> {{ element.axs }}  </label>
+                <div class="container-table__load" *ngIf="element.axs === 'load'">
+                    <app-loading></app-loading>
+                </div>
+            </td>
         </ng-container>
         
         <ng-container matColumnDef="weth">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Weth </th>
-            <td mat-cell *matCellDef="let element" class="container-table__colum-cryto"> {{element.weth}} </td>
+            <td mat-cell *matCellDef="let element" class="container-table__colum-cryto">
+                <label *ngIf="element.weth !== 'load'"> {{ element.weth }}  </label>
+                <div class="container-table__load" *ngIf="element.weth === 'load'">
+                    <app-loading></app-loading>
+                </div>
+            </td>
         </ng-container>
         
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -22,7 +22,7 @@ export class PerfilesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource: MatTableDataSource<Perfiles> = new MatTableDataSource();
   perfiles: Perfiles[] = [];
-  axiesImagen: AxiesImage[] = [];
+  roninAdress: string[] = [];
   roninWalet = new RoninWeb3();
 
   constructor(private session: SessionsService, private getAxies: GetAxiesService) { }
@@ -42,11 +42,8 @@ export class PerfilesComponent implements OnInit {
         return this.getAxies.get(scholar).then((axies: AxiesData[])=>{
           let imgAxie: string[] = [];
           axies.forEach(axie=> imgAxie.push(axie.image));
-          this.axiesImagen.push({
-            axies: imgAxie,
-            name: scholar.name,
-            ronin: scholar.roninAddress
-          });
+          this.roninAdress.push(scholar.roninAddress);
+          this.createPerfil(imgAxie, scholar.name);
         }).catch((scholar: Scholar) =>{
           retryAxie.push(scholar);
         });
@@ -55,29 +52,34 @@ export class PerfilesComponent implements OnInit {
     if(retryAxie.length !== 0){
       this.getAxiesData(retryAxie);
     }else{
-      await this.loadPerfil();
+      this.loadBalancePerfil();
       this.loadTable();
       this.sortDescTable();
     }
   }
-  
-  async loadPerfil(): Promise<void>{
-    await Promise.all(
-      this.axiesImagen.map(data=>{
-        return this.createPerfil(data.name, data.axies, data.ronin);
-      })
-    );
+
+  createPerfil(axiesData: string[], namePlayer: string): void{
+    this.perfiles.push({
+      name: namePlayer,
+      axies: axiesData,
+      axs: 'load',
+      slp: 'load',
+      weth: 'load'
+    })
   }
 
-  async createPerfil(name: string, axies: string[], ronin: string): Promise<boolean>{
-    this.perfiles.push({
-      name: name,
-      axies: axies,
-      slp: await this.getRoninCryto(ronin, this.roninWalet.SLP_CONTRACT),
-      axs: await this.getRoninCryto(ronin, this.roninWalet.AXS_CONTRACT),
-      weth: this.parseWeth(await this.getRoninCryto(ronin, this.roninWalet.WETH_CONTRACT))
-    });
-    return Promise.resolve(true);
+  loadBalancePerfil(): void{
+    this.perfiles.forEach((perfil, index)=>{
+      this.getRoninCryto(this.roninAdress[index], this.roninWalet.SLP_CONTRACT).then(Balance =>{
+        perfil.slp = Balance;
+      });
+      this.getRoninCryto(this.roninAdress[index], this.roninWalet.AXS_CONTRACT).then(Balance =>{
+        perfil.axs = Balance;
+      });
+      this.getRoninCryto(this.roninAdress[index], this.roninWalet.WETH_CONTRACT).then(Balance =>{
+        perfil.weth = this.parseWeth(Balance);
+      });
+    })
   }
 
   async getRoninCryto(ronin: string, contract: string): Promise<string>{
