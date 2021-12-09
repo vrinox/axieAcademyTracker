@@ -11,7 +11,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SessionsService } from '../services/sessions/sessions.service';
 import { ComunityService } from '../services/community.service';
 import { MatPaginator } from '@angular/material/paginator';
-
 @Component({
   selector: 'app-scholars',
   templateUrl: './scholars.component.html',

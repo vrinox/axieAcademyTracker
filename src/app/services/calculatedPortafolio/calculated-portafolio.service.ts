@@ -92,4 +92,10 @@ export class CalculatedPortafolioService {
     let eth: number = parseFloat(this.total.eth.toFixed(3));
     this.total.eth = eth;
   }
+
+  refreshNaNewPrice(axie: AxiesData){
+    this.total.eth += parseFloat(axie.eth!);
+    this.total.usd += parseInt(axie.price!);
+    this.total.na -= 1;
+  }
 }

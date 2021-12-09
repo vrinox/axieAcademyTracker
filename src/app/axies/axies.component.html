@@ -15,16 +15,7 @@
       </mat-button-toggle-group>
     
       <div class="menu-axies__filters-menu">
-        <mat-form-field class="menu-axies__input--name" appearance="outline">
-          <mat-label>Name Player</mat-label>
-          <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="myControl"
-            [matAutocomplete]="auto">
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="filterName(option)">
-              {{ option }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+        <app-input-auto-complet [label]="'Nombre Becado'" [optionsFilter]="namePlayerOptions" [keyBoardEmit]="true" (OutName)="filterName($event)"></app-input-auto-complet>
   
         <div [class.menu-axies__general-off]="menuFilter === 'Partes'">
           <label class="menu-axies__label">Class</label>
@@ -54,17 +45,8 @@
           <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)">Axies en venta</button>
         </div>
   
-        <div  [class.menu-axies__general-off]="menuFilter === 'General'">
-          <mat-form-field class="menu-axies__parts" appearance="outline">
-            <mat-label>Partes</mat-label>
-            <input type="text" placeholder="Pick one" aria-label="name axies player" matInput [formControl]="partAxies"
-              [matAutocomplete]="auto2" (keyup)="ChipsAddEntrer($event)">
-            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete">
-              <mat-option *ngFor="let cardOption of cardsOptions | async" [value]="cardOption" (click)="setPart(cardOption)">
-                {{ cardOption }}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field> 
+        <div [class.menu-axies__general-off]="menuFilter === 'General'">
+          <app-input-auto-complet [label]="'Partes'" [optionsFilter]="allParts" [keyBoardEmit]="false" (OutName)="setPart($event)"></app-input-auto-complet>
           <mat-chip-list aria-label="Fish selection">
             <mat-chip class="menu-axies__cards" *ngFor="let part of parts; index as i"
               [removable]="removable" (removed)="remove(part)" selected  color="primary">
@@ -82,7 +64,6 @@
   
   <div class="content-axies__content">
     <app-donwload-pdf *ngIf="valuePortafolio" [axiesData]="axiesData" (loadPdf)="pdfDonwload($event)"></app-donwload-pdf>
-    
     
     <mat-card class="portafolio" *ngIf="valuePortafolio">
       <div class="portafolio__totals portafolio__totals--prices">

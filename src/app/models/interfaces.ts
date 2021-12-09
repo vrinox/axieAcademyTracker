@@ -281,3 +281,17 @@ export interface Genes{
         partName: string,
     }
 }
+
+export interface Perfiles{
+    name: string
+    axies: string[],
+    slp: string,
+    axs: string, 
+    weth: string
+}
+
+export interface AxiesImage{
+    name: string
+    ronin: string
+    axies: string[]
+}

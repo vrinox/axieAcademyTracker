@@ -86,14 +86,14 @@ export class FiltersAxiesService {
       let filterA: number = 0;
       let filterB: number = 0;
       if(priceOrId){
-        if(a.price !== 'N/A'){
+        if(a.price !== 'N/A' && a.price !== undefined){
           filterA = parseFloat(a.price!);
         }
       }else{
         filterA = parseInt(a.id);
       }
       if(priceOrId){
-        if(b.price !== 'N/A'){
+        if(b.price !== 'N/A' && b.price !== undefined){
           filterB = parseFloat(b.price!);
         }
       }else{
@@ -109,10 +109,10 @@ export class FiltersAxiesService {
   }
 
   setCopyAxiesNewPrice(axie: AxiesData): void{
-    this.copyAxiesData.forEach(axies => {
-      if(axies.id === axies.id){
-        axies.price = axie.price;
-        axies.eth = axie.eth;
+    this.copyAxiesData.forEach(copyAxies => {
+      if(axie.id === copyAxies.id){
+        copyAxies.price = axie.price;
+        copyAxies.eth = axie.eth;
       };
     });
   }
