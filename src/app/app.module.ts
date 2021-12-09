@@ -54,7 +54,8 @@ import { DonwloadPdfComponent } from './donwload-pdf/donwload-pdf.component';
 import { GenesComponent } from './components/genes/genes/genes.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { InputAutoCompletComponent } from './components/input-auto-complet/input-auto-complet.component';
-
+import Web3 from 'web3';
+import { PerfilesComponent } from './perfiles/perfiles.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { InputAutoCompletComponent } from './components/input-auto-complet/input
     StastAxieComponent,
     DonwloadPdfComponent,
     GenesComponent,
-    InputAutoCompletComponent
+    InputAutoCompletComponent,
+    PerfilesComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,40 @@
+.container-table
+    width: 100%
+    padding: 5px 20px 0px 20px
+    box-sizing: border-box
+    &__colum-axies
+        position: relative
+    &__icon-add
+        position: absolute
+        top: 50%
+        transform: translateY(-50%)
+    &__name
+        min-width: 150px
+    &__colum-axies
+        min-width: 270px
+    &__colum-cryto
+        min-width: 100px
+
+.paginator
+    width: calc(100% - 40px)
+    margin: 0px 20px
+    box-sizing: border-box
+
+.container-table
+    &__img
+        width: 70px
+
+table
+    width: 100%
+
+@media screen and(max-width: 700px)
+    .container-table
+        padding: 0px
+        overflow: hidden
+        overflow-x: scroll
+    table
+        width: 100%
+        margin-left: 0px
+    .paginator
+        width: 100%
+        margin: 0px
