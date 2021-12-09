@@ -54,7 +54,6 @@ export class PerfilesComponent implements OnInit {
     }else{
       this.loadBalancePerfil();
       this.loadTable();
-      this.sortDescTable();
     }
   }
 
@@ -94,9 +93,5 @@ export class PerfilesComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.perfiles);
     this.dataSource.sort = this.sort!;
     this.dataSource.paginator = this.paginator;
-  }
-
-  sortDescTable(): void{
-    this.dataSource.data = this.dataSource.data.sort((a, b)=> parseInt(b.slp) - parseInt(a.slp));
   }
 }
