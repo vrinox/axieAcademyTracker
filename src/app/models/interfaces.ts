@@ -289,9 +289,18 @@ export interface Perfiles{
     axs: string, 
     weth: string
 }
-
-export interface AxiesImage{
-    name: string
-    ronin: string
-    axies: string[]
+export interface RandomMessaje{
+    data: {
+        createRandomMessage: string
+    }
+}
+export interface AccessToken{
+    data: {
+        createAccessTokenWithSignature:{
+            accessToken: string,
+            newAccount: boolean,
+            result: boolean,
+            __typename: string
+        }
+    }
 }

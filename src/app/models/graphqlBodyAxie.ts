@@ -1,6 +1,5 @@
 import { GraphqlBody, Criteria, AxiesData } from './interfaces';
 import { Scholar } from 'src/app/models/scholar';
-import { A } from '@angular/cdk/keycodes';
 
 class GraphqlBodyAxie{
     private roning?: string;
@@ -80,6 +79,29 @@ class GraphqlBodyAxie{
         classArray.sort((a, b) => b.acc - a.acc);
         pureness[0] = classArray[0].acc;
         return pureness;
+    }
+
+    getBodyRandomMessage(){
+        return {
+            "operationName": "CreateRandomMessage",
+            "variables": {},
+            "query": "mutation CreateRandomMessage{createRandomMessage}"
+        }
+    }
+
+    getBodyAccessToken(roning: string, message: string, signHex: string){
+        return {
+            "operationName": "CreateAccessTokenWithSignature",
+            "variables": {
+                "input": {
+                    "mainnet": "ronin",
+                    "owner": roning,
+                    "message": message,
+                    "signature": signHex
+                }
+            },
+            "query": "mutation CreateAccessTokenWithSignature($input: SignatureInput!) {  createAccessTokenWithSignature(input: $input) {    newAccount    result    accessToken    __typename  }}"
+        }
     }
 }
 
