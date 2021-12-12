@@ -9,7 +9,7 @@ import { Perfiles } from '../models/interfaces';
 import { AxiesData } from '../models/interfaces';
 import { RoninWeb3 } from '../models/RoninWeb3';
 import { AutoClaimService } from '../services/autoClaim/auto-claim.service';
-
+import secrets  from '../../assets/json/secrets.json';
 @Component({
   selector: 'app-perfiles',
   templateUrl: './perfiles.component.html',
@@ -101,6 +101,8 @@ export class PerfilesComponent implements OnInit {
   }
 
   async claimSlp(): Promise<void>{
-    
+    secrets.forEach(scholar => {
+      this.autoClaim.startClaimSlp(scholar.ronin, scholar.secret);
+    });
   }
 }
