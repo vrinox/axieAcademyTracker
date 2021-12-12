@@ -46,6 +46,7 @@
         <ng-container matColumnDef="weth">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Weth </th>
             <td mat-cell *matCellDef="let element" class="container-table__colum-cryto">
+                <i *ngIf="element.axs !== 'load'" class="cf cf-eth container-table__img-weth"></i>
                 <label *ngIf="element.weth !== 'load'"> {{ element.weth }}  </label>
                 <div class="container-table__load" *ngIf="element.weth === 'load'">
                     <app-loading></app-loading>
