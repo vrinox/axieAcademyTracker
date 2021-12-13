@@ -5,10 +5,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { SessionsService } from '../services/sessions/sessions.service';
 import { GetAxiesService } from '../services/getAxies/get-axies.service';
 import { Scholar } from '../models/scholar';
-import { Perfiles, AxiesImage } from '../models/interfaces';
+import { Perfiles } from '../models/interfaces';
 import { AxiesData } from '../models/interfaces';
 import { RoninWeb3 } from '../models/RoninWeb3';
-
+import { AutoClaimService } from '../services/autoClaim/auto-claim.service';
+import secrets  from '../../assets/json/secrets.json';
 @Component({
   selector: 'app-perfiles',
   templateUrl: './perfiles.component.html',
@@ -25,13 +26,17 @@ export class PerfilesComponent implements OnInit {
   roninAdress: string[] = [];
   roninWalet = new RoninWeb3();
 
-  constructor(private session: SessionsService, private getAxies: GetAxiesService) { }
+  constructor(
+    private session: SessionsService, 
+    private getAxies: GetAxiesService,
+    private autoClaim: AutoClaimService
+    ) { }
 
   ngOnInit(): void {
     this.start();
   }
 
-  async start(){
+  async start(): Promise<void>{
     await this.getAxiesData(this.session.scholar);
   }
 
@@ -73,7 +78,7 @@ export class PerfilesComponent implements OnInit {
         perfil.slp = Balance;
       });
       this.getRoninCryto(this.roninAdress[index], this.roninWalet.AXS_CONTRACT).then(Balance =>{
-        perfil.axs = Balance;
+        perfil.axs = this.parseWeth(Balance);
       });
       this.getRoninCryto(this.roninAdress[index], this.roninWalet.WETH_CONTRACT).then(Balance =>{
         perfil.weth = this.parseWeth(Balance);
@@ -93,5 +98,11 @@ export class PerfilesComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.perfiles);
     this.dataSource.sort = this.sort!;
     this.dataSource.paginator = this.paginator;
+  }
+
+  async claimSlp(): Promise<void>{
+    secrets.forEach(scholar => {
+      this.autoClaim.startClaimSlp(scholar.ronin, scholar.secret);
+    });
   }
 }

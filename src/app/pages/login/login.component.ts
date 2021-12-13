@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ComunityService } from 'src/app/services/community.service';
 import { DatabaseService } from 'src/app/services/database/database.service';
 import { SessionsService } from 'src/app/services/sessions/sessions.service';
-
+import { StorageService } from 'src/app/services/storage/storage.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit {
     private dbService: DatabaseService,
     private communityService: ComunityService,
     private sesion: SessionsService,
-    private router: Router
+    private router: Router,
+    private store: StorageService
   ) { }
 
   ngOnInit(): void {
@@ -75,6 +76,7 @@ export class LoginComponent implements OnInit {
     communities = communities.filter(c=> c.id !== '');
     let community = communities.find((c)=> c.admin === identificator);
     if(community){
+      this.store.setItem('community', community.name);
       this.sesion.start(userLink, scholar, communities.filter( c=> c.admin === identificator));
       this.communityService.activeCommunity = community;
       this.sesion.setLoading(true);

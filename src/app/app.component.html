@@ -6,19 +6,17 @@
   <app-loading></app-loading>
 </div>
 
-<mat-toolbar color="primary" *ngIf="this.sesion.init">
+<mat-toolbar class="menu-tool" color="primary" *ngIf="this.sesion.init">
+  <div>
     <button mat-icon-button mat-button (click)="close()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>{{communityName}}</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
-  </mat-toolbar>
+    <label> {{ communityName }} </label>
+  </div>
+  <button mat-button>
+    <label>Donate</label> <mat-icon>favorite</mat-icon>
+  </button>
+</mat-toolbar>
   
   <mat-sidenav-container class="container" [hasBackdrop]="false">
     <mat-sidenav #sidenav (keydown.escape)="close()" disableClose [mode]="'side'">
@@ -52,7 +50,7 @@
           <span>Axies</span>
         </mat-list-item>
         <mat-list-item role="listitem" routerLink="/prefiles">
-          <!-- <mat-icon>pets</mat-icon> -->
+          <mat-icon>account_balance_wallet</mat-icon>
           <span>Perfiles</span>
         </mat-list-item>
         <mat-list-item role="listitem" (click)="logOut()">
