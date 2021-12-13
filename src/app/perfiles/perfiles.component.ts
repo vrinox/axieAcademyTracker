@@ -101,8 +101,8 @@ export class PerfilesComponent implements OnInit {
   }
 
   async claimSlp(): Promise<void>{
-    secrets.forEach(scholar => {
-      this.autoClaim.startClaimSlp(scholar.ronin, scholar.secret);
-    });
+    // secrets.forEach(scholar => {
+    //   this.autoClaim.startClaimSlp(scholar.ronin, scholar.secret);
+    // });
   }
 }
