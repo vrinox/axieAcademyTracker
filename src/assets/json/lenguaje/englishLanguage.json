@@ -1,0 +1,101 @@
+{
+    "appComponent": {
+        "donate": "Donate",
+        "home": "home",
+        "addBecado": "add new scholarship",
+        "historicUser": "history per user",
+        "historicDay": "history per day",
+        "generalReport": "general report",
+        "profiles": "profiles",
+        "logOut": "logOut"
+    }, 
+    "register": {
+        "Title": "Record of scholar",
+        "condition": "",
+        "name": "Name",
+        "Lastname": "Last name",
+        "RonginAdress": "Rongin Adress",
+        "RonginAdressPersonal": "Rongin Adress personal",
+        "gain": "average gain"
+    },
+    "axies": {
+        "filter": "Filter",
+        "clear": "Clear",
+        "inputAutoComplet": "Nombre becado",
+        "general": "General",
+        "parts": "parts",
+        "class": "class",
+        "breed": "Breed",
+        "All": "All",
+        "classify": "classify",
+        "portfolioValue": "Portfolio value",
+        "axieSale": "Axies sale",
+        "downloadPdf": "Download Pdf",
+        "higherPrice": "Higher price",
+        "lowerPrice": "Lower price",
+        "higherId": "Higher id",
+        "lowerId": "Lower id"
+    }, 
+    "donwloadPdf": {
+        "allAxies": "All Axies",
+        "AllScholar": "All Scholar",
+        "averageUsd": "Average Usd",
+        "averageEtg": "Average Eth",
+        "allNa": "All N/A",
+        "allEgg": "All Egg",
+        "type": "Type",
+        "typeTotal": "Total Types",
+        "valueAverage": "Value average",
+        "valueMin": "Value min",
+        "valueMax": "Value max",
+        "gift": "Gift me a coffe",
+        "url": "",
+        "warning": "warning",
+        "disclaimer": "The value of the portfolio depends on the current value of the eth, this can cause price variations over time."
+    }, 
+    "reportDaily": {
+        "monthAndYear": "Month and Year",
+        "btnSearh": "Search",
+        "name": "name",
+        "totalSLP": "Total Slp",
+        "todaySLP": "Today Slp",
+        "average": "Average",
+        "Scholarships": "Scholarships",
+        "monthSLP": "Month Slp",
+        "weekSLP": "Week Slp"
+    },
+    "story": {
+        "monthAndYear": "Month and Year",
+        "btnSearh": "Search",
+        "name": "name",
+        "Date": "Date",
+        "totalSLP": "Total Slp",
+        "todaySLP": "Today Slp",
+        "monthSLP": "Month Slp",
+        "weekSLP": "Week Slp",
+        "yesterdaySLP": "Yesterday SLP",
+        "monthlyRank": "Monthly Rank"
+    },
+    "storyDay": {
+        "monthAndYear": "Choose a date",
+        "label": "Search Scholar",
+        "name": "name",
+        "totalSLP": "Total Slp",
+        "todaySLP": "Today Slp",
+        "monthSLP": "Month Slp",
+        "yesterdaySLP": "Yesterday SLP",
+        "monthlyRank": "Monthly Rank"
+    },
+    "perfiles": {
+        "name": "Name"
+    }, 
+    "scholars": {
+        "searh": "Search scholar",
+        "name": "name",
+        "totalSLP": "Total Slp",
+        "todaySLP": "Today Slp",
+        "yesterdaySLP": "Yesterday SLP",
+        "monthSLP": "Month Slp",
+        "monthlyRank": "Monthly Rank"
+    }
+}

@@ -12,6 +12,10 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MatDatepicker } from '@angular/material/datepicker';
 import * as _moment from 'moment';
 import { default as _rollupMoment, Moment } from 'moment';
+import spanish from '../../../assets/json/lenguaje/spanishLanguaje.json';
+import english from '../../../assets/json/lenguaje/englishLanguage.json';
+import { StorageService } from 'src/app/services/storage/storage.service';
+import { SessionsService } from 'src/app/services/sessions/sessions.service';
 
 const moment = _rollupMoment || _moment;
 
@@ -53,16 +57,22 @@ export class StoryComponent implements OnInit {
   storyLabels: any[] = [];
   wholeData: Scholar[] = [];
 
+  idiom: any = {};
+
   constructor(
     private dbService: DatabaseService,
     private communityService: ComunityService,
-    private storyService: HistoricService
+    private storyService: HistoricService,
+    private storage: StorageService,
+    private sessions: SessionsService
   ) {
     this.filteredOptions = new Observable();
 
   }
 
   async ngOnInit() {
+    this.changeIdiom();
+    this.getLangueaje();
     this.date.setValue('')
     const memberAddressList = await this.communityService.getMembersAddressList(this.communityService.activeCommunity.id);
     this.disponibleScholars = await this.dbService.getScholarsByAddressList(memberAddressList);
@@ -70,6 +80,24 @@ export class StoryComponent implements OnInit {
       this.namePlayerOptions.push(scholar.name);
     });
   }
+
+  getLangueaje(): void{
+    let lenguage: string | null = this.storage.getItem('language');
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.story
+    }else{
+      this.idiom = english.story;
+    };
+  }
+
+  changeIdiom():void{
+    this.sessions.getIdiom().subscribe(change=>{
+      if(change){
+        this.getLangueaje();
+      }
+    })
+  }
+
   async cargarDatos(roninAddress: string) {
     let scholarData = await this.dbService.getAllStory(roninAddress);
     let scholarsFirebase = scholarData

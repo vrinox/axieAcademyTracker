@@ -3,7 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Scholar } from '../models/scholar';
 import { InsertScholarsService } from '../services/insertScholars/insert-scholars.service';
 import { AgregarNewBecadoService } from 'src/app/services/agregarNewBecado/agregar-new-becado.service';
-
+import { StorageService } from '../services/storage/storage.service';
+import english from '../../assets/json/lenguaje/englishLanguage.json';
+import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
+import { SessionsService } from '../services/sessions/sessions.service';
 @Component({
   selector: 'app-formulario-becado',
   templateUrl: './formulario-becado.component.html',
@@ -35,12 +38,35 @@ export class FormularioBecadoComponent implements OnInit {
     ])
   })
 
+  idiom: any = {};
+
   constructor(private insertNewScholar: InsertScholarsService,
               private agregarBecado: AgregarNewBecadoService,
-              private render: Renderer2) { }
+              private render: Renderer2,
+              private storage: StorageService,
+              private sessions: SessionsService) { }
               
   ngOnInit(): void {
+    this.changeIdiom();
+    this.getLangueaje();
     this.cirreExteriorModal();
+  }
+
+  getLangueaje(): void{
+    let lenguage: string | null = this.storage.getItem('language');
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.register
+    }else{
+      this.idiom = english.register;
+    };
+  }
+
+  changeIdiom():void{
+    this.sessions.getIdiom().subscribe(change=>{
+      if(change){
+        this.getLangueaje();
+      }
+    })
   }
   
   cirreExteriorModal(): void{

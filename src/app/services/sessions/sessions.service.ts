@@ -26,6 +26,9 @@ export class SessionsService {
 
   clear: Subject<string> = new Subject;
 
+
+  idiom: Subject<boolean> = new Subject;
+
   constructor(
     public storage: StorageService,
     private communityservice: ComunityService,
@@ -120,5 +123,13 @@ export class SessionsService {
   
   setClear(value: string): void{
     this.clear.next(value);
+  }
+
+  getIdiom(): Observable<boolean>{
+    return this.idiom;
+  }
+
+  setIdiom(value: boolean): void{
+    this.idiom.next(value)
   }
 }

@@ -1,0 +1,101 @@
+{
+    "appComponent": {
+        "donate": "Donar",
+        "home": "Inicio",
+        "addBecado": "Agregar nuevo becado",
+        "historicUser": "Historico por usuario",
+        "historicDay": "Historico por dia",
+        "generalReport": "Reporte general",
+        "profiles": "Perfiles",
+        "logOut": "Cerrar Session"
+    }, 
+    "register": {
+        "Title": "Registro de becado",
+        "condition": "",
+        "name": "Nombre",
+        "Lastname": "Apellido",
+        "RonginAdress": "Rongin Adress",
+        "RonginAdressPersonal": "Rongin Adress personal",
+        "gain": "Procentaje de ganancia"
+    },
+    "axies": {
+        "filter": "Filtros",
+        "clear": "Limpiar",
+        "inputAutoComplet": "Name Scholar",
+        "general": "General",
+        "parts": "Partes",
+        "class": "clase",
+        "breed": "Hijos",
+        "All": "Todos",
+        "classify": "clasificar",
+        "portfolioValue": "Valor del Portafolio",
+        "axieSale": "Axies en venta",
+        "downloadPdf": "Descargar Pdf",
+        "higherPrice": "Mayor Precio",
+        "lowerPrice": "Menor Precio",
+        "higherId": "Mayor Id",
+        "lowerId": "Menor Id"
+    }, 
+    "donwloadPdf": {
+        "allAxies": "Todos Axies",
+        "AllScholar": "Todos Scholar",
+        "averageUsd": "Promedio en Usd",
+        "averageEtg": "Promedio en Eth",
+        "allNa": "Todos N/A",
+        "allEgg": "Todos Egg",
+        "type": "Tipos",
+        "typeTotal": "Total Tipos",
+        "valueAverage": "Valor Promedio",
+        "valueMin": "Valor Minimo",
+        "valueMax": "Valor Maximo",
+        "gift": "Regalame un cafe",
+        "url": "",
+        "warning": "Aviso",
+        "disclaimer": "El valor del portafolio depende del valor actual del eth, esto puede causar variantes de precios a lo largo del tiempo."
+    }, 
+    "reportDaily": {
+        "monthAndYear": "Mes y Año",
+        "btnSearh": "Buscar",
+        "name": "Nombre",
+        "totalSLP": "Total Slp",
+        "todaySLP": "Hoy slp",
+        "average": "Promedio",
+        "Scholarships": "Becado",
+        "monthSLP": "Mes Slp",
+        "weekSLP": "Semana Slp"
+    },
+    "story": {
+        "monthAndYear": "Mes y Año",
+        "btnSearh": "Buscar",
+        "name": "Nombre",
+        "Date": "Fecha",
+        "totalSLP": "Total Slp",
+        "todaySLP": "Hoy slp",
+        "monthSLP": "Mes Slp",
+        "weekSLP": "Semana Slp",
+        "yesterdaySLP": "Ayer SLP",
+        "monthlyRank": "Mensual Rank"
+    },
+    "storyDay": {
+        "monthAndYear": "Selecciona una Fecha",
+        "label": "Buscar Becado",
+        "name": "Nombre",
+        "totalSLP": "Total Slp",
+        "todaySLP": "Hoy Slp",
+        "monthSLP": "Mes Slp",
+        "yesterdaySLP": "Ayer SLP",
+        "monthlyRank": "Mensual Rank"
+    },
+    "perfiles": {
+        "name": "Nombre"
+    }, 
+    "scholars": {
+        "searh": "Buscar Becados",
+        "name": "Nombre",
+        "totalSLP": "Total Slp",
+        "todaySLP": "Today Slp",
+        "yesterdaySLP": "Ayer SLP",
+        "monthSLP": "Mes Slp",
+        "monthlyRank": "Mensual Rank"
+    }
+}

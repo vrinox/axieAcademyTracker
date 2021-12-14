@@ -10,6 +10,9 @@ import { FormControl } from '@angular/forms';
 import { HistoricService } from 'src/app/services/historic/historic.service';
 import * as moment from 'moment';
 import { MatPaginator } from '@angular/material/paginator';
+import english from '../../../assets/json/lenguaje/englishLanguage.json';
+import spanish from '../../../assets/json/lenguaje/spanishLanguaje.json';
+import { StorageService } from 'src/app/services/storage/storage.service';
 @Component({
   selector: 'app-story-day',
   templateUrl: './story-day.component.html',
@@ -25,11 +28,15 @@ export class StoryDayComponent implements OnInit {
   myControl = new FormControl();
   dias: any[] = [];
   membersAddressList: string[] = [];
+
+  idiom: any = {};
+
   constructor(
     private dbService: DatabaseService,
     private sessions: SessionsService,
     private communityService: ComunityService,
-    private storyService: HistoricService
+    private storyService: HistoricService,
+    private storage: StorageService
   ) { 
     this.myControl.valueChanges.subscribe(async (value)=>{
       const startOfDay: Date = moment(new Date(value)).subtract(1, 'day').endOf('day').toDate();
@@ -42,7 +49,27 @@ export class StoryDayComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.getLangueaje();
+    this.changeIdiom();
     await this.cargarDatos();
+  }
+
+  getLangueaje(): void{
+    let lenguage: string | null = this.storage.getItem('language');
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.storyDay;
+    }else{
+      this.idiom = english.storyDay;
+    };
+  }
+
+  
+  changeIdiom():void{
+    this.sessions.getIdiom().subscribe(change=>{
+      if(change){
+        this.getLangueaje();
+      }
+    })
   }
 
   async cargarDatos() {

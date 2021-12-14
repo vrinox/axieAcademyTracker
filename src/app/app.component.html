@@ -13,9 +13,16 @@
     </button>
     <label> {{ communityName }} </label>
   </div>
-  <button mat-button>
-    <label>Donate</label> <mat-icon>favorite</mat-icon>
-  </button>
+  <div>
+    <button mat-button>
+      <label>{{ idiom.donate }}</label> <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-button [matMenuTriggerFor]="menu">{{ browserIdiom }}</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="changeLanguage('es')">es</button>
+      <button mat-menu-item (click)="changeLanguage('en')">en</button>
+    </mat-menu>
+  </div>
 </mat-toolbar>
   
   <mat-sidenav-container class="container" [hasBackdrop]="false">
@@ -23,23 +30,23 @@
       <mat-list role="list">
         <mat-list-item role="listitem" routerLink="/scholars">
           <mat-icon>groups</mat-icon>
-          <span>Users</span>
+          <span>{{ idiom.home }}</span>
         </mat-list-item>
         <mat-list-item role="listitem" (click)="showFiller = !showFiller; viewModal = !viewModal">
           <mat-icon>add</mat-icon>
-          <span> Agregar nuevo becado</span>
+          <span>{{ idiom.addBecado }}</span>
         </mat-list-item>
         <mat-list-item role="listitem" routerLink="/story">
           <mat-icon>history</mat-icon>
-          <span>Historico por usuario</span>
+          <span>{{ idiom.historicUser }}</span>
         </mat-list-item>
         <mat-list-item role="listitem" routerLink="/storyDay">
           <mat-icon>today</mat-icon>
-          <span>Historico por dia</span>
+          <span>{{ idiom.historicDay }}</span>
         </mat-list-item>
         <mat-list-item role="listitem" routerLink="/reportDailyGeneral">
           <mat-icon>event</mat-icon>
-          <span>Reporte general</span>
+          <span>{{ idiom.generalReport }}</span>
         </mat-list-item>
         <mat-list-item role="listitem" routerLink="/axies">
           <mat-icon>pets</mat-icon>
@@ -47,11 +54,11 @@
         </mat-list-item>
         <mat-list-item role="listitem" routerLink="/prefiles">
           <mat-icon>account_balance_wallet</mat-icon>
-          <span>Perfiles</span>
+          <span>{{ idiom.profiles }}</span>
         </mat-list-item>
         <mat-list-item role="listitem" (click)="logOut()">
           <mat-icon>logout</mat-icon>
-          <span> logOut</span>
+          <span> {{ idiom.logOut }} </span>
         </mat-list-item>
       </mat-list>
     </mat-sidenav>

@@ -7,6 +7,9 @@ import * as cards from '../../assets/json/cards.json';
 import { FiltersAxiesService } from '../services/filtersAxies/filters-axies.service';
 import { CalculatedPortafolioService } from '../services/calculatedPortafolio/calculated-portafolio.service';
 import { MatCheckboxChange } from '@angular/material/checkbox'; 
+import { StorageService } from '../services/storage/storage.service';
+import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
+import english from '../../assets/json/lenguaje/englishLanguage.json';
 
 @Component({
   selector: 'app-axies',
@@ -68,21 +71,57 @@ export class AxiesComponent implements OnInit {
 
   sortMenu: boolean = false;
 
+  idiom: any = {};
+
   constructor(
     private getAxies: GetAxiesService,
     private sessions: SessionsService,
     public filterAxies: FiltersAxiesService,
     public portafolio: CalculatedPortafolioService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private storage: StorageService
   ) {
   }
 
   ngOnInit(): void {
+    this.getLangueaje();
+    this.changeIdiom();
     this.filterAxies.copyAxiesData = [];
     this.movilChange();
     this.start();
     this.selecViewMenu(this.viewMenu);
     this.setAllParts();
+  }
+
+  getLangueaje(): void{
+    let lenguage: string | null = this.storage.getItem('language');
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.axies;
+      this.OrderMenuOptionsIdiom();
+    }else{
+      this.idiom = english.axies;
+      this.OrderMenuOptionsIdiom();
+    };
+  }
+
+  changeIdiom():void{
+    this.sessions.getIdiom().subscribe(change=>{
+      if(change){
+        this.getLangueaje();
+      }
+    });
+  }
+
+  OrderMenuOptionsIdiom(): void{
+    if(this.orderTitle === 'Mayor Precio' || this.orderTitle === 'Higher price'){
+      this.orderTitle = this.idiom.higherPrice;
+    }else if(this.orderTitle === 'Menor Precio' || this.orderTitle === 'Lower price'){
+      this.orderTitle = this.idiom.lowerPrice;
+    }else if(this.orderTitle === 'Mayor Id' || this.orderTitle === 'Higher id'){
+      this.orderTitle = this.idiom.higherId;
+    }else if(this.orderTitle === 'Menor Id' || this.orderTitle === 'Lower id'){
+      this.orderTitle = this.idiom.lowerId;
+    }
   }
 
   filterName(filterValue: string): void{
@@ -209,6 +248,7 @@ export class AxiesComponent implements OnInit {
     this.priceOrId = valuePriceOrId;
     this.order = valueOrder;
     this.filterPrice();
+    this.OrderMenuOptionsIdiom();
   }
 
   filterPrice(): void{

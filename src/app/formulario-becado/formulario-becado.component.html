@@ -1,20 +1,16 @@
 <div #modal class="modal-form" [class.view-modal]="!viewModal">
     <form [formGroup]="formBecado" class="form-becado">
         <div class="form-becado__title">
-            <h1>Registro de Becados</h1>
-            <img src="../../assets/img/becado.png" alt="">
+            <h1>{{ idiom.Title }}</h1>
         </div>
 
         <div class="form-becado__condicion">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero 
-                voluptatibus eveniet suscipit! Error odio architecto dolore provident.
-                Corporis repellendus at facilis hic illo tempore nulla modi quos ab, suscipit aut?
-            </p>
+            <p>{{ idiom.condition }}</p>
         </div>
 
 
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
-            <mat-label>Nombre</mat-label>
+            <mat-label>{{ idiom.name }}</mat-label>
             <input formControlName="name" matInput placeholder="Victor">
             <mat-icon matSuffix class="form-becado__check"
                         *ngIf="formBecado.controls.name.valid">check_circle_outline</mat-icon>
@@ -25,7 +21,7 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
-            <mat-label>Apellido</mat-label>
+            <mat-label>{{ idiom.Lastname }}</mat-label>
             <input formControlName="apellido" matInput placeholder="Leon">
             <mat-icon matSuffix class="form-becado__check"
                         *ngIf="formBecado.controls.apellido.valid">check_circle_outline</mat-icon>
@@ -35,8 +31,8 @@
             <mat-error *ngIf="formBecado.controls.apellido.hasError('pattern')">Solo se permiten letras</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
-            <mat-label>Rongin Adress</mat-label>
-            <input formControlName="roninAddress" matInput placeholder="Leon">
+            <mat-label>{{ idiom.RonginAdress }}</mat-label>
+            <input formControlName="roninAddress" matInput placeholder="0xa35ad70c8a0bc39a6cc73bbacfaf201fae75f2fb">
             <mat-icon matSuffix class="form-becado__check"
                         *ngIf="formBecado.controls.roninAddress.valid">check_circle_outline</mat-icon>
             <mat-icon matSuffix class="form-becado__off" 
@@ -44,8 +40,8 @@
             <mat-error *ngIf="formBecado.controls.roninAddress.hasError('required')">El campo no puede estar vacio</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
-            <mat-label>Rongin Adress Personal</mat-label>
-            <input formControlName="personalAdress" matInput placeholder="Leon">
+            <mat-label>{{ idiom.RonginAdressPersonal }}</mat-label>
+            <input formControlName="personalAdress" matInput placeholder="0xa35ad70c8a0bc39a6cc73bbacfaf201fae75f2fb">
             <mat-icon matSuffix class="form-becado__check"
                         *ngIf="formBecado.controls.personalAdress.valid">check_circle_outline</mat-icon>
             <mat-icon matSuffix class="form-becado__off" 
@@ -53,7 +49,7 @@
             <mat-error *ngIf="formBecado.controls.personalAdress.hasError('required')">El campo no puede estar vacio</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
-            <mat-label>Procentaje de Ganancia</mat-label>
+            <mat-label>{{ idiom.gain }}</mat-label>
             <input formControlName="ganancia" matInput placeholder="50%">
             <mat-icon matSuffix class="form-becado__check"
                         *ngIf="formBecado.controls.ganancia.valid">check_circle_outline</mat-icon>

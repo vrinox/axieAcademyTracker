@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { SessionsService } from './services/sessions/sessions.service';
 import { StorageService } from './services/storage/storage.service';
+import english from '../assets/json/lenguaje/englishLanguage.json';
+import spanish from '../assets/json/lenguaje/spanishLanguaje.json';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -14,9 +16,13 @@ export class AppComponent implements OnInit{
   viewModal: boolean = false;
   loading: boolean = false;
   communityName: string = "";
+  browserIdiom: string = ''
+  idiom: any = {};
+
   constructor(public sesion: SessionsService, private storage: StorageService){}
 
   ngOnInit(){
+    this.getLengueaje();
     this.sesion.getLoading().subscribe(viewLoading=>{
       this.loading = viewLoading;
     })
@@ -28,7 +34,33 @@ export class AppComponent implements OnInit{
       }
     });
   }
-  
+
+  getLengueaje(): void{
+    let language: any = this.storage.getItem('language');
+    this.browserIdiom = language;
+    if(language != null){
+      this.setLenagueaje(language);
+    }else{
+      this.setLenagueaje(window.navigator.language); 
+    };
+  }
+
+  changeLanguage(language: string): void{
+    this.storage.setItem('language', language);
+    this.browserIdiom = language;
+    this.sesion.setIdiom(true);
+    this.getLengueaje();
+  }
+
+  setLenagueaje(lenguage: string): void{
+    this.storage.setItem('language', lenguage);
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.appComponent;
+    }else{
+      this.idiom = english.appComponent;
+    };
+  }
+
   offModal(event: boolean){
     this.viewModal = event
   }

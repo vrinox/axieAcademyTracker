@@ -13,7 +13,9 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MatDatepicker } from '@angular/material/datepicker';
 import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
-
+import spanish from '../../../assets/json/lenguaje/spanishLanguaje.json';
+import english from '../../../assets/json/lenguaje/englishLanguage.json';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 const moment = _rollupMoment || _moment;
 
@@ -50,11 +52,14 @@ export class ReportDailyGeneralComponent implements OnInit {
   myControl = new FormControl();
   dias: any[] = [];
   membersAddressList: string[] = [];
+  idiom: any = {};
 
   constructor(
     private dbService: DatabaseService,
     private communityService: ComunityService,
-    private storyService: HistoricService
+    private storyService: HistoricService,
+    private storage: StorageService,
+    private sessions: SessionsService
   ) {
     this.myControl.valueChanges.subscribe(async (value) => {
 
@@ -62,9 +67,28 @@ export class ReportDailyGeneralComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.changeIdiom();
+    this.getLangueaje();
     this.date.setValue('')
     const initDate = new Date().getMonth() + 1;
     this.init(initDate.toString(), new Date().getFullYear().toString());
+  }
+
+  getLangueaje(): void{
+    let lenguage: string | null = this.storage.getItem('language');
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.reportDaily
+    }else{
+      this.idiom = english.reportDaily;
+    };
+  }
+
+  changeIdiom():void{
+    this.sessions.getIdiom().subscribe(change=>{
+      if(change){
+        this.getLangueaje();
+      }
+    })
   }
 
   public createLabels(data: Scholar[]) {

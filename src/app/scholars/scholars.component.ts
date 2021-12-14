@@ -11,6 +11,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SessionsService } from '../services/sessions/sessions.service';
 import { ComunityService } from '../services/community.service';
 import { MatPaginator } from '@angular/material/paginator';
+import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
+import english from '../../assets/json/lenguaje/englishLanguage.json';
+import { StorageService } from '../services/storage/storage.service';
 @Component({
   selector: 'app-scholars',
   templateUrl: './scholars.component.html',
@@ -23,6 +26,7 @@ export class ScholarsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort?: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource: MatTableDataSource<Scholar> = new MatTableDataSource();
+  idiom: any = {};
 
   constructor(
     private schDataService: ScholarDataService,
@@ -30,12 +34,33 @@ export class ScholarsComponent implements OnInit {
     private addNewBecado: AgregarNewBecadoService,
     private router: Router,
     private sessions: SessionsService,
-    private communityService: ComunityService
+    private communityService: ComunityService,
+    private storage: StorageService
   ) { }
   
   ngOnInit(): void {
+    this.getLangueaje();
+    this.changeIdiom();
     this.cargarDatos();
     this.newBecado();
+  }
+
+  getLangueaje(): void{
+    let lenguage: string | null = this.storage.getItem('language');
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.scholars;
+    }else{
+      this.idiom = english.scholars;
+    };
+  }
+
+  
+  changeIdiom():void{
+    this.sessions.getIdiom().subscribe(change=>{
+      if(change){
+        this.getLangueaje();
+      }
+    })
   }
 
   async cargarDatos() {

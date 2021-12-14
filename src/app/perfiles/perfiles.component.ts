@@ -10,6 +10,9 @@ import { AxiesData } from '../models/interfaces';
 import { RoninWeb3 } from '../models/RoninWeb3';
 import { AutoClaimService } from '../services/autoClaim/auto-claim.service';
 import secrets  from '../../assets/json/secrets.json';
+import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
+import english from '../../assets/json/lenguaje/englishLanguage.json';
+import { StorageService } from '../services/storage/storage.service';
 @Component({
   selector: 'app-perfiles',
   templateUrl: './perfiles.component.html',
@@ -25,11 +28,14 @@ export class PerfilesComponent implements OnInit {
   perfiles: Perfiles[] = [];
   roninAdress: string[] = [];
   roninWalet = new RoninWeb3();
+  idiom: any = {};
 
   constructor(
     private session: SessionsService, 
     private getAxies: GetAxiesService,
-    private autoClaim: AutoClaimService
+    private autoClaim: AutoClaimService,
+    private storage: StorageService,
+    private sessions: SessionsService
     ) { }
 
   ngOnInit(): void {
@@ -37,7 +43,26 @@ export class PerfilesComponent implements OnInit {
   }
 
   async start(): Promise<void>{
+    this.getLangueaje();
+    this.changeIdiom();
     await this.getAxiesData(this.session.scholar);
+  }
+
+  getLangueaje(): void{
+    let lenguage: string | null = this.storage.getItem('language');
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.perfiles;
+    }else{
+      this.idiom = english.perfiles;
+    };
+  }
+
+  changeIdiom():void{
+    this.sessions.getIdiom().subscribe(change=>{
+      if(change){
+        this.getLangueaje();
+      }
+    })
   }
 
   async getAxiesData(scholars: Scholar[]): Promise<void>{
