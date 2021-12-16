@@ -1,3 +1,4 @@
+@import "../../colors.module"
 .content-axies
     display: flex
     &__content
@@ -54,6 +55,19 @@
         justify-content: space-between
     &__general-off
         display: none
+    &__dark
+        background: $back-dark
+    &__text-dark
+        color: $color-dark
+        ::ng-deep .mat-button-toggle-button
+            background: $hover-dark
+        ::ng-deep .mat-checkbox-frame, ::ng-deep .mat-radio-outer-circle
+            border-color: $hover-dark
+            background: $difBack-dark
+    &__btn-dark
+        color: $color-dark
+        border-color: $hover-dark
+        background: $difBack-dark
 
 .portafolio
     width: calc(100% - 40px)
@@ -70,6 +84,10 @@
     &__totals--icons
         padding: 0px 10px
         margin-top: 12px
+    &__dark
+        background: $difBack-dark
+    &__text-dark
+        color: $color-dark
 
 .loading
     width: calc(100% - 40px)
@@ -110,14 +128,23 @@
         display: none
     &__btn-menu
         margin: 0px 5px
+        background: #fff
     &__sort
         display: none
+    &__text-dark
+        color: $color-dark
+    &__btn-dark
+        color: $color-dark
+        border-color: $hover-dark
+        background: $difBack-dark
+
 
 @media screen and (max-width: 700px)
     .menu-axies
         width: 100%
         position: relative
         &__hidden
+            width: 100%
             display: none
             position: absolute
             top: 53px
@@ -144,6 +171,10 @@
             right: 0px
         &__sub-menu-on
             display: flex
+        &__dark
+            background: $difBack-dark
+        &__btn-menu
+            margin: 5px 
 
 
 @media screen and (max-width: 580px) 

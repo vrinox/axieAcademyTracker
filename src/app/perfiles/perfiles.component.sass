@@ -1,3 +1,4 @@
+@import "../../colors.module"
 .container-table
     width: 100%
     padding: 5px 20px 0px 20px
@@ -19,6 +20,8 @@
         height: 50px
         background: #dedede
         overflow: hidden
+    &__load-dark
+        background: $difBack-dark
     &__img-cryto
         width: 20px
         position: relative
@@ -29,11 +32,27 @@
         position: relative
         font-size: 20px
         top: 4px
+    &__dark-table
+        background: $difBack-dark
+    &__text-dark
+        color: $color-dark
+    &__filter-dark
+        ::ng-deep .mat-form-field-outline 
+            color: $hover-dark 
+        ::ng-deep  .mat-form-field-outline-thick, ::ng-deep .mat-input-element 
+            color: $color-dark
 
 .paginator
     width: calc(100% - 40px)
     margin: 0px 20px
     box-sizing: border-box
+    &__dark
+        background: $difBack-dark
+        color: $color-dark
+        ::ng-deep .mat-select-value
+            color: $color-dark
+        ::ng-deep .mat-select-arrow 
+            color: $color-dark
 
 table
     width: 100%

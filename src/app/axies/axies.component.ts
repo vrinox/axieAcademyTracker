@@ -73,6 +73,8 @@ export class AxiesComponent implements OnInit {
 
   idiom: any = {};
 
+  dark: boolean = false;
+
   constructor(
     private getAxies: GetAxiesService,
     private sessions: SessionsService,
@@ -84,6 +86,8 @@ export class AxiesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dark = this.sessions.dark;
+    this.changeDarkMode();
     this.getLangueaje();
     this.changeIdiom();
     this.filterAxies.copyAxiesData = [];
@@ -104,7 +108,13 @@ export class AxiesComponent implements OnInit {
     };
   }
 
-  changeIdiom():void{
+  changeDarkMode(): void{
+    this.sessions.getDarkMode().subscribe(mode=>{
+      this.dark = mode;
+    });
+  }
+
+  changeIdiom() :void{
     this.sessions.getIdiom().subscribe(change=>{
       if(change){
         this.getLangueaje();

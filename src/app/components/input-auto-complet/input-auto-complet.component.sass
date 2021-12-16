@@ -1,2 +1,10 @@
+@import "../../../colors.module"
 .input-auto
     width: 100%
+    &__filter-dark
+        ::ng-deep .mat-form-field-outline 
+            color: $hover-dark 
+        ::ng-deep  .mat-form-field-outline-thick, ::ng-deep .mat-input-element 
+            color: $color-dark
+    &__text-dark
+        color: $color-dark

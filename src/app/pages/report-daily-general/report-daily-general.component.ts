@@ -70,11 +70,18 @@ export class ReportDailyGeneralComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.dark = this.sessions.dark;
+    this.changeDarkMode();
     this.changeIdiom();
     this.getLangueaje();
     this.date.setValue('')
     const initDate = new Date().getMonth() + 1;
     this.init(initDate.toString(), new Date().getFullYear().toString());
+  }
+
+  changeDarkMode(): void{
+    this.sessions.getDarkMode().subscribe(mode=>{
+      this.dark = mode;
+    });
   }
 
   getLangueaje(): void{

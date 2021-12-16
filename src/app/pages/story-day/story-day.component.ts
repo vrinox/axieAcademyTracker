@@ -52,9 +52,16 @@ export class StoryDayComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.dark = this.sessions.dark;
+    this.changeDarkMode();
     this.getLangueaje();
     this.changeIdiom();
     await this.cargarDatos();
+  }
+
+  changeDarkMode(): void{
+    this.sessions.getDarkMode().subscribe(mode=>{
+      this.dark = mode;
+    });
   }
 
   getLangueaje(): void{

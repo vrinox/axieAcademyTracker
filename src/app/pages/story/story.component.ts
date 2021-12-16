@@ -74,6 +74,7 @@ export class StoryComponent implements OnInit {
 
   async ngOnInit() {
     this.dark = this.sessions.dark;
+    this.changeDarkMode();
     this.changeIdiom();
     this.getLangueaje();
     this.date.setValue('')
@@ -81,6 +82,12 @@ export class StoryComponent implements OnInit {
     this.disponibleScholars = await this.dbService.getScholarsByAddressList(memberAddressList);
     this.disponibleScholars.forEach((scholar: Scholar) => {
       this.namePlayerOptions.push(scholar.name);
+    });
+  }
+
+  changeDarkMode(): void{
+    this.sessions.getDarkMode().subscribe(mode=>{
+      this.dark = mode;
     });
   }
 

@@ -13,6 +13,7 @@ import secrets  from '../../assets/json/secrets.json';
 import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
 import english from '../../assets/json/lenguaje/englishLanguage.json';
 import { StorageService } from '../services/storage/storage.service';
+
 @Component({
   selector: 'app-perfiles',
   templateUrl: './perfiles.component.html',
@@ -30,6 +31,8 @@ export class PerfilesComponent implements OnInit {
   roninWalet = new RoninWeb3();
   idiom: any = {};
 
+  dark: boolean = false;
+
   constructor(
     private session: SessionsService, 
     private getAxies: GetAxiesService,
@@ -39,6 +42,8 @@ export class PerfilesComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.dark = this.sessions.dark;
+    this.changeDarkMode();
     this.start();
   }
 
@@ -46,6 +51,12 @@ export class PerfilesComponent implements OnInit {
     this.getLangueaje();
     this.changeIdiom();
     await this.getAxiesData(this.session.scholar);
+  }
+
+  changeDarkMode(): void{
+    this.sessions.getDarkMode().subscribe(mode=>{
+      this.dark = mode;
+    });
   }
 
   getLangueaje(): void{

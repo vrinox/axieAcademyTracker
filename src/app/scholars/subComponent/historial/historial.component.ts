@@ -27,11 +27,18 @@ export class HistorialComponent implements OnInit {
 
   ngOnInit(): void {
     this.dark = this.sessions.dark;
+    this.changeDarkMode();
     this.scholarC.changeScholars().subscribe(scholars => {
       this.historial  = [];
       totals.setHistorial(scholars, this.historial, this.slpPrice);
     });
     this.getPriceSlp();
+  }
+
+  changeDarkMode(): void{
+    this.sessions.getDarkMode().subscribe(mode=>{
+      this.dark = mode;
+    });
   }
 
 

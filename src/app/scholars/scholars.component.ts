@@ -41,10 +41,17 @@ export class ScholarsComponent implements OnInit {
   
   ngOnInit(): void {
     this.dark = this.sessions.dark;
+    this.changeDarkMode();
     this.getLangueaje();
     this.changeIdiom();
     this.cargarDatos();
     this.newBecado();
+  }
+
+  changeDarkMode(): void{
+    this.sessions.getDarkMode().subscribe(mode=>{
+      this.dark = mode;
+    });
   }
 
   getLangueaje(): void{

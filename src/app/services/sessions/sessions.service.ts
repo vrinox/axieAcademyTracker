@@ -28,8 +28,8 @@ export class SessionsService {
 
   idiom: Subject<boolean> = new Subject;
 
-  darkMode: Subject<boolean> = new Subject;
-  dark: boolean = true;
+  private darkMode: Subject<boolean> = new Subject;
+  dark: boolean = false;
 
   constructor(
     public storage: StorageService,
@@ -141,6 +141,6 @@ export class SessionsService {
 
   setDarkMode(dark: boolean): void{
     this.dark = dark;
-    this.idiom.next(dark);
+    this.darkMode.next(dark);
   }
 }

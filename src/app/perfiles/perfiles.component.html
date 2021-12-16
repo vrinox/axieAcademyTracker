@@ -1,54 +1,55 @@
 <div class="container-table">
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">  
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" [class.container-table__dark-table]="dark">  
         <ng-container matColumnDef="name" sticky>
-            <th mat-header-cell *matHeaderCellDef> {{ idiom.name }} </th>
-            <td mat-cell class="container-table__name" *matCellDef="let element"> {{element.name}} </td>
+            <th mat-header-cell *matHeaderCellDef [class.container-table__text-dark]="dark"> {{ idiom.name }} </th>
+            <td mat-cell class="container-table__name" *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.name}} </td>
         </ng-container>
 
         <ng-container matColumnDef="axies">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Axies </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> Axies </th>
             <td mat-cell *matCellDef="let element" class="container-table__colum-axies"> 
                 <img class="container-table__img" *ngFor="let index of imgView" [src]="element.axies[index]" alt="">
                 <mat-icon *ngIf="element.axies.length > 3" 
                     class="container-table__icon-add" 
-                    [matBadge]="element.axies.length - 3">
+                    [matBadge]="element.axies.length - 3"
+                    [class.container-table__text-dark]="dark">
                     add_circle_outline
                 </mat-icon>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="slp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Slp </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> Slp </th>
             <td mat-cell *matCellDef="let element" class="container-table__colum-cryto"> 
                 <img *ngIf="element.axs !== 'load'" 
                     class="container-table__img-cryto" 
                     src="assets/img/SLP.png" alt=""> 
-                <label *ngIf="element.slp !== 'load'"> {{ element.slp }}  </label>
-                <div class="container-table__load" *ngIf="element.slp === 'load'">
+                <label *ngIf="element.slp !== 'load'" [class.container-table__text-dark]="dark"> {{ element.slp }}  </label>
+                <div class="container-table__load" [class.container-table__load-dark]="dark" *ngIf="element.slp === 'load'">
                     <app-loading></app-loading>
                 </div>
             </td>
         </ng-container>
         
         <ng-container matColumnDef="axs">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Axs </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> Axs </th>
             <td mat-cell *matCellDef="let element" class="container-table__colum-cryto"> 
                 <img *ngIf="element.axs !== 'load'" 
                     class="container-table__img-cryto" 
                     src="assets/img/axs.png" alt=""> 
-                <label *ngIf="element.axs !== 'load'"> {{ element.axs }} </label>
-                <div class="container-table__load" *ngIf="element.axs === 'load'">
+                <label *ngIf="element.axs !== 'load'" [class.container-table__text-dark]="dark"> {{ element.axs }} </label>
+                <div class="container-table__load" [class.container-table__load-dark]="dark" *ngIf="element.axs === 'load'">
                     <app-loading></app-loading>
                 </div>
             </td>
         </ng-container>
         
         <ng-container matColumnDef="weth">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Weth </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> Weth </th>
             <td mat-cell *matCellDef="let element" class="container-table__colum-cryto">
-                <i *ngIf="element.axs !== 'load'" class="cf cf-eth container-table__img-weth"></i>
-                <label *ngIf="element.weth !== 'load'"> {{ element.weth }}  </label>
-                <div class="container-table__load" *ngIf="element.weth === 'load'">
+                <i *ngIf="element.axs !== 'load'" class="cf cf-eth container-table__img-weth" [class.container-table__text-dark]="dark"></i>
+                <label *ngIf="element.weth !== 'load'" [class.container-table__text-dark]="dark"> {{ element.weth }}  </label>
+                <div class="container-table__load" [class.container-table__load-dark]="dark" *ngIf="element.weth === 'load'">
                     <app-loading></app-loading>
                 </div>
             </td>
@@ -58,4 +59,4 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </div>
-<mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+<mat-paginator class="paginator" [class.paginator__dark]="dark" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
