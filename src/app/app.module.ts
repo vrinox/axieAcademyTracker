@@ -55,6 +55,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { InputAutoCompletComponent } from './components/input-auto-complet/input-auto-complet.component';
 import Web3 from 'web3';
 import { PerfilesComponent } from './perfiles/perfiles.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -108,6 +109,7 @@ import { PerfilesComponent } from './perfiles/perfiles.component';
     MatPaginatorModule,
     MatBadgeModule,
     MatDividerModule,
+    MatSlideToggleModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),    
     provideAuth(() => getAuth()),

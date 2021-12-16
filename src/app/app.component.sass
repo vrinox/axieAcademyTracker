@@ -1,9 +1,13 @@
+@import "../colors.module"
+
 .whole
     min-height: 100vh
 
 .menu-tool
     display: flex
     justify-content: space-between
+    &__dark
+        background: $difBack-dark
 
 .container
     background: #dedede
@@ -20,6 +24,17 @@
         height: 100vh
         background: #28364b
         z-index: 50
+
+.container-dark
+    background: $back-dark
+    &__menu
+        background: $back-dark
+        height: calc(100% - 8px)
+    &__span
+        color:$color-dark
+        &:hover
+            background: $hover-dark
+            border-radius: 3px
 
 .mat-drawer-container 
     min-height: calc(100vh - 64px)

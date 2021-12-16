@@ -1,6 +1,6 @@
-<mat-card class="menu-month">
-  <mat-form-field appearance="fill">
-    <mat-label>{{ idiom.monthAndYear }}</mat-label>
+<mat-card class="menu-month" [class.menu-month__dark]="dark">
+  <mat-form-field appearance="fill" [class.menu-month__dark-field]="dark">
+    <mat-label [class.menu-month__dark-field]="dark">{{ idiom.monthAndYear }}</mat-label>
     <input matInput [matDatepicker]="dp" [formControl]="date">
     <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
     <mat-datepicker #dp
@@ -10,7 +10,7 @@
                     panelClass="example-month-picker">
     </mat-datepicker>
   </mat-form-field>
-  <button mat-button color="primary" (click)="buscar()" [disabled]="!date.value">
+  <button mat-button [class.menu-month__dark-btn]="dark" color="primary" (click)="buscar()" [disabled]="!date.value">
       {{ idiom.btnSearh }}
   </button>
 </mat-card>
@@ -19,46 +19,46 @@
     <mat-card>
         <app-line-chart [data]="storyLabels"></app-line-chart>
     </mat-card>
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" [class.container-table__dark]="dark">
       <ng-container matColumnDef="name" sticky>
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ idiom.name }} </th>
-        <td mat-cell *matCellDef="let element; index as i ">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.name }} </th>
+        <td mat-cell *matCellDef="let element; index as i " [class.container-table__text-dark]="dark">
           {{element.lastUpdate.toDateString()}}
         </td>
       </ng-container>
   
       <ng-container matColumnDef="totalSLP">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ idiom.totalSLP }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.inGameSLP}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.totalSLP }} </th>
+        <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.inGameSLP}} </td>
       </ng-container>
   
       <ng-container matColumnDef="todaySLP">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ idiom.todaySLP }} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.todaySLP }} </th>
         <td mat-cell *matCellDef="let element" [ngClass]="{'container-table__min': element.todaySLP <= (50 * element.yesterdaySLP),
                         'container-table__middle': element.todaySLP > (50 * element.yesterdaySLP) && element.todaySLP < (75 * element.yesterdaySLP),
                         'container-table__max': element.todaySLP >= (75 * element.yesterdaySLP)}">{{element.todaySLP}} </td>
       </ng-container>
   
       <ng-container matColumnDef="average">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ idiom.average }} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.average }} </th>
         <td mat-cell *matCellDef="let element" [ngClass]="{'container-table__min': (element.todaySLP/element.yesterdaySLP) <= 50,
         'container-table__middle': (element.todaySLP/element.yesterdaySLP) > 50 && (element.todaySLP/element.yesterdaySLP) < 75,
         'container-table__max': (element.todaySLP/element.yesterdaySLP) >= 75}"> {{(element.todaySLP/element.yesterdaySLP).toFixed(2)}} </td>
       </ng-container>
 
       <ng-container matColumnDef="yesterdaySLP">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ idiom.Scholarships }} </th>
-        <td mat-cell *matCellDef="let element" > {{element.yesterdaySLP}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.Scholarships }} </th>
+        <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.yesterdaySLP}} </td>
       </ng-container>
   
       <ng-container matColumnDef="monthSLP">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ idiom.monthSLP }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.monthSLP}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.monthSLP }} </th>
+        <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.monthSLP}} </td>
       </ng-container>
 
       <ng-container matColumnDef="weekSLP">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ idiom.weekSLP }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.weekSLP}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.weekSLP }} </th>
+        <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.weekSLP}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

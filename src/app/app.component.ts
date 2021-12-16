@@ -4,6 +4,7 @@ import { SessionsService } from './services/sessions/sessions.service';
 import { StorageService } from './services/storage/storage.service';
 import english from '../assets/json/lenguaje/englishLanguage.json';
 import spanish from '../assets/json/lenguaje/spanishLanguaje.json';
+import { MatSlideToggleDefaultOptions } from '@angular/material/slide-toggle';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,6 +12,7 @@ import spanish from '../assets/json/lenguaje/spanishLanguaje.json';
 })
 export class AppComponent implements OnInit{
   @ViewChild('sidenav') sidenav!: MatSidenav;
+  @ViewChild('darkMode') DarkMode!: any;
   title = 'axie';
   showFiller = false;
   viewModal: boolean = false;
@@ -18,6 +20,8 @@ export class AppComponent implements OnInit{
   communityName: string = "";
   browserIdiom: string = ''
   idiom: any = {};
+
+  dark: boolean = false;
 
   constructor(public sesion: SessionsService, private storage: StorageService){}
 
@@ -59,6 +63,11 @@ export class AppComponent implements OnInit{
     }else{
       this.idiom = english.appComponent;
     };
+  }
+
+  setDarkMode(): void{
+    this.dark = !this.DarkMode.checked;
+    this.sesion.setDarkMode(!this.DarkMode.checked);
   }
 
   offModal(event: boolean){

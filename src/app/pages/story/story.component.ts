@@ -59,6 +59,8 @@ export class StoryComponent implements OnInit {
 
   idiom: any = {};
 
+  dark: boolean = false;
+
   constructor(
     private dbService: DatabaseService,
     private communityService: ComunityService,
@@ -71,6 +73,7 @@ export class StoryComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.dark = this.sessions.dark;
     this.changeIdiom();
     this.getLangueaje();
     this.date.setValue('')

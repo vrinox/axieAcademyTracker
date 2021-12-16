@@ -7,7 +7,8 @@
         "historicDay": "Historico por dia",
         "generalReport": "Reporte general",
         "profiles": "Perfiles",
-        "logOut": "Cerrar Session"
+        "logOut": "Cerrar Session",
+        "darkMode": "Modo Oscuro"
     }, 
     "register": {
         "Title": "Registro de becado",

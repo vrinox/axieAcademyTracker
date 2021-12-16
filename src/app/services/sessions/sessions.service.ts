@@ -5,7 +5,6 @@ import { community, userLink } from 'src/app/models/interfaces';
 import { StorageService } from '../storage/storage.service';
 import { Router } from '@angular/router';
 import { ComunityService } from '../community.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +27,9 @@ export class SessionsService {
 
 
   idiom: Subject<boolean> = new Subject;
+
+  darkMode: Subject<boolean> = new Subject;
+  dark: boolean = true;
 
   constructor(
     public storage: StorageService,
@@ -130,6 +132,15 @@ export class SessionsService {
   }
 
   setIdiom(value: boolean): void{
-    this.idiom.next(value)
+    this.idiom.next(value);
+  }
+
+  getDarkMode(): Observable<boolean>{
+    return this.darkMode;
+  }
+
+  setDarkMode(dark: boolean): void{
+    this.dark = dark;
+    this.idiom.next(dark);
   }
 }

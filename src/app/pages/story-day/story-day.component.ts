@@ -31,6 +31,8 @@ export class StoryDayComponent implements OnInit {
 
   idiom: any = {};
 
+  dark: boolean = false;
+
   constructor(
     private dbService: DatabaseService,
     private sessions: SessionsService,
@@ -49,6 +51,7 @@ export class StoryDayComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.dark = this.sessions.dark;
     this.getLangueaje();
     this.changeIdiom();
     await this.cargarDatos();

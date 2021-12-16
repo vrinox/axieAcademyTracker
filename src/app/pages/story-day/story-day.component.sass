@@ -1,7 +1,14 @@
+@import "../../../colors.module"
 .date-picker
     width: calc(100% - 20px)
     margin: 10px 10px
     box-sizing: border-box
+    &__dark
+        background: $difBack-dark
+    &__dark-field
+        color: $color-dark
+        ::ng-deep .mat-button-wrapper, ::ng-deep .mat-input-element
+            color: $color-dark
 .container-table
     width: 100%
     &__filter, table
@@ -19,6 +26,15 @@
         right: 25px
     &__btn-img
         width: 28px
+    &__dark-table
+        background: $difBack-dark
+    &__text-dark
+        color: $color-dark
+    &__filter-dark
+        ::ng-deep .mat-form-field-outline 
+            color: $hover-dark 
+        ::ng-deep  .mat-form-field-outline-thick, ::ng-deep .mat-input-element
+            color: $color-dark
 .paginator, table, .container-table__filter
     width: calc(100% - 140px)
     margin: 0px 70px 

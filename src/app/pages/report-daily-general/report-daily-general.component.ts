@@ -54,6 +54,8 @@ export class ReportDailyGeneralComponent implements OnInit {
   membersAddressList: string[] = [];
   idiom: any = {};
 
+  dark: boolean = false;
+
   constructor(
     private dbService: DatabaseService,
     private communityService: ComunityService,
@@ -67,6 +69,7 @@ export class ReportDailyGeneralComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.dark = this.sessions.dark;
     this.changeIdiom();
     this.getLangueaje();
     this.date.setValue('')

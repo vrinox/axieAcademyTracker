@@ -27,6 +27,7 @@ export class ScholarsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource: MatTableDataSource<Scholar> = new MatTableDataSource();
   idiom: any = {};
+  dark: boolean = false;
 
   constructor(
     private schDataService: ScholarDataService,
@@ -39,6 +40,7 @@ export class ScholarsComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
+    this.dark = this.sessions.dark;
     this.getLangueaje();
     this.changeIdiom();
     this.cargarDatos();
@@ -54,7 +56,6 @@ export class ScholarsComponent implements OnInit {
     };
   }
 
-  
   changeIdiom():void{
     this.sessions.getIdiom().subscribe(change=>{
       if(change){

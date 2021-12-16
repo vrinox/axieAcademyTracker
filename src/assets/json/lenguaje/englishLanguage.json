@@ -7,7 +7,8 @@
         "historicDay": "history per day",
         "generalReport": "general report",
         "profiles": "profiles",
-        "logOut": "logOut"
+        "logOut": "logOut",
+        "darkMode": "Dark Mode"
     }, 
     "register": {
         "Title": "Record of scholar",

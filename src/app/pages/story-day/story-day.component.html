@@ -1,19 +1,19 @@
 
-<mat-card class="date-picker">
-  <mat-form-field appearance="fill">
-    <mat-label>{{ idiom.monthAndYear }}</mat-label>
+<mat-card class="date-picker" [class.date-picker__dark]="dark">
+  <mat-form-field appearance="fill" [class.date-picker__dark-field]="dark">
+    <mat-label [class.date-picker__dark-field]="dark">{{ idiom.monthAndYear }}</mat-label>
     <input matInput [matDatepicker]="picker" [formControl]="myControl">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 </mat-card>
 
-<mat-form-field appearance="outline" class="container-table__filter">
-  <mat-label>{{ idiom.label }}</mat-label>
+<mat-form-field appearance="outline" class="container-table__filter" [class.container-table__filter-dark]="dark">
+  <mat-label [class.container-table__text-dark]="dark">{{ idiom.label }}</mat-label>
   <input matInput (keyup)="filterName($event)" placeholder="Nombre de un becado" #input>
 </mat-form-field>
 
-<div class="container-table">
+<div class="container-table" [class.container-table__dark-table]="dark">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">  
     <ng-container class="container-table__name" matColumnDef="name" sticky>
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ idiom.name }} </th>
