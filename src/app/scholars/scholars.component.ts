@@ -130,6 +130,7 @@ export class ScholarsComponent implements OnInit {
       this.scholars = tempScholars.map((scholar) => {
         return scholar;
       });
+      this.dataSource = new MatTableDataSource(this.scholars);
     })
   }
 
