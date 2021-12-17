@@ -1,3 +1,4 @@
+@import "../../colors.module"
 .container-axies
     min-height: 48px
     padding: 0px 20px
@@ -69,6 +70,10 @@
         display: flex
     &__genes, &__sub-content, &__parts
         box-sizing: border-box
+    &__dark-table
+        background: $difBack-dark
+    &__text-dark
+        color: $color-dark
 
 @media screen and (max-width: 800px)
     .container-axies

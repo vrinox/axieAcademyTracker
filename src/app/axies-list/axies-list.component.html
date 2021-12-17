@@ -1,11 +1,11 @@
 <div class="container-axies">
-    <mat-expansion-panel>
+    <mat-expansion-panel [class.container-axies__dark-table]="dark">
         <mat-expansion-panel-header>
-            <mat-panel-title>
+            <mat-panel-title [class.container-axies__text-dark]="dark">
                 {{ axie.namePlayer }}
             </mat-panel-title>
 
-            <mat-panel-description class="container-axies__description">
+            <mat-panel-description class="container-axies__description" [class.container-axies__text-dark]="dark">
                 <div><i class="cf cf-eth" *ngIf="axie.auction"></i>{{ axie.name }}</div>
                 <div class="container-axies__icon-price" *ngIf="axie.class != null" >
                     <p class="container-axies__price-panel" 
@@ -25,7 +25,7 @@
                 </a>
 
                 <div class="container-axies__price" 
-                *ngIf="axie.price != undefined">
+                *ngIf="axie.price != undefined" [class.container-axies__text-dark]="dark">
                     <div class="container-axies__price-content">
                         <p class="container-axies__icon-usd">$</p> <p> {{ axie.price }}</p>
                     </div>
@@ -34,26 +34,26 @@
                     </div>
                 </div>
 
-                <div class="container-axies__sub-stast" *ngIf="axie.class != null" >
+                <div class="container-axies__sub-stast" *ngIf="axie.class != null" [class.container-axies__text-dark]="dark" >
                     <app-stast-axie [stast]="[axie.hp, axie.speed, axie.skill, axie.morale]"></app-stast-axie>
                 </div>
             </div>
 
             <div class="container-axies__parts" 
                     *ngIf="axie.class != null && menuView === 'Basic Menu' || menuView === 'Completed View'">
-                <div *ngFor="let parts of axie.parts" class="container-axies__sub-parts">
+                <div *ngFor="let parts of axie.parts" class="container-axies__sub-parts" [class.container-axies__text-dark]="dark">
                 <img class="container-axies__parts-img" 
                         src="assets/svg/axies/{{parts.class}}/{{parts.type}}.svg" alt="">
                 <p>{{ parts.name }}</p>
                 </div>
             </div>
 
-            <div class="container-axies__genes" *ngIf="menuView === 'Breed View'"> 
+            <div class="container-axies__genes" *ngIf="menuView === 'Breed View'" [class.container-axies__text-dark]="dark"> 
                 <app-genes [AxieGen]="axie.genes"></app-genes>
             </div>
         </div>
 
-        <div class="container-axies__genes container-axies__genes-completed" *ngIf="menuView === 'Completed View'"> 
+        <div class="container-axies__genes container-axies__genes-completed" *ngIf="menuView === 'Completed View'" [class.container-axies__text-dark]="dark"> 
             <app-genes [AxieGen]="axie.genes"></app-genes>
         </div>
     </mat-expansion-panel>

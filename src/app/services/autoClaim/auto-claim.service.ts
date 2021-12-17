@@ -14,7 +14,7 @@ export class AutoClaimService {
 
   private API_CLAIM: string = 'https://game-api.skymavis.com/game-api/clients/'
   private roninWalet = new RoninWeb3();
-  CHAIN_ID: number = 2020;
+  private CHAIN_ID: number = 2020;
 
   constructor(private http: HttpClient) { }
 
