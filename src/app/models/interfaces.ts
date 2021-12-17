@@ -304,3 +304,13 @@ export interface AccessToken{
         }
     }
 }
+
+export interface ResAccesToken{
+    blockchain_related: {
+        signature:{
+            amount: number,
+            signature: string,
+            timestamp: number
+        }
+    }
+}
