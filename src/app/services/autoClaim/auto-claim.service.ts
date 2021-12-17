@@ -61,6 +61,15 @@ export class AutoClaimService {
     });
   }
 
+  async transferSlp(
+    front: string, 
+    to: string,
+    privatekey: string, 
+    amount: number){
+      const transaction = await this.roninWalet.getTransaccionTransfer(to, amount);
+      this.signAndSendTransaction(front, this.roninWalet.SLP_CONTRACT, privatekey, 100000, transaction);
+  }
+
   private async claim(
     ronin: string, 
     privatekey: string, 
@@ -68,7 +77,7 @@ export class AutoClaimService {
     timestamp: number,
     signature: string): Promise<void>{
       const transaction = await this.roninWalet.getContracChekpoint(ronin, amount, timestamp, signature);
-      await this.signAndSendTransaction(ronin, this.roninWalet.SLP_CONTRACT, privatekey, 100000, 
+      this.signAndSendTransaction(ronin, this.roninWalet.SLP_CONTRACT, privatekey, 100000, 
         transaction
       );
   }

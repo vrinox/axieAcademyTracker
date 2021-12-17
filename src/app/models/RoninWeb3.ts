@@ -19,7 +19,12 @@ export class RoninWeb3{
 
     async getContracChekpoint(ronin: string, amount: number, timestamp: number, signature: string){
         let Contract = this.getContract();
-        return await Contract.methods.checkpoint(ronin, amount, timestamp,signature);
+        return await Contract.methods.checkpoint(ronin, amount, timestamp, signature);
+    }
+
+    async getTransaccionTransfer(to: string, amount: number){
+        let contract = this.getContract();
+        return await contract.methods.transferSlp(to, amount);
     }
 
     getContract(){
