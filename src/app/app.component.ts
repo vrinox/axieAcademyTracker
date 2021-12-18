@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { SessionsService } from './services/sessions/sessions.service';
 import { StorageService } from './services/storage/storage.service';
+import english from '../assets/json/lenguaje/englishLanguage.json';
+import spanish from '../assets/json/lenguaje/spanishLanguaje.json';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,14 +11,22 @@ import { StorageService } from './services/storage/storage.service';
 })
 export class AppComponent implements OnInit{
   @ViewChild('sidenav') sidenav!: MatSidenav;
+  @ViewChild('darkMode') DarkMode!: any;
   title = 'axie';
   showFiller = false;
   viewModal: boolean = false;
   loading: boolean = false;
   communityName: string = "";
+  browserIdiom: string = ''
+  idiom: any = {};
+
+  dark: boolean = false;
+
   constructor(public sesion: SessionsService, private storage: StorageService){}
 
   ngOnInit(){
+    this.darkStorage();
+    this.getLengueaje();
     this.sesion.getLoading().subscribe(viewLoading=>{
       this.loading = viewLoading;
     })
@@ -28,7 +38,47 @@ export class AppComponent implements OnInit{
       }
     });
   }
-  
+
+  getLengueaje(): void{
+    let language: any = this.storage.getItem('language');
+    this.browserIdiom = language;
+    if(language != null){
+      this.setLenagueaje(language);
+    }else{
+      this.setLenagueaje(window.navigator.language); 
+    };
+  }
+
+  changeLanguage(language: string): void{
+    this.storage.setItem('language', language);
+    this.browserIdiom = language;
+    this.sesion.setIdiom(true);
+    this.getLengueaje();
+  }
+
+  setLenagueaje(lenguage: string): void{
+    this.storage.setItem('language', lenguage);
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.appComponent;
+    }else{
+      this.idiom = english.appComponent;
+    };
+  }
+
+  darkStorage(): void{
+    let darkStore = this.storage.getItem('darkMode');
+    if(darkStore === 'true'){
+      this.sesion.setDarkMode(true);
+      this.dark = true;
+    }
+  }
+
+  setDarkMode(): void{
+    this.dark = !this.DarkMode.checked;
+    this.sesion.setDarkMode(!this.DarkMode.checked);
+    this.storage.setItem('darkMode', `${!this.DarkMode.checked}`);
+  }
+
   offModal(event: boolean){
     this.viewModal = event
   }

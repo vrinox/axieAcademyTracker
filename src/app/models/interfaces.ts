@@ -285,6 +285,7 @@ export interface Genes{
 export interface Perfiles{
     name: string
     axies: string[],
+    ronin: string,
     slp: string,
     axs: string, 
     weth: string
@@ -301,6 +302,16 @@ export interface AccessToken{
             newAccount: boolean,
             result: boolean,
             __typename: string
+        }
+    }
+}
+
+export interface ResAccesToken{
+    blockchain_related: {
+        signature:{
+            amount: number,
+            signature: string,
+            timestamp: number
         }
     }
 }

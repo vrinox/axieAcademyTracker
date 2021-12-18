@@ -1,16 +1,17 @@
 <app-historial></app-historial>
 
-<mat-form-field appearance="outline" class="container-table__filter">
-  <mat-label>Busqueda de becados</mat-label>
+<mat-form-field appearance="outline" class="container-table__filter" [class.container-table__filter-dark]="dark">
+  <mat-label [class.container-table__text-dark]="dark">{{ idiom.searh }}</mat-label>
   <input matInput (keyup)="filterName($event)" placeholder="Nombre de un becado" #input>
 </mat-form-field>
 
 <div class="container-table">
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">  
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" 
+        [class.container-table__dark-table]="dark">  
     <ng-container class="container-table__name" matColumnDef="name" sticky>
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.name }} </th>
       <td mat-cell *matCellDef="let element; index as i ">
-        <button mat-button color="primary" (click)="viewOneScholarHistoric(element.roninAddress)">
+        <button mat-button color="primary" [class.container-table__text-dark]="dark">
           {{element.name}}
         </button>
         <button mat-mini-fab color="primary" class="container-table__btn" (click)="viewAxie(element)">
@@ -20,12 +21,12 @@
     </ng-container>
 
       <ng-container matColumnDef="totalSLP">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> totalSLP </th>
-        <td mat-cell *matCellDef="let element"> {{element.inGameSLP}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.totalSLP }} </th>
+        <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.inGameSLP}} </td>
       </ng-container>
 
       <ng-container matColumnDef="todaySLP">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> todaySLP </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.todaySLP }} </th>
         <td mat-cell *matCellDef="let element" 
             [ngClass]="{'container-table__min': element.todaySLP <= 50,
                       'container-table__middle': element.todaySLP > 50 && element.todaySLP < 75,
@@ -33,7 +34,7 @@
       </ng-container>
     
       <ng-container matColumnDef="yesterdaySLP">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> yesterdaySLP </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.yesterdaySLP }} </th>
         <td mat-cell *matCellDef="let element"
             [ngClass]="{'container-table__min': element.yesterdaySLP <= 50,
             'container-table__middle': element.yesterdaySLP > 50 && element.yesterdaySLP < 75,
@@ -41,22 +42,22 @@
       </ng-container>
       
       <ng-container matColumnDef="monthSLP">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> monthSLP </th>
-        <td mat-cell *matCellDef="let element"> {{element.monthSLP}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.monthSLP }} </th>
+        <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.monthSLP}} </td>
       </ng-container>
       
       <ng-container matColumnDef="monthlyRank">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> monthlyRank </th>
-        <td mat-cell *matCellDef="let element"> {{element.mounthlyRank}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.monthlyRank }} </th>
+        <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.mounthlyRank}} </td>
       </ng-container>
     
       <ng-container matColumnDef="MMR">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> MMR </th>
-        <td mat-cell *matCellDef="let element">{{element.MMR}}🏆</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> MMR </th>
+        <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark">{{element.MMR}}🏆</td>
       </ng-container>
     
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
-<mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+<mat-paginator class="paginator" [class.paginator__dark]="dark" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>

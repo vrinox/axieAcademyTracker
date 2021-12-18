@@ -1,5 +1,5 @@
-<mat-form-field class="input-auto" appearance="outline">
-    <mat-label>{{ label }}</mat-label>
+<mat-form-field class="input-auto" appearance="outline" [class.input-auto__filter-dark]="dark">
+    <mat-label [class.input-auto__text-dark]="dark">{{ label }}</mat-label>
     <input type="text" placeholder="Pick one" aria-label="name axies player" 
     matInput [formControl]="myControl" [matAutocomplete]="auto" (keydown)="setKeyOption()">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">

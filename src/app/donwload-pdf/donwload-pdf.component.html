@@ -11,17 +11,17 @@
         </div>
         
         <mat-card class="container-table__head">
-            <p class="container-table__p">Total Axies: {{ contentpdf.totalAxie }}</p>
-            <p class="container-table__p">Total Becados: {{ contentpdf.totalbecados }}</p>
-            <p class="container-table__p">Aproxidamo en usd: <span class="container-table__icon-usd">$</span> {{ contentpdf.totalPortafolio }}</p>
-            <p class="container-table__p">Aproxidamo en eth: <i class="cf cf-eth"></i> {{ contentpdf.totalPortafolioEth }}</p>
-            <p class="container-table__p">Total N/A: {{ contentpdf.totalNa }}</p>
-            <p class="container-table__p">Total Egg: {{ contentpdf.totalEgg }}</p>
+            <p class="container-table__p">{{idiom.allAxies}}: {{ contentpdf.totalAxie }}</p>
+            <p class="container-table__p">{{idiom.AllScholar}}: {{ contentpdf.totalbecados }}</p>
+            <p class="container-table__p">{{idiom.averageUsd}}: <span class="container-table__icon-usd">$</span> {{ contentpdf.totalPortafolio }}</p>
+            <p class="container-table__p">{{idiom.averageEtg}}: <i class="cf cf-eth"></i> {{ contentpdf.totalPortafolioEth }}</p>
+            <p class="container-table__p">{{idiom.allNa}}: {{ contentpdf.totalNa }}</p>
+            <p class="container-table__p">{{idiom.allEgg}}: {{ contentpdf.totalEgg }}</p>
         </mat-card>
         
         <table mat-table [dataSource]="dataSource" matSort>  
             <ng-container matColumnDef="Tipo" sticky>
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{idiom.type}} </th>
                 <td mat-cell *matCellDef="let element">
                     <button mat-button color="primary">
                         <img src="assets/svg/axies/{{element.type}}/{{element.type}}.svg" class="container-table__icon" alt="">
@@ -31,7 +31,7 @@
             </ng-container>
 
             <ng-container matColumnDef="Total">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{idiom.typeTotal}} </th>
                 <td mat-cell *matCellDef="let element"> {{ element.totalType }} </td>
             </ng-container>
 
@@ -46,17 +46,17 @@
             </ng-container>
 
             <ng-container matColumnDef="Valor Promedio">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor Promedio </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{idiom.valueAverage}} </th>
                 <td mat-cell *matCellDef="let element"> {{ element.averageValue }} </td>
             </ng-container>
 
             <ng-container matColumnDef="Valor Minimo">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor Minimo </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{idiom.valueMin}} </th>
                 <td mat-cell *matCellDef="let element"> {{ element.minValue }} </td>
             </ng-container>
 
             <ng-container matColumnDef="Valor Maximo">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Valor Maximo </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{idiom.valueMax}} </th>
                 <td mat-cell *matCellDef="let element"> {{ element.maxValue }} </td>
             </ng-container>
 
@@ -67,10 +67,10 @@
 
         <div class="container-table__footer">
             <div class="container-table__url">
-                espacio para la url
+                {{ idiom.url }}
             </div>
 
-            <button mat-raised-button color="warn">Gift me a coffee</button>
+            <button mat-raised-button color="warn">{{ idiom.gift }}</button>
         </div>
 
         <mat-card class="container-table__price">
@@ -82,12 +82,11 @@
         <div class="container-table__disclaimer">
             <div class="container-table__disclaimer-title">
                 <mat-icon class="container-table__disclaimer-icon">warning</mat-icon>
-                <h1 class="container-table__disclaimer-aviso">Aviso</h1>
+                <h1 class="container-table__disclaimer-aviso">{{idiom.warning}}</h1>
                 <mat-icon class="container-table__disclaimer-icon">warning</mat-icon>
             </div>
             <p class="container-table__disclaimer-text">
-                El valor del portafolio depende del valor actual del eth,
-                esto puede causar variantes de precios a lo largo del tiempo.
+                {{ idiom.disclaimer }}
             </p>
         </div>
     </div>

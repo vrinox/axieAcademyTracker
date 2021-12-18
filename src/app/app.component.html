@@ -1,4 +1,4 @@
-<app-formulario-becado [ViewModal]="viewModal" (OffModal)="offModal($event)"></app-formulario-becado>
+<app-formulario-becado  [ViewModal]="viewModal" (OffModal)="offModal($event)"></app-formulario-becado>
 
 <div class="whole">
 
@@ -6,56 +6,62 @@
   <app-loading></app-loading>
 </div>
 
-<mat-toolbar class="menu-tool" color="primary" *ngIf="this.sesion.init">
+<mat-toolbar class="menu-tool" [class.menu-tool__dark]="dark" color="primary" *ngIf="this.sesion.init">
   <div>
     <button mat-icon-button mat-button (click)="close()">
       <mat-icon>menu</mat-icon>
     </button>
     <label> {{ communityName }} </label>
   </div>
-  <button mat-button>
-    <label>Donate</label> <mat-icon>favorite</mat-icon>
-  </button>
+  <div>
+    <button mat-button>
+      <label>{{ idiom.donate }}</label> <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-button [matMenuTriggerFor]="menu">{{ browserIdiom }}</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="changeLanguage('es')">es</button>
+      <button mat-menu-item (click)="changeLanguage('en')">en</button>
+    </mat-menu>
+    <mat-slide-toggle #darkMode (click)="setDarkMode()">
+      <mat-icon>{{ dark ? 'dark_mode' : 'brightness_5' }}</mat-icon>
+    </mat-slide-toggle>
+  </div>
 </mat-toolbar>
   
-  <mat-sidenav-container class="container" [hasBackdrop]="false">
+  <mat-sidenav-container class="container" [class.container-dark]="dark" [hasBackdrop]="false">
     <mat-sidenav #sidenav (keydown.escape)="close()" disableClose [mode]="'side'">
-      <mat-list role="list">
-        <mat-list-item role="listitem" routerLink="/scholars">
+      <mat-list role="list"  [class.container-dark__menu]="dark">
+        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/scholars">
           <mat-icon>groups</mat-icon>
-          <span>Users</span>
+          <span>{{ idiom.home }}</span>
         </mat-list-item>
-        <mat-list-item role="listitem" (click)="showFiller = !showFiller; viewModal = !viewModal">
+        <mat-list-item [class.container-dark__span]="dark" role="listitem" (click)="showFiller = !showFiller; viewModal = !viewModal">
           <mat-icon>add</mat-icon>
-          <span> Agregar nuevo becado</span>
+          <span>{{ idiom.addBecado }}</span>
         </mat-list-item>
-        <mat-list-item role="listitem" routerLink="/historic/months">
-          <mat-icon>insights</mat-icon>
-          <span>Historico</span>
-        </mat-list-item>
-        <mat-list-item role="listitem" routerLink="/story">
+        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/story">
           <mat-icon>history</mat-icon>
-          <span>Historico por usuario</span>
+          <span>{{ idiom.historicUser }}</span>
         </mat-list-item>
-        <mat-list-item role="listitem" routerLink="/storyDay">
+        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/storyDay">
           <mat-icon>today</mat-icon>
-          <span>Historico por dia</span>
+          <span>{{ idiom.historicDay }}</span>
         </mat-list-item>
-        <mat-list-item role="listitem" routerLink="/reportDailyGeneral">
+        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/reportDailyGeneral">
           <mat-icon>event</mat-icon>
-          <span>Reporte general</span>
+          <span>{{ idiom.generalReport }}</span>
         </mat-list-item>
-        <mat-list-item role="listitem" routerLink="/axies">
+        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/axies">
           <mat-icon>pets</mat-icon>
           <span>Axies</span>
         </mat-list-item>
-        <mat-list-item role="listitem" routerLink="/prefiles">
+        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/prefiles">
           <mat-icon>account_balance_wallet</mat-icon>
-          <span>Perfiles</span>
+          <span>{{ idiom.profiles }}</span>
         </mat-list-item>
-        <mat-list-item role="listitem" (click)="logOut()">
+        <mat-list-item [class.container-dark__span]="dark" role="listitem" (click)="logOut()">
           <mat-icon>logout</mat-icon>
-          <span> logOut</span>
+          <span> {{ idiom.logOut }} </span>
         </mat-list-item>
       </mat-list>
     </mat-sidenav>

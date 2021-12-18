@@ -18,7 +18,6 @@ import { FormularioBecadoComponent } from './formulario-becado/formulario-becado
 import { MatFormFieldModule  } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { GraficasComponent } from './graficas/graficas.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -56,6 +55,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { InputAutoCompletComponent } from './components/input-auto-complet/input-auto-complet.component';
 import Web3 from 'web3';
 import { PerfilesComponent } from './perfiles/perfiles.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -63,7 +63,6 @@ import { PerfilesComponent } from './perfiles/perfiles.component';
     ScholarsComponent,
     HistorialComponent,
     FormularioBecadoComponent,
-    GraficasComponent,
     AxiesComponent,
     LoadingComponent,
     StoryComponent,
@@ -110,6 +109,7 @@ import { PerfilesComponent } from './perfiles/perfiles.component';
     MatPaginatorModule,
     MatBadgeModule,
     MatDividerModule,
+    MatSlideToggleModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),    
     provideAuth(() => getAuth()),

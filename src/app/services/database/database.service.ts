@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, query, QueryDocumentSnapshot, where } from 'firebase/firestore';
-import { scholarFirebaseI, scholarOfficialData, userLink } from 'src/app/models/interfaces';
+import { getFirestore, collection, getDocs, query, QueryDocumentSnapshot, where, doc } from 'firebase/firestore';
+import { scholarFirebaseI, userLink } from 'src/app/models/interfaces';
 import { Subject } from 'rxjs';
 import { Scholar } from 'src/app/models/scholar';
 import { Axie } from 'src/app/models/axie';
-import { addDoc, deleteDoc, getDoc, updateDoc } from '@angular/fire/firestore';
-import * as moment from 'moment';
+import { addDoc, getDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 
 const app = initializeApp(environment.firebase);
 
@@ -110,5 +109,11 @@ export class DatabaseService {
   async addScholar(scholar:Scholar) {
     const dbRef = await addDoc(collection(this.db,"scholars"), scholar.getValues());
     return dbRef.id;
+  }
+
+  async deleteScholar(ronin: string){
+    const dbRef = collection(this.db, "scholars");
+    const snapshot = await getDocs(query(dbRef, where("roninAddress", "==", ronin)));
+    deleteDoc(doc(this.db, 'scholars', snapshot.docs[0].id));
   }
 }

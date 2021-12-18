@@ -1,3 +1,4 @@
+@import "../../colors.module"
 .container-table
     width: 100%
     &__filter, table
@@ -15,6 +16,27 @@
         right: 25px
     &__btn-img
         width: 28px
+    &__dark-table
+        background: $difBack-dark
+    &__text-dark
+        color: $color-dark
+    &__filter-dark
+        ::ng-deep .mat-form-field-outline 
+            color: $hover-dark 
+        ::ng-deep  .mat-form-field-outline-thick, ::ng-deep .mat-input-element 
+            color: $color-dark
+
+.paginator
+    &__dark
+        background: $difBack-dark
+        color: $color-dark
+        ::ng-deep .mat-select-value
+            color: $color-dark
+        ::ng-deep .mat-select-arrow 
+            color: $color-dark
+
+
+
 .paginator, table, .container-table__filter
     width: calc(100% - 140px)
     margin: 0px 70px 

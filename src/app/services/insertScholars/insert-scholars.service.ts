@@ -19,24 +19,25 @@ export class InsertScholarsService {
   insertNewScholar(newScholar: DatosFormulario): Promise<Scholar> {
     const parsedRonin = this.parseRonin(newScholar.roninAddress);    
     return new Promise(async (resolve) => {
-      let parsedScholar = await this.dbService.getScholar('roninAddress',parsedRonin);
-      if(parsedScholar.roninAddress === ''){
-        let scholarsUpdated: scholarOfficialData = await this.schDataService.getOne(parsedRonin);
-        scholarsUpdated.ronin_address = parsedRonin;      
-        parsedScholar = new Scholar();
-        parsedScholar.parse(scholarsUpdated);
-        parsedScholar.name = newScholar.name;
-        const id = await this.dbService.addScholar(parsedScholar);
-        parsedScholar.id = id;
-      }
-      await this.communiyService.addScholarToComunity(parsedScholar.roninAddress, this.communiyService.activeCommunity.id);
-      resolve(parsedScholar);
+      delete newScholar.apellido
+      let scholarsUpdated: scholarOfficialData = await this.schDataService.getOne(parsedRonin);
+
+      let scholar = new Scholar(newScholar);
+      scholar.parse(scholarsUpdated);
+      scholar.roninAddress = parsedRonin
+
+      const id = await this.dbService.addScholar(scholar);
+      scholar.id = id;
+      await this.communiyService.addScholarToComunity(scholar.roninAddress, this.communiyService.activeCommunity.id);
+      resolve(scholar);
     })
   }
   
   parseRonin(roninAddress: string){
     if(roninAddress && roninAddress.search('ronin') !== -1){
       roninAddress = "0x"+roninAddress.split(':')[1];
+    }else if(roninAddress.search('0x') === -1){
+      roninAddress = `0x${roninAddress}`
     }
     return roninAddress;
   }

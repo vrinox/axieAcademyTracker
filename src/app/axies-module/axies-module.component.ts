@@ -4,6 +4,7 @@ import { MarketplaceService } from 'src/app/services/marketplace/marketplace.ser
 import { SessionsService } from '../services/sessions/sessions.service';
 import { AxieGene } from 'agp-npm/dist/axie-gene';
 
+
 @Component({
   selector: 'app-axies-module',
   templateUrl: './axies-module.component.html',
@@ -16,8 +17,8 @@ export class AxiesModuleComponent implements OnInit {
 
   await: boolean = false;
   purity: number = 0;
-  menuView: string = ''
-  axieGenes: any = ''
+  menuView: string = '';
+  axieGenes: any = '';
 
   constructor(private market: MarketplaceService, private sessions: SessionsService) { 
     this.axie = {

@@ -1,6 +1,6 @@
-<mat-card class="menu-month">
-    <mat-form-field class="menu-month__input" appearance="fill">
-        <mat-label>Name Player</mat-label>
+<mat-card class="menu-month" [class.menu-month__dark]="dark">
+    <mat-form-field class="menu-month__input" [class.menu-month__dark-field]="dark" appearance="fill">
+        <mat-label [class.menu-month__dark-field]="dark">{{ idiom.name }}</mat-label>
         <mat-select [formControl]="myControl">
             <mat-option *ngFor="let option of namePlayerOptions " [value]="option">
                 {{ option }}
@@ -8,8 +8,8 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="menu-month__input" appearance="fill" *ngIf="myControl.value">
-        <mat-label>Month and Year</mat-label>
+    <mat-form-field class="menu-month__input" [class.menu-month__dark-field]="dark" appearance="fill" *ngIf="myControl.value">
+        <mat-label [class.menu-month__dark-field]="dark">{{ idiom.monthAndYear }}</mat-label>
         <input matInput [matDatepicker]="dp" [formControl]="date">
         <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
         <mat-datepicker #dp
@@ -21,11 +21,7 @@
     </mat-form-field>
 
     <button mat-button color="primary" (click)="buscar()" [disabled]="!date.value">
-        buscar
-    </button>
-
-    <button mat-button color="primary" (click)="recalculateWholeHistorics()" >
-        Recalcular Todos los historicos
+        {{ idiom.btnSearh }}
     </button>
 </mat-card>
 
@@ -34,9 +30,9 @@
     <mat-card>
         <app-line-chart [data]="storyLabels"></app-line-chart>
     </mat-card>
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" [class.container-table__dark]="dark">
         <ng-container matColumnDef="lastUpdate" sticky>
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.Date }} </th>
             <td mat-cell *matCellDef="let element; index as i ">
                 <button mat-button color="primary">
                     {{element.lastUpdate}}
@@ -45,42 +41,42 @@
         </ng-container>
 
         <ng-container matColumnDef="totalSLP">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> totalSLP </th>
-            <td mat-cell *matCellDef="let element"> {{element.totalSLP}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.totalSLP }} </th>
+            <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.totalSLP}} </td>
         </ng-container>
 
         <ng-container matColumnDef="todaySLP">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> todaySLP </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.todaySLP }} </th>
             <td mat-cell *matCellDef="let element" [ngClass]="{'container-table__min': element.todaySLP <= 50,
-                      'container-table__middle': element.todaySLP > 50 && element.todaySLP < 75,
-                      'container-table__max': element.todaySLP >= 75}">{{element.todaySLP}} </td>
+                    'container-table__middle': element.todaySLP > 50 && element.todaySLP < 75,
+                    'container-table__max': element.todaySLP >= 75}">{{element.todaySLP}} </td>
         </ng-container>
 
         <ng-container matColumnDef="yesterdaySLP">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> yesterdaySLP </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{idiom.yesterdaySLP}} </th>
             <td mat-cell *matCellDef="let element" [ngClass]="{'container-table__min': element.yesterdaySLP <= 50,
             'container-table__middle': element.yesterdaySLP > 50 && element.yesterdaySLP < 75,
             'container-table__max': element.yesterdaySLP >= 75}"> {{element.yesterdaySLP}} </td>
         </ng-container>
 
         <ng-container matColumnDef="monthSLP">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> monthSLP </th>
-            <td mat-cell *matCellDef="let element"> {{element.monthSLP}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.monthSLP }} </th>
+            <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.monthSLP}} </td>
         </ng-container>
         
         <ng-container matColumnDef="weekSLP">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> weekSLP </th>
-            <td mat-cell *matCellDef="let element"> {{element.weekSLP}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.weekSLP }} </th>
+            <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.weekSLP}} </td>
         </ng-container>
 
         <ng-container matColumnDef="monthlyRank">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> monthlyRank </th>
-            <td mat-cell *matCellDef="let element"> {{element.mounthlyRank}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> {{ idiom.monthlyRank }} </th>
+            <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark"> {{element.mounthlyRank}} </td>
         </ng-container>
 
         <ng-container matColumnDef="MMR">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> MMR </th>
-            <td mat-cell *matCellDef="let element">{{element.MMR}}🏆</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> MMR </th>
+            <td mat-cell *matCellDef="let element" [class.container-table__text-dark]="dark">{{element.MMR}}🏆</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

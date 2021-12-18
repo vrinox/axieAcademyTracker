@@ -7,6 +7,9 @@ import { SessionsService } from '../services/sessions/sessions.service';
 import { ComunityService } from '../services/community.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { StorageService } from '../services/storage/storage.service';
+import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
+import english from '../../assets/json/lenguaje/englishLanguage.json';
 
 @Component({
   selector: 'app-donwload-pdf',
@@ -47,6 +50,8 @@ export class DonwloadPdfComponent implements OnInit {
 
   dataSource: MatTableDataSource<axiestypesPdf> = new MatTableDataSource();
 
+  idiom: any = {};
+
   @Input() axiesData: AxiesData[] = [];
   @ViewChild('screen', { static: true }) screen!: ElementRef;
   @Output() loadPdf = new EventEmitter<boolean>();
@@ -55,16 +60,36 @@ export class DonwloadPdfComponent implements OnInit {
     private portafolio: CalculatedPortafolioService,
     private sessions: SessionsService,
     public comunity: ComunityService,
-    private cryto: GetPriceService
+    private cryto: GetPriceService,
+    private storage: StorageService
   ) { }
   
   ngOnInit(): void {
+    this.getLangueaje();
+    this.changeIdiom();
     this.travelInAxiesData();
     this.dataSource = new MatTableDataSource(this.contentpdf.axiesTypes);
     this.loadPdf.emit(true);
     this.sessions.getDonwloadPdf().subscribe((value: boolean) =>{
       if(value = true){
         this.donwloadPdf();
+      }
+    })
+  }
+
+  getLangueaje(): void{
+    let lenguage: string | null = this.storage.getItem('language');
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.donwloadPdf
+    }else{
+      this.idiom = english.donwloadPdf;
+    };
+  }
+
+  changeIdiom():void{
+    this.sessions.getIdiom().subscribe(change=>{
+      if(change){
+        this.getLangueaje();
       }
     })
   }

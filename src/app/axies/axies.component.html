@@ -1,37 +1,37 @@
 <div class="content-axies">
 
   <div class="menu-axies__hidden" [class.menu-axies__value-portafolio]="valuePortafolio" #menuAxies>
-    <mat-card class="menu-axies">
+    <mat-card class="menu-axies" [class.menu-axies__dark]="dark">
       <div class="menu-axies__filters-title">
-        <label class="menu-axies__title-p">Filtros</label>
-        <button mat-button  color="primary" (click)="clearFilters()">Limpiar 
+        <label class="menu-axies__title-p" [class.menu-axies__text-dark]="dark">{{ idiom.filter }}</label>
+        <button mat-button  color="primary" (click)="clearFilters()" [class.menu-axies__text-dark]="dark">{{ idiom.clear }}
           <mat-icon>clear</mat-icon>
         </button>
       </div>
   
-      <mat-button-toggle-group class="menu-axies__options">
-        <mat-button-toggle checked="true" class="menu-axies__option" (click)="setMenuFilterAxies('General')">General</mat-button-toggle>
-        <mat-button-toggle class="menu-axies__option" (click)="setMenuFilterAxies('Partes')">Partes</mat-button-toggle>
+      <mat-button-toggle-group class="menu-axies__options" [class.menu-axies__text-dark]="dark">
+        <mat-button-toggle checked="true" class="menu-axies__option" (click)="setMenuFilterAxies('General')" [class.menu-axies__text-dark]="dark">{{ idiom.general }}</mat-button-toggle>
+        <mat-button-toggle class="menu-axies__option" (click)="setMenuFilterAxies('Partes')" [class.menu-axies__text-dark]="dark">{{ idiom.parts }}</mat-button-toggle>
       </mat-button-toggle-group>
     
       <div class="menu-axies__filters-menu">
-        <app-input-auto-complet [label]="'Nombre Becado'" [optionsFilter]="namePlayerOptions" [keyBoardEmit]="true" (OutName)="filterName($event)"></app-input-auto-complet>
+        <app-input-auto-complet [label]="idiom.inputAutoComplet" [optionsFilter]="namePlayerOptions" [keyBoardEmit]="true" (OutName)="filterName($event)"></app-input-auto-complet>
   
-        <div [class.menu-axies__general-off]="menuFilter === 'Partes'">
-          <label class="menu-axies__label">Class</label>
+        <div class="menu-axies__parts" [class.menu-axies__general-off]="menuFilter === 'Partes'">
+          <label class="menu-axies__label" [class.menu-axies__text-dark]="dark">{{ idiom.class }}</label>
           <section class="menu-axies__section-checks">
-            <mat-checkbox class="menu-axies__check" *ngFor="let type of typeAxies; index as i" 
+            <mat-checkbox class="menu-axies__check" [class.menu-axies__text-dark]="dark" *ngFor="let type of typeAxies; index as i" 
             [value]="type" #checks (change)="selectCheckType($event, i)">
               <img *ngIf="type != 'Todos'" src="assets/svg/axies/{{type}}/{{type}}.svg" class="menu-axies__check-img" alt="">
               {{ type }}
             </mat-checkbox>
           </section>
     
-          <label class="menu-axies__label">Breed</label>
+          <label class="menu-axies__label" [class.menu-axies__text-dark]="dark">{{ idiom.breed }}</label>
           <section>
             <mat-radio-group>
-              <mat-radio-button class="menu-axies__breed-select" #btnRadioTodos [checked]="true" value="Todos" (click)="selectRadioBreed('Todos')">Todos</mat-radio-button>
-              <mat-radio-button class="menu-axies__breed-select" *ngFor="let bd of breed" [value]="bd"  #test  (change)="selectRadioBreed(bd)">{{ bd }}</mat-radio-button>
+              <mat-radio-button class="menu-axies__breed-select" [class.menu-axies__text-dark]="dark" #btnRadioTodos [checked]="true" value="Todos" (click)="selectRadioBreed('Todos')">{{ idiom.breed.all }}</mat-radio-button>
+              <mat-radio-button class="menu-axies__breed-select" [class.menu-axies__text-dark]="dark" *ngFor="let bd of breed" [value]="bd"  #test  (change)="selectRadioBreed(bd)">{{ bd }}</mat-radio-button>
             </mat-radio-group>
           </section>
   
@@ -39,10 +39,11 @@
           [disabled]="calculatePortafolio"
           class="menu-axies__btn" 
           (click)="valuePortafolio = true"
-          *ngIf="!movil">
-          Valor del Portafolio</button>
+          *ngIf="!movil"
+          [class.menu-axies__btn-dark]="dark">
+          {{ idiom.portfolioValue }}</button>
   
-          <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)">Axies en venta</button>
+          <button mat-stroked-button class="menu-axies__btn" (click)="startFilter(true)" [class.menu-axies__btn-dark]="dark">{{ idiom.axieSale }}</button>
         </div>
   
         <div [class.menu-axies__general-off]="menuFilter === 'General'">
@@ -65,13 +66,13 @@
   <div class="content-axies__content">
     <app-donwload-pdf *ngIf="valuePortafolio" [axiesData]="axiesData" (loadPdf)="pdfDonwload($event)"></app-donwload-pdf>
     
-    <mat-card class="portafolio" *ngIf="valuePortafolio">
+    <mat-card class="portafolio" [class.portafolio__dark]="dark" *ngIf="valuePortafolio">
       <div class="portafolio__totals portafolio__totals--prices">
-        <p>$ {{ portafolio.total.usd }}</p>
-        <p><i class="cf cf-eth"></i>{{ portafolio.total.eth }}</p>
-        <p>Total Becados: {{ portafolio.total.becados }}</p>
-        <p>Total Axies: {{ portafolio.total.axies }}</p>
-        <p (click)="getNa()">Total N/A: {{ portafolio.total.na }}</p>
+        <p [class.portafolio__text-dark]="dark">$ {{ portafolio.total.usd }}</p>
+        <p [class.portafolio__text-dark]="dark"><i class="cf cf-eth"></i>{{ portafolio.total.eth }}</p>
+        <p [class.portafolio__text-dark]="dark">Total Becados: {{ portafolio.total.becados }}</p>
+        <p [class.portafolio__text-dark]="dark">Total Axies: {{ portafolio.total.axies }}</p>
+        <p [class.portafolio__text-dark]="dark" (click)="getNa()">Total N/A: {{ portafolio.total.na }}</p>
       </div>
     
       <div class="portafolio__totals portafolio__totals--icons">
@@ -86,32 +87,32 @@
     <div class="menu-change">
       <div class="menu-change__btn-filter menu-change__btn-filter-list">
         <button mat-stroked-button color="primary" (click)="menuFilterShow()">
-          Filtros
-          <mat-icon>{{ arrowFilter ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
+          {{ idiom.filter }}
+          <mat-icon [class.menu-change__dark]="dark">{{ arrowFilter ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</mat-icon>
         </button>
       </div>
       <div>
-        <button  mat-raised-button color="warn" *ngIf="donwloadPdf" (click)="savePdf()">descargar PDF</button>
+        <button  mat-raised-button color="warn" *ngIf="donwloadPdf" (click)="savePdf()">{{ idiom.downloadPdf }}</button>
       </div>
       <div class="menu-change__sort-menu">
-        <button mat-raised-button class="menu-change__sort" (click)="sortMenu = !sortMenu">Clasificar</button>
-        <div class="menu-change__sub-menu-off" [class.menu-change__sub-menu-on]="sortMenu">
+        <button mat-raised-button class="menu-change__sort" (click)="sortMenu = !sortMenu">{{ idiom.classify }}</button>
+        <div class="menu-change__sub-menu-off" [class.menu-change__dark]="dark" [class.menu-change__sub-menu-on]="sortMenu">
           <button mat-button (click)="list = true" *ngIf="!movil">
-            <mat-icon>reorder</mat-icon>
+            <mat-icon [class.menu-change__text-dark]="dark">reorder</mat-icon>
           </button>
           <button mat-button (click)="viewModule()" *ngIf="!movil">
-            <mat-icon>view_module</mat-icon>
+            <mat-icon [class.menu-change__text-dark]="dark">view_module</mat-icon>
           </button>
-          <button class="menu-change__btn-menu" mat-raised-button [matMenuTriggerFor]="menu5">{{ viewMenu }}</button>
+          <button class="menu-change__btn-menu" mat-stroked-button [class.menu-change__btn-dark]="dark" [matMenuTriggerFor]="menu5">{{ viewMenu }}</button>
           <mat-menu #menu5="matMenu">
             <button mat-menu-item *ngFor="let viewOpntios of filterViewOptions" (click)="selecViewMenu(viewOpntios)" >{{ viewOpntios }}</button>
           </mat-menu>
-          <button class="menu-change__btn-menu" mat-raised-button [matMenuTriggerFor]="menu6" [disabled]="!orderMenu">{{ orderTitle }}</button>
+          <button class="menu-change__btn-menu" mat-stroked-button [class.menu-change__btn-dark]="dark" [matMenuTriggerFor]="menu6" [disabled]="!orderMenu">{{ orderTitle }}</button>
           <mat-menu #menu6="matMenu">
-            <button mat-menu-item  (click)="setOrderTitle('Mayor Precio', true, 'Desc')">Mayor Precio</button>
-            <button mat-menu-item  (click)="setOrderTitle('Menor Precio', true, 'Asc')">Menor Precio</button>
-            <button mat-menu-item  (click)="setOrderTitle('Mayor Id', false, 'Desc')">Mayor Id</button>
-            <button mat-menu-item  (click)="setOrderTitle('Menor Id', false, 'Asc')">Menor Id</button>
+            <button mat-menu-item  (click)="setOrderTitle('Mayor Precio', true, 'Desc')">{{ idiom.higherPrice }}</button>
+            <button mat-menu-item  (click)="setOrderTitle('Menor Precio', true, 'Asc')">{{ idiom.lowerPrice }}</button>
+            <button mat-menu-item  (click)="setOrderTitle('Mayor Id', false, 'Desc')">{{ idiom.higherId }}</button>
+            <button mat-menu-item  (click)="setOrderTitle('Menor Id', false, 'Asc')">{{ idiom.lowerId }}</button>
           </mat-menu>
         </div>
       </div>

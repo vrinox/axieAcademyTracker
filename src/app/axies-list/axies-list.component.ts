@@ -14,7 +14,11 @@ export class AxiesListComponent implements OnInit {
   @Input() axie: AxiesData;
   @Input() viewMenu: string = ''
 
+  dark: boolean = false;
+
   constructor(private sessions: SessionsService) { 
+    this.changeDarkMode();
+    this.dark = this.sessions.dark;
     this.axie = {
       namePlayer: '',
       roning: '',
@@ -44,6 +48,10 @@ export class AxiesListComponent implements OnInit {
     })
   }
 
-
+  changeDarkMode(): void{
+    this.sessions.getDarkMode().subscribe(mode=>{
+      this.dark = mode;
+    });
+  }
 
 }

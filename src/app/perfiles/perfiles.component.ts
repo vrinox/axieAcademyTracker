@@ -10,6 +10,11 @@ import { AxiesData } from '../models/interfaces';
 import { RoninWeb3 } from '../models/RoninWeb3';
 import { AutoClaimService } from '../services/autoClaim/auto-claim.service';
 import secrets  from '../../assets/json/secrets.json';
+import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
+import english from '../../assets/json/lenguaje/englishLanguage.json';
+import { StorageService } from '../services/storage/storage.service';
+import { DatabaseService } from '../services/database/database.service';
+
 @Component({
   selector: 'app-perfiles',
   templateUrl: './perfiles.component.html',
@@ -17,7 +22,7 @@ import secrets  from '../../assets/json/secrets.json';
 })
 
 export class PerfilesComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'axies', 'slp', 'axs', 'weth'];
+  displayedColumns: string[] = ['name', 'axies', 'slp', 'axs', 'weth', 'delete'];
   imgView: number[] = [0, 1, 2];
   @ViewChild(MatSort, { static: false }) sort?: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -25,19 +30,52 @@ export class PerfilesComponent implements OnInit {
   perfiles: Perfiles[] = [];
   roninAdress: string[] = [];
   roninWalet = new RoninWeb3();
+  idiom: any = {};
+
+  dark: boolean = false;
 
   constructor(
     private session: SessionsService, 
     private getAxies: GetAxiesService,
-    private autoClaim: AutoClaimService
+    private autoClaim: AutoClaimService,
+    private storage: StorageService,
+    private sessions: SessionsService,
+    private database: DatabaseService,
     ) { }
 
   ngOnInit(): void {
+    this.dark = this.sessions.dark;
+    this.changeDarkMode();
     this.start();
   }
 
   async start(): Promise<void>{
+    this.getLangueaje();
+    this.changeIdiom();
     await this.getAxiesData(this.session.scholar);
+  }
+
+  changeDarkMode(): void{
+    this.sessions.getDarkMode().subscribe(mode=>{
+      this.dark = mode;
+    });
+  }
+
+  getLangueaje(): void{
+    let lenguage: string | null = this.storage.getItem('language');
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.perfiles;
+    }else{
+      this.idiom = english.perfiles;
+    };
+  }
+
+  changeIdiom():void{
+    this.sessions.getIdiom().subscribe(change=>{
+      if(change){
+        this.getLangueaje();
+      }
+    })
   }
 
   async getAxiesData(scholars: Scholar[]): Promise<void>{
@@ -48,7 +86,7 @@ export class PerfilesComponent implements OnInit {
           let imgAxie: string[] = [];
           axies.forEach(axie=> imgAxie.push(axie.image));
           this.roninAdress.push(scholar.roninAddress);
-          this.createPerfil(imgAxie, scholar.name);
+          this.createPerfil(imgAxie, scholar.name, scholar.roninAddress);
         }).catch((scholar: Scholar) =>{
           retryAxie.push(scholar);
         });
@@ -62,10 +100,11 @@ export class PerfilesComponent implements OnInit {
     }
   }
 
-  createPerfil(axiesData: string[], namePlayer: string): void{
+  createPerfil(axiesData: string[], namePlayer: string, roninAddress: string): void{
     this.perfiles.push({
       name: namePlayer,
       axies: axiesData,
+      ronin: roninAddress,
       axs: 'load',
       slp: 'load',
       weth: 'load'
@@ -101,8 +140,12 @@ export class PerfilesComponent implements OnInit {
   }
 
   async claimSlp(): Promise<void>{
-    secrets.forEach(scholar => {
-      this.autoClaim.startClaimSlp(scholar.ronin, scholar.secret);
-    });
+    // secrets.forEach(scholar => {
+    //   this.autoClaim.startClaimSlp(scholar.ronin, scholar.secret);
+    // });
+  }
+
+  deleteScholar(Perfiles: Perfiles){
+    this.database.deleteScholar(Perfiles.ronin);
   }
 }

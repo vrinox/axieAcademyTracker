@@ -18,11 +18,15 @@ export class InputAutoCompletComponent implements OnInit {
   @Input() keyBoardEmit: boolean = false;
   @Output() OutName = new EventEmitter();
 
+  dark: boolean = false;
+
   constructor(private sessions: SessionsService) { 
     this.filteredOptions = new Observable();
   }
 
   ngOnInit(): void {
+    this.dark = this.sessions.dark;
+    this.changeDarkMode();
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value))
@@ -35,6 +39,12 @@ export class InputAutoCompletComponent implements OnInit {
         this.myControl.setValue('');
       }
     })
+  }
+
+  changeDarkMode(): void{
+    this.sessions.getDarkMode().subscribe(mode=>{
+      this.dark = mode;
+    });
   }
 
   private _filter(value: string): string[] {

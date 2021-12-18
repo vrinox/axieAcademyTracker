@@ -1,7 +1,18 @@
+@import "../../../colors.module"
 .menu-month
     width: 90%
     margin: 5px 0px 5px 5%
     box-sizing: border-box
+    &__dark
+        background: $difBack-dark
+        ::ng-deep .mat-button.mat-primary.mat-button-disabled
+            color: $hover-dark
+    &__dark-btn
+        color: white
+    &__dark-field
+        color: $color-dark
+        ::ng-deep .mat-button-wrapper
+            color: $color-dark
 
 .container-table
     width: 90%
@@ -22,6 +33,12 @@
         right: 25px
     &__btn-img
         width: 28px
+    &__dark
+        background: $difBack-dark
+    &__text-dark
+        color: $color-dark
+
+
 @media screen and (max-width: 500px)
     .container-table
         width: 100%

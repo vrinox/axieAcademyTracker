@@ -1,4 +1,6 @@
 @use '@angular/material' as mat
+@import "../../../../colors.module"
+
 .historial
     width: calc(100% - 140px)
     margin: 10px 70px 
@@ -21,6 +23,10 @@
     &__img
         width: 5em
         height: 5em
+    &__card-dark
+        background: $difBack-dark
+    &__dark-text
+        color: $color-dark
 
 @media screen and (max-width: 800px) 
     .historial
