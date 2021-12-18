@@ -56,7 +56,7 @@ import { InputAutoCompletComponent } from './components/input-auto-complet/input
 import Web3 from 'web3';
 import { PerfilesComponent } from './perfiles/perfiles.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
+import { FormsModule  } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,6 +110,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatBadgeModule,
     MatDividerModule,
     MatSlideToggleModule,
+    FormsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),    
     provideAuth(() => getAuth()),

@@ -4,6 +4,7 @@ import { SessionsService } from './services/sessions/sessions.service';
 import { StorageService } from './services/storage/storage.service';
 import english from '../assets/json/lenguaje/englishLanguage.json';
 import spanish from '../assets/json/lenguaje/spanishLanguaje.json';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,6 +13,7 @@ import spanish from '../assets/json/lenguaje/spanishLanguaje.json';
 export class AppComponent implements OnInit{
   @ViewChild('sidenav') sidenav!: MatSidenav;
   @ViewChild('darkMode') DarkMode!: any;
+  
   title = 'axie';
   showFiller = false;
   viewModal: boolean = false;

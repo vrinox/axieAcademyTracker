@@ -22,7 +22,7 @@
       <button mat-menu-item (click)="changeLanguage('es')">es</button>
       <button mat-menu-item (click)="changeLanguage('en')">en</button>
     </mat-menu>
-    <mat-slide-toggle #darkMode (click)="setDarkMode()">
+    <mat-slide-toggle #darkMode [(ngModel)]="dark" (click)="setDarkMode()">
       <mat-icon>{{ dark ? 'dark_mode' : 'brightness_5' }}</mat-icon>
     </mat-slide-toggle>
   </div>
