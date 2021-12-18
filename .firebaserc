@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "axieacademytracker"
-  }
+    "production": "axieacademytracker"
+  },
+  "targets": {}
 }
