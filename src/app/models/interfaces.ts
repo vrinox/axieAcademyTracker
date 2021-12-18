@@ -285,6 +285,7 @@ export interface Genes{
 export interface Perfiles{
     name: string
     axies: string[],
+    ronin: string,
     slp: string,
     axs: string, 
     weth: string

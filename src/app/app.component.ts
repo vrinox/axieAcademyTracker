@@ -4,7 +4,6 @@ import { SessionsService } from './services/sessions/sessions.service';
 import { StorageService } from './services/storage/storage.service';
 import english from '../assets/json/lenguaje/englishLanguage.json';
 import spanish from '../assets/json/lenguaje/spanishLanguaje.json';
-import { MatSlideToggleDefaultOptions } from '@angular/material/slide-toggle';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -26,6 +25,7 @@ export class AppComponent implements OnInit{
   constructor(public sesion: SessionsService, private storage: StorageService){}
 
   ngOnInit(){
+    this.darkStorage();
     this.getLengueaje();
     this.sesion.getLoading().subscribe(viewLoading=>{
       this.loading = viewLoading;
@@ -65,9 +65,18 @@ export class AppComponent implements OnInit{
     };
   }
 
+  darkStorage(): void{
+    let darkStore = this.storage.getItem('darkMode');
+    if(darkStore === 'true'){
+      this.sesion.setDarkMode(true);
+      this.dark = true;
+    }
+  }
+
   setDarkMode(): void{
     this.dark = !this.DarkMode.checked;
     this.sesion.setDarkMode(!this.DarkMode.checked);
+    this.storage.setItem('darkMode', `${!this.DarkMode.checked}`);
   }
 
   offModal(event: boolean){

@@ -13,6 +13,7 @@ import secrets  from '../../assets/json/secrets.json';
 import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
 import english from '../../assets/json/lenguaje/englishLanguage.json';
 import { StorageService } from '../services/storage/storage.service';
+import { DatabaseService } from '../services/database/database.service';
 
 @Component({
   selector: 'app-perfiles',
@@ -21,7 +22,7 @@ import { StorageService } from '../services/storage/storage.service';
 })
 
 export class PerfilesComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'axies', 'slp', 'axs', 'weth'];
+  displayedColumns: string[] = ['name', 'axies', 'slp', 'axs', 'weth', 'delete'];
   imgView: number[] = [0, 1, 2];
   @ViewChild(MatSort, { static: false }) sort?: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -38,7 +39,8 @@ export class PerfilesComponent implements OnInit {
     private getAxies: GetAxiesService,
     private autoClaim: AutoClaimService,
     private storage: StorageService,
-    private sessions: SessionsService
+    private sessions: SessionsService,
+    private database: DatabaseService,
     ) { }
 
   ngOnInit(): void {
@@ -84,7 +86,7 @@ export class PerfilesComponent implements OnInit {
           let imgAxie: string[] = [];
           axies.forEach(axie=> imgAxie.push(axie.image));
           this.roninAdress.push(scholar.roninAddress);
-          this.createPerfil(imgAxie, scholar.name);
+          this.createPerfil(imgAxie, scholar.name, scholar.roninAddress);
         }).catch((scholar: Scholar) =>{
           retryAxie.push(scholar);
         });
@@ -98,10 +100,11 @@ export class PerfilesComponent implements OnInit {
     }
   }
 
-  createPerfil(axiesData: string[], namePlayer: string): void{
+  createPerfil(axiesData: string[], namePlayer: string, roninAddress: string): void{
     this.perfiles.push({
       name: namePlayer,
       axies: axiesData,
+      ronin: roninAddress,
       axs: 'load',
       slp: 'load',
       weth: 'load'
@@ -140,5 +143,9 @@ export class PerfilesComponent implements OnInit {
     // secrets.forEach(scholar => {
     //   this.autoClaim.startClaimSlp(scholar.ronin, scholar.secret);
     // });
+  }
+
+  deleteScholar(Perfiles: Perfiles){
+    this.database.deleteScholar(Perfiles.ronin);
   }
 }

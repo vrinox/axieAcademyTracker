@@ -17,6 +17,8 @@ export class FormularioBecadoComponent implements OnInit {
   @Input('ViewModal') viewModal!: boolean;
   @Output() OffModal = new EventEmitter<boolean>();
 
+  exitsRonin: boolean = false;
+
   formBecado: FormGroup = new FormGroup({
     name: new FormControl('',[
       Validators.required,
@@ -98,8 +100,15 @@ export class FormularioBecadoComponent implements OnInit {
   
   limpiarFormulario(): void{
     this.formBecado.reset();
-    Object.keys(this.formBecado.controls).forEach(keys => {
-      this.formBecado.get(keys)?.setErrors(null);
-    });
+  }
+
+  roninExits(){
+    let roninParse: string = this.insertNewScholar.parseRonin(this.formBecado.controls.roninAddress.value);
+    this.exitsRonin = this.sessions.scholar.some(scholar => scholar.roninAddress === roninParse);
+    if(this.exitsRonin){
+      this.formBecado.controls.roninAddress.setErrors({'incorrect': true})
+    }else{
+      this.formBecado.controls.roninAddress.setErrors(null)
+    }
   }
 }

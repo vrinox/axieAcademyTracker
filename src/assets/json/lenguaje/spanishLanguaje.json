@@ -17,7 +17,13 @@
         "Lastname": "Apellido",
         "RonginAdress": "Rongin Adress",
         "RonginAdressPersonal": "Rongin Adress personal",
-        "gain": "Procentaje de ganancia"
+        "gain": "Procentaje de ganancia",
+        "validRequired": "El campo no puede estar vacio",
+        "errorString": "Solo se permiten letras",
+        "errorExist": "Existe el ronin en su comunidad",
+        "errorNumberString": "Solo se permiten numeros y el simbolo %",
+        "send": "Enviar",
+        "cancel": "Cancelar"
     },
     "axies": {
         "filter": "Filtros",

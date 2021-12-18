@@ -1,5 +1,5 @@
 <div #modal class="modal-form" [class.view-modal]="!viewModal">
-    <form [formGroup]="formBecado" class="form-becado">
+    <form [formGroup]="formBecado" class="form-becado" *ngIf="viewModal">
         <div class="form-becado__title">
             <h1>{{ idiom.Title }}</h1>
         </div>
@@ -16,8 +16,8 @@
                         *ngIf="formBecado.controls.name.valid">check_circle_outline</mat-icon>
             <mat-icon matSuffix class="form-becado__off" 
                         *ngIf="!formBecado.controls.name.valid">highlight_off</mat-icon>
-            <mat-error *ngIf="formBecado.controls.name.hasError('required')">El campo no puede estar vacio</mat-error>
-            <mat-error *ngIf="formBecado.controls.name.hasError('pattern')">Solo se permiten letras</mat-error>
+            <mat-error *ngIf="formBecado.controls.name.hasError('required')">{{ idiom.validRequired }}</mat-error>
+            <mat-error *ngIf="formBecado.controls.name.hasError('pattern')">{{ idiom.errorString }}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
@@ -27,17 +27,18 @@
                         *ngIf="formBecado.controls.apellido.valid">check_circle_outline</mat-icon>
             <mat-icon matSuffix class="form-becado__off" 
                         *ngIf="!formBecado.controls.apellido.valid">highlight_off</mat-icon>
-            <mat-error *ngIf="formBecado.controls.apellido.hasError('required')">El campo no puede estar vacio</mat-error>
-            <mat-error *ngIf="formBecado.controls.apellido.hasError('pattern')">Solo se permiten letras</mat-error>
+            <mat-error *ngIf="formBecado.controls.apellido.hasError('required')">{{ idiom.validRequired }}</mat-error>
+            <mat-error *ngIf="formBecado.controls.apellido.hasError('pattern')">{{ idiom.errorString }}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
             <mat-label>{{ idiom.RonginAdress }}</mat-label>
-            <input formControlName="roninAddress" matInput placeholder="0xa35ad70c8a0bc39a6cc73bbacfaf201fae75f2fb">
+            <input formControlName="roninAddress" (blur)="roninExits()" matInput placeholder="0xa35ad70c8a0bc39a6cc73bbacfaf201fae75f2fb">
             <mat-icon matSuffix class="form-becado__check"
                         *ngIf="formBecado.controls.roninAddress.valid">check_circle_outline</mat-icon>
             <mat-icon matSuffix class="form-becado__off" 
                         *ngIf="!formBecado.controls.roninAddress.valid">highlight_off</mat-icon>
-            <mat-error *ngIf="formBecado.controls.roninAddress.hasError('required')">El campo no puede estar vacio</mat-error>
+            <mat-error *ngIf="formBecado.controls.roninAddress.hasError('required')">{{ idiom.validRequired }}</mat-error>
+            <mat-error *ngIf="!formBecado.controls.roninAddress.valid && !formBecado.controls.roninAddress.hasError('required')">{{ idiom.errorExist }}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
             <mat-label>{{ idiom.RonginAdressPersonal }}</mat-label>
@@ -46,7 +47,7 @@
                         *ngIf="formBecado.controls.personalAdress.valid">check_circle_outline</mat-icon>
             <mat-icon matSuffix class="form-becado__off" 
                         *ngIf="!formBecado.controls.personalAdress.valid">highlight_off</mat-icon>
-            <mat-error *ngIf="formBecado.controls.personalAdress.hasError('required')">El campo no puede estar vacio</mat-error>
+            <mat-error *ngIf="formBecado.controls.personalAdress.hasError('required')">{{ idiom.validRequired }}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
             <mat-label>{{ idiom.gain }}</mat-label>
@@ -55,10 +56,10 @@
                         *ngIf="formBecado.controls.ganancia.valid">check_circle_outline</mat-icon>
             <mat-icon matSuffix class="form-becado__off" 
                         *ngIf="!formBecado.controls.ganancia.valid">highlight_off</mat-icon>
-            <mat-error *ngIf="formBecado.controls.ganancia.hasError('required')">El campo no puede estar vacio</mat-error>
-            <mat-error *ngIf="formBecado.controls.ganancia.hasError('pattern')">Solo se permiten numeros y el simbolo %</mat-error>
+            <mat-error *ngIf="formBecado.controls.ganancia.hasError('required')">{{ idiom.validRequired }}</mat-error>
+            <mat-error *ngIf="formBecado.controls.ganancia.hasError('pattern')">{{ idiom.errorNumberString }}</mat-error>
         </mat-form-field>
-        <button (click)="revisarValido()" class="form-becado__btn" mat-raised-button color="primary">Enviar</button>
-        <button class="form-becado__btn" (click)="closeModal()" mat-raised-button>Cancelar</button>
+        <button (click)="revisarValido()" class="form-becado__btn" mat-raised-button color="primary">{{ idiom.send }}</button>
+        <button class="form-becado__btn" (click)="closeModal()" mat-raised-button>{{ idiom.cancel }}</button>
     </form>
 </div>

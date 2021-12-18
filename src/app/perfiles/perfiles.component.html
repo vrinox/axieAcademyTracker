@@ -54,6 +54,15 @@
                 </div>
             </td>
         </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [class.container-table__text-dark]="dark"> delete </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-mini-fab color="primary" (click)="deleteScholar(element)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </td>
+        </ng-container>
         
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

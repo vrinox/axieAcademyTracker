@@ -17,7 +17,13 @@
         "Lastname": "Last name",
         "RonginAdress": "Rongin Adress",
         "RonginAdressPersonal": "Rongin Adress personal",
-        "gain": "average gain"
+        "gain": "average gain",
+        "validRequired": "The field cannot be empty",
+        "errorString": "Only letters are allowed",
+        "errorExist": "There is the ronin in your community",
+        "errorNumberString": "Only numbers and the% symbol are allowed",
+        "send": "Send",
+        "cancel": "Cancel"
     },
     "axies": {
         "filter": "Filter",
