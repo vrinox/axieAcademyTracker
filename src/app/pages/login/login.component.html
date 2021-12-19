@@ -13,6 +13,7 @@
           <mat-icon matSuffix class="form-becado__off" *ngIf="!form.controls.user.valid">highlight_off</mat-icon>
           <mat-error *ngIf="form.controls.user.hasError('required')">El campo no puede estar vacio</mat-error>
           <mat-error *ngIf="form.controls.user.hasError('pattern')">Solo se permiten letras</mat-error>
+          <mat-error *ngIf="!form.controls.user.valid && !form.controls.user.hasError('required')">Correo invalido</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
@@ -22,6 +23,7 @@
           <mat-icon matSuffix class="form-becado__off" *ngIf="!form.controls.password.valid">highlight_off</mat-icon>
           <mat-error *ngIf="form.controls.password.hasError('required')">El campo no puede estar vacio</mat-error>
           <mat-error *ngIf="form.controls.password.hasError('pattern')">Solo se permiten letras</mat-error>
+          <mat-error *ngIf="!form.controls.password.valid && !form.controls.password.hasError('required')">Clave Incorrecta</mat-error>
         </mat-form-field>
         <button (click)="revisarValido()" class="form-becado__btn" mat-raised-button color="primary">Send</button>
         <button (click)="showRegisterForm = !showRegisterForm" class="form-becado__btn" mat-raised-button>register</button>

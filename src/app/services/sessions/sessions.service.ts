@@ -31,6 +31,8 @@ export class SessionsService {
   private darkMode: Subject<boolean> = new Subject;
   dark: boolean = false;
 
+  modalScholarName: string = '';
+
   constructor(
     public storage: StorageService,
     private communityservice: ComunityService,

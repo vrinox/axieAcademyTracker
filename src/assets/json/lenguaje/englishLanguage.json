@@ -94,7 +94,8 @@
         "monthlyRank": "Monthly Rank"
     },
     "perfiles": {
-        "name": "Name"
+        "name": "Name",
+        "delete": "Kick"
     }, 
     "scholars": {
         "searh": "Search scholar",

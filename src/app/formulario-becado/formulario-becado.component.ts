@@ -4,6 +4,7 @@ import { Scholar } from '../models/scholar';
 import { InsertScholarsService } from '../services/insertScholars/insert-scholars.service';
 import { AgregarNewBecadoService } from 'src/app/services/agregarNewBecado/agregar-new-becado.service';
 import { StorageService } from '../services/storage/storage.service';
+
 import english from '../../assets/json/lenguaje/englishLanguage.json';
 import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
 import { SessionsService } from '../services/sessions/sessions.service';

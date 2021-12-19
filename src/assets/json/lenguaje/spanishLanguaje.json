@@ -94,7 +94,8 @@
         "monthlyRank": "Mensual Rank"
     },
     "perfiles": {
-        "name": "Nombre"
+        "name": "Nombre",
+        "delete": "Eliminar"
     }, 
     "scholars": {
         "searh": "Buscar Becados",

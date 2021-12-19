@@ -57,6 +57,8 @@ import Web3 from 'web3';
 import { PerfilesComponent } from './perfiles/perfiles.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule  } from '@angular/forms';
+import { ModalExitPlayerComponent } from './components/modal-exit-player/modal-exit-player.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +79,8 @@ import { FormsModule  } from '@angular/forms';
     DonwloadPdfComponent,
     GenesComponent,
     InputAutoCompletComponent,
-    PerfilesComponent
+    PerfilesComponent,
+    ModalExitPlayerComponent
   ],
   imports: [
     BrowserModule,
@@ -111,6 +114,7 @@ import { FormsModule  } from '@angular/forms';
     MatDividerModule,
     MatSlideToggleModule,
     FormsModule,
+    MatDialogModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),    
     provideAuth(() => getAuth()),

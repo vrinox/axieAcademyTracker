@@ -59,31 +59,44 @@ export class LoginComponent implements OnInit {
     }
   }
   async enviarDatos(): Promise<void>{
-    const result: string = await this.auth.login({
+    let result: string = '';
+    let error: string = '';
+    await this.auth.login({
       email: this.form.value.user,
       password: this.form.value.password
+    }).then(id=>{
+      result = id;
+    }).catch(err=>{
+      error = err;
     })
-    const userLink: userLink = await this.dbService.getUserLink('uid',result);
-    let scholar: Scholar = new Scholar();
-    let identificator = (userLink.roninAddress) ? userLink.roninAddress : userLink.uid;
-    if(userLink.roninAddress){
-      scholar = await this.dbService.getScholar('roninAddress', userLink.roninAddress);
-      if(!scholar.roninAddress){
-        return;
+    if(error === 'auth/user-not-found'){
+      this.form.controls.user.setErrors({'incorrect': true})
+    }else if(error === 'auth/wrong-password'){
+      this.form.controls.password.setErrors({'incorrect': true})
+    }else{
+      const userLink: userLink = await this.dbService.getUserLink('uid',result);
+      let scholar: Scholar = new Scholar();
+      let identificator = (userLink.roninAddress) ? userLink.roninAddress : userLink.uid;
+      if(userLink.roninAddress){
+        scholar = await this.dbService.getScholar('roninAddress', userLink.roninAddress);
+        if(!scholar.roninAddress){
+          return;
+        }
+      }
+      let communities: community[] = await this.communityService.getCommunities(identificator);
+      communities = communities.filter(c=> c.id !== '');
+      let community = communities.find((c)=> c.admin === identificator);
+      if(community){
+        this.store.setItem('community', community.name);
+        this.sesion.start(userLink, scholar, communities.filter( c=> c.admin === identificator));
+        this.communityService.activeCommunity = community;
+        this.sesion.setLoading(true);
+      }else{
+        console.log('debes ser admin de una comunidad para entrar en esta herramienta');
       }
     }
-    let communities: community[] = await this.communityService.getCommunities(identificator);
-    communities = communities.filter(c=> c.id !== '');
-    let community = communities.find((c)=> c.admin === identificator);
-    if(community){
-      this.store.setItem('community', community.name);
-      this.sesion.start(userLink, scholar, communities.filter( c=> c.admin === identificator));
-      this.communityService.activeCommunity = community;
-      this.sesion.setLoading(true);
-    }else{
-      console.log('debes ser admin de una comunidad para entrar en esta herramienta');
-    }
   }
+
   async registerNewUser(): Promise<void>{
     this.auth.emailSignup({
       email: this.registerForm.value.email,

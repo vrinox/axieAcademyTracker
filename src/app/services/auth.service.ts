@@ -15,7 +15,7 @@ export class AuthService {
         resolve(value.user.uid);
       })
       .catch(async err => {
-        console.log(err);
+        reject(err.code) 
       });
     })
   }

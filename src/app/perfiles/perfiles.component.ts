@@ -14,6 +14,8 @@ import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
 import english from '../../assets/json/lenguaje/englishLanguage.json';
 import { StorageService } from '../services/storage/storage.service';
 import { DatabaseService } from '../services/database/database.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalExitPlayerComponent } from '../components/modal-exit-player/modal-exit-player.component';
 
 @Component({
   selector: 'app-perfiles',
@@ -41,6 +43,7 @@ export class PerfilesComponent implements OnInit {
     private storage: StorageService,
     private sessions: SessionsService,
     private database: DatabaseService,
+    public dialog: MatDialog
     ) { }
 
   ngOnInit(): void {
@@ -145,7 +148,13 @@ export class PerfilesComponent implements OnInit {
     // });
   }
 
-  deleteScholar(Perfiles: Perfiles){
-    this.database.deleteScholar(Perfiles.ronin);
+  deleteScholar(perfiles: Perfiles): void{
+    this.session.modalScholarName = perfiles.name;
+    const dialogRef = this.dialog.open(ModalExitPlayerComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.database.deleteScholar(perfiles.ronin);
+      };
+    });
   }
 }
