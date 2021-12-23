@@ -119,9 +119,13 @@ export class CommunityPerfilComponent implements OnInit {
     this.storage.setItem('communities', JSON.stringify(communities));
   }
 
-  changeCommunities(changeCommunity: community): void{
+  changeCommunities(changeCommunity: community, index: number): void{
     this.sessions.changeCommunity(changeCommunity);
-    this.getNotCurrentComunity()
+    this.getNotCurrentComunity();
+    this.comunities.splice(index, 1);
+    this.comunities.unshift(changeCommunity);
+    this.setStoreComunities(this.comunities);
+    this.storage.setItem('community', changeCommunity.name);
   }
 
   getNotCurrentComunity(): void{

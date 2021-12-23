@@ -6,7 +6,7 @@
     <div class="menu">
         <button class="menu__btn" mat-raised-button [matMenuTriggerFor]="menu">{{ idiom.changeComunities }}</button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item *ngFor="let community of comunities" (click)="changeCommunities(community)">
+            <button mat-menu-item *ngFor="let community of comunities; index as i" (click)="changeCommunities(community, i)">
                 {{ community.name }}
             </button>
         </mat-menu>
