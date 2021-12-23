@@ -76,6 +76,14 @@ export class ReportDailyGeneralComponent implements OnInit {
     this.date.setValue('')
     const initDate = new Date().getMonth() + 1;
     this.init(initDate.toString(), new Date().getFullYear().toString());
+    this.changeCommunities();
+  }
+
+  changeCommunities(): void{
+    this.sessions.getScholar().subscribe(scholar=>{
+      const initDate = new Date().getMonth() + 1;
+      this.init(initDate.toString(), new Date().getFullYear().toString());
+    });
   }
 
   changeDarkMode(): void{

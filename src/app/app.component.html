@@ -11,10 +11,12 @@
     <button mat-icon-button mat-button (click)="close()">
       <mat-icon>menu</mat-icon>
     </button>
-    <label> {{ communityName }} </label>
+    <button mat-button class="menu-tool__community" (click)="communityModal()">
+      <label> {{ communityName }} </label>
+    </button>
   </div>
   <div>
-    <button mat-button>
+    <button mat-button (click)="doanteModal()">
       <label>{{ idiom.donate }}</label> <mat-icon>favorite</mat-icon>
     </button>
     <button mat-button [matMenuTriggerFor]="menu">{{ browserIdiom }}</button>
@@ -62,7 +64,27 @@
         <mat-list-item [class.container-dark__span]="dark" role="listitem" (click)="logOut()">
           <mat-icon>logout</mat-icon>
           <span> {{ idiom.logOut }} </span>
-        </mat-list-item>
+        </mat-list-item>   
+
+        <div class="container__footer">
+          <div class="container__footer-cryto">
+            <p [class.container__text-dark]="dark">
+              <img class="container__img-cryto" src="assets/img/SLP.png" alt=""> 
+              {{ slp }}
+            </p>
+            <p [class.container__text-dark]="dark">
+              <i class="cf cf-eth container__img-weth" 
+              [class.container__text-dark]="dark"></i> 
+              {{ eth }}
+            </p>
+          </div>
+          <div [class.container__text-dark]="dark">
+            <p>Desarrollado Por</p>
+            <p>Victor Leon</p>
+            <p>Albino Rodriguez</p>
+          </div>
+        </div>
+
       </mat-list>
     </mat-sidenav>
     <div>

@@ -5,6 +5,7 @@ import { community, userLink } from 'src/app/models/interfaces';
 import { StorageService } from '../storage/storage.service';
 import { Router } from '@angular/router';
 import { ComunityService } from '../community.service';
+import { DatabaseService } from '../database/database.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -36,8 +37,14 @@ export class SessionsService {
   constructor(
     public storage: StorageService,
     private communityservice: ComunityService,
-    private router: Router
+    private router: Router,
+    private dbService: DatabaseService,
   ) {}
+
+  async obtainDataFromDB() {
+    const memberAddressList = await this.communityservice.getMembersAddressList(this.communityservice.activeCommunity.id);
+    this.scholar = await this.dbService.getScholarsByAddressList(memberAddressList);
+  }
 
   getScholar(): Observable<Scholar[]>{
     return this.scholar$;
@@ -54,7 +61,6 @@ export class SessionsService {
   }
 
   setScholar(scholars: Scholar[]): void{
-    this.scholar = scholars;
     this.scholar$.next(scholars);
   }
 
@@ -76,6 +82,15 @@ export class SessionsService {
     this.init = true;
     this.router.navigate(['/scholars'], {replaceUrl:true});
   }
+
+
+  async changeCommunity(community: community): Promise<void>{
+    this.communityservice.activeCommunity = community;
+    this.communityChange.next(community);
+    await this.obtainDataFromDB()
+    this.setScholar(this.scholar);
+  }
+
   setSesionToLocalStorage():void{
     this.storage.setItem('user',JSON.stringify(this.user!));
     this.storage.setItem('scholar',JSON.stringify(this.infinity));

@@ -95,7 +95,8 @@
     },
     "perfiles": {
         "name": "Name",
-        "delete": "Kick"
+        "delete": "Kick",
+        "searh": "Search scholar"
     }, 
     "scholars": {
         "searh": "Search scholar",
@@ -105,5 +106,40 @@
         "yesterdaySLP": "Yesterday SLP",
         "monthSLP": "Month Slp",
         "monthlyRank": "Monthly Rank"
+    },
+    "modalDonate": {
+        "title": "Thanks for your support",
+        "text": "Donations allow us to continue with the development of new functionalities",
+        "btn": "Cancel"
+    },
+    "login": {
+        "errorVoid": "The field cannot be empty",
+        "errorString": "Only letters are allowed",
+        "invalidCorreo": "Invalid email",
+        "invalidPass": "Incorrect password",
+        "btnSend": "Send",
+        "btnRegistrer": "Sign up"
+    },
+    "perfilComunities": {
+        "title": "Communities",
+        "changeComunities": "Community change",
+        "addComunities": "Add community",
+        "deleteComunities": "Delete community",
+        "nameComunities": "Community name",
+        "discordName": "Discord name",
+        "type": "Type",
+        "typeRank": "Type Rank",
+        "newPassword": "New Password",
+        "passwordConfirm": "Confirm the password",
+        "changePassword": "Change Password",
+        "createComunities": "Create Community",
+        "cancel": "Cancel",
+        "nameRequired": "Name is Required",
+        "discordRequired": "Discord name is required",
+        "typeRequired": "Type is required",
+        "rankTypeRequired": "Type rank is required",
+        "passRequired": "Password is required",
+        "min": "The minimum characters is 8",
+        "noMatch": "The password does not match"
     }
 }

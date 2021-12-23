@@ -95,7 +95,8 @@
     },
     "perfiles": {
         "name": "Nombre",
-        "delete": "Eliminar"
+        "delete": "Eliminar",
+        "searh": "Buscar Becados"
     }, 
     "scholars": {
         "searh": "Buscar Becados",
@@ -105,5 +106,40 @@
         "yesterdaySLP": "Ayer SLP",
         "monthSLP": "Mes Slp",
         "monthlyRank": "Mensual Rank"
+    },
+    "modalDonate": {
+        "title": "Gracias por tu ayuda",
+        "text": "las donaciones nos permiten seguir con el desarrollo de nuevas funcionalidades.",
+        "btn": "Cancelar"
+    },
+    "login": {
+        "errorVoid": "El campo no puede estar vacio",
+        "errorString": "Solo se permiten letras",
+        "invalidCorreo": "Correo invalido",
+        "invalidPass": "Clave Incorrecta",
+        "btnSend": "Enviar",
+        "btnRegistrer": "Registrate"
+    },
+    "perfilComunities": {
+        "title": "Comunidades",
+        "changeComunities": "Cambio de Comunidad",
+        "addComunities": "Agregar una comunidad",
+        "deleteComunities": "Eliminar una comunidad",
+        "nameComunities": "Nombre de la comunidad",
+        "discordName": "Nombre del discord",
+        "type": "Tipo",
+        "typeRank": "Tipo de Rank",
+        "newPassword": "Nueva clave",
+        "passwordConfirm": "Confirme la clave",
+        "changePassword": "Cambio de clave",
+        "createComunities": "Crear Comunidad",
+        "cancel": "Cancelar",
+        "nameRequired": "El nombre es requerido",
+        "discordRequired": "El nombre del Discord es requerido",
+        "typeRequired": "El tipo es requerido",
+        "rankTypeRequired": "El tipo de rank es requerido",
+        "passRequired": "Clave  es requerida",
+        "min": "El minimo de caractes es 8",
+        "noMatch": "Las claves no coinciden"
     }
 }

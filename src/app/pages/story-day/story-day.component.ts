@@ -56,6 +56,7 @@ export class StoryDayComponent implements OnInit {
     this.getLangueaje();
     this.changeIdiom();
     await this.cargarDatos();
+    this.changecommunities();
   }
 
   changeDarkMode(): void{
@@ -118,5 +119,11 @@ export class StoryDayComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  changecommunities(){
+    this.sessions.getScholar().subscribe(scholar=>{
+      this.cargarDatos();
+    });
   }
 }

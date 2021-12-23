@@ -11,9 +11,8 @@
           <input formControlName="user" matInput placeholder="Victor">
           <mat-icon matSuffix class="form-becado__check" *ngIf="form.controls.user.valid">check_circle_outline</mat-icon>
           <mat-icon matSuffix class="form-becado__off" *ngIf="!form.controls.user.valid">highlight_off</mat-icon>
-          <mat-error *ngIf="form.controls.user.hasError('required')">El campo no puede estar vacio</mat-error>
-          <mat-error *ngIf="form.controls.user.hasError('pattern')">Solo se permiten letras</mat-error>
-          <mat-error *ngIf="!form.controls.user.valid && !form.controls.user.hasError('required')">Correo invalido</mat-error>
+          <mat-error *ngIf="form.controls.user.hasError('required')">{{ idiom.errorVoid }}</mat-error>
+          <mat-error *ngIf="!form.controls.user.valid && !form.controls.user.hasError('required')">{{idiom.invalidCorreo}}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-becado__contenedor-inputs">
@@ -21,12 +20,11 @@
           <input formControlName="password" matInput type="password" placeholder="Leon">
           <mat-icon matSuffix class="form-becado__check" *ngIf="form.controls.password.valid">check_circle_outline</mat-icon>
           <mat-icon matSuffix class="form-becado__off" *ngIf="!form.controls.password.valid">highlight_off</mat-icon>
-          <mat-error *ngIf="form.controls.password.hasError('required')">El campo no puede estar vacio</mat-error>
-          <mat-error *ngIf="form.controls.password.hasError('pattern')">Solo se permiten letras</mat-error>
-          <mat-error *ngIf="!form.controls.password.valid && !form.controls.password.hasError('required')">Clave Incorrecta</mat-error>
+          <mat-error *ngIf="form.controls.password.hasError('required')">{{ idiom.errorVoid }}</mat-error>
+          <mat-error *ngIf="!form.controls.password.valid && !form.controls.password.hasError('required')"> {{ idiom.invalidPass }}</mat-error>
         </mat-form-field>
-        <button (click)="revisarValido()" class="form-becado__btn" mat-raised-button color="primary">Send</button>
-        <button (click)="showRegisterForm = !showRegisterForm" class="form-becado__btn" mat-raised-button>register</button>
+        <button (click)="revisarValido()" class="form-becado__btn" mat-raised-button color="primary">{{ idiom.btnSend }}</button>
+        <button (click)="showRegisterForm = !showRegisterForm" class="form-becado__btn" mat-raised-button>{{ idiom.btnRegistrer }}</button>
       </form>
     </mat-card-content>
   </mat-card>
@@ -64,8 +62,8 @@
           <mat-icon matSuffix class="form-register__check" *ngIf="registerForm.controls.community.valid">check_circle_outline</mat-icon>
           <mat-icon matSuffix class="form-register__off" *ngIf="!registerForm.controls.community.valid">highlight_off</mat-icon>
         </mat-form-field>
-        <button (click)="registerNewUser()" class="form-register__btn" mat-raised-button color="primary">Enviar</button>
-        <button (click)="showRegisterForm = !showRegisterForm" class="form-register__btn" mat-raised-button>Cancelar</button>
+        <button (click)="registerNewUser()" class="form-register__btn" mat-raised-button color="primary">{{ idiom.btnSend }}</button>
+        <button (click)="showRegisterForm = !showRegisterForm" class="form-register__btn" mat-raised-button>{{ idiom.btnRegistrer }}</button>
       </form>
     </mat-card-content>
   </mat-card>

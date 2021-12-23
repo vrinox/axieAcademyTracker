@@ -48,7 +48,6 @@ export class StoryComponent implements OnInit {
   myControl = new FormControl();
   date = new FormControl(moment());
   namePlayerOptions: string[] = [];
-  filteredOptions: Observable<string[]>;;
   scholars: Scholar[] = [];
   scholars$: Subject<Scholar[]> = new Subject();
   displayedColumns: string[] = ['lastUpdate', 'totalSLP', 'todaySLP', 'yesterdaySLP', 'monthSLP', 'weekSLP', 'monthlyRank', 'MMR'];
@@ -68,16 +67,19 @@ export class StoryComponent implements OnInit {
     private storage: StorageService,
     private sessions: SessionsService
   ) {
-    this.filteredOptions = new Observable();
-
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.dark = this.sessions.dark;
     this.changeDarkMode();
     this.changeIdiom();
     this.getLangueaje();
     this.date.setValue('')
+    this.getDisponibleScholar();
+    this.changeCommunities();
+  }
+
+  async getDisponibleScholar(): Promise<void>{
     const memberAddressList = await this.communityService.getMembersAddressList(this.communityService.activeCommunity.id);
     this.disponibleScholars = await this.dbService.getScholarsByAddressList(memberAddressList);
     this.disponibleScholars.forEach((scholar: Scholar) => {
@@ -195,5 +197,12 @@ export class StoryComponent implements OnInit {
     ctrlValue.month(normalizedMonth.month());
     this.date.setValue(ctrlValue);
     datepicker.close();
+  }
+
+  changeCommunities(): void{
+    this.sessions.getScholar().subscribe(async scholar=>{
+      this.namePlayerOptions = [];
+      await this.getDisponibleScholar()
+    });
   }
 }

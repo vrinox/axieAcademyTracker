@@ -8,6 +8,8 @@ import { ComunityService } from 'src/app/services/community.service';
 import { DatabaseService } from 'src/app/services/database/database.service';
 import { SessionsService } from 'src/app/services/sessions/sessions.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import spanish from '../../../assets/json/lenguaje/spanishLanguaje.json';
+import english from '../../../assets/json/lenguaje/englishLanguage.json';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -39,6 +41,8 @@ export class LoginComponent implements OnInit {
     ])
   });
   showRegisterForm: boolean = false;
+  idiom: any = {};
+
   constructor(
     private auth: AuthService,
     private dbService: DatabaseService,
@@ -52,12 +56,24 @@ export class LoginComponent implements OnInit {
     if(this.sesion.init){
       this.router.navigate(['/scholars'],{replaceUrl:true});
     }
+    this.getLangueaje();
   }
+
+  getLangueaje(): void{
+    let lenguage: string | null = this.store.getItem('language');
+    if(lenguage === 'es-419' || lenguage === 'es'){
+      this.idiom = spanish.login;
+    }else{
+      this.idiom = english.login;
+    };
+  }
+
   public revisarValido(): void{
     if(this.form.valid){
       this.enviarDatos();
     }
   }
+
   async enviarDatos(): Promise<void>{
     let result: string = '';
     let error: string = '';

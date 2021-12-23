@@ -10,6 +10,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { StorageService } from '../services/storage/storage.service';
 import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
 import english from '../../assets/json/lenguaje/englishLanguage.json';
+import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
 
 @Component({
   selector: 'app-axies',
@@ -81,12 +82,14 @@ export class AxiesComponent implements OnInit {
     public filterAxies: FiltersAxiesService,
     public portafolio: CalculatedPortafolioService,
     private renderer: Renderer2,
-    private storage: StorageService
+    private storage: StorageService,
+    private addNewBecado: AgregarNewBecadoService
   ) {
   }
 
   ngOnInit(): void {
     this.dark = this.sessions.dark;
+    this.changeScholarsCommunities();
     this.changeDarkMode();
     this.getLangueaje();
     this.changeIdiom();
@@ -95,6 +98,14 @@ export class AxiesComponent implements OnInit {
     this.start();
     this.selecViewMenu(this.viewMenu);
     this.setAllParts();
+    this.addAxiesNewBecado()
+  }
+
+  changeScholarsCommunities(): void{
+    this.sessions.getScholar().subscribe(scholar=>{
+      this.axiesData = [];
+      this.start();
+    })
   }
 
   getLangueaje(): void{
@@ -192,15 +203,8 @@ export class AxiesComponent implements OnInit {
     await Promise.all(
       scholars.map((scholar: Scholar) => {
         this.namePlayerOptions.push(scholar.name);
-        return this.getAxies.get(scholar).then((axies: AxiesData[]) => {
-          axies.forEach((DataAxie: AxiesData) => {
-            this.axiesData.push(DataAxie);
-            if (this.filter) {
-              this.startFilter();
-            }
-            return 
-          });
-        }).catch((scholar: Scholar) => {
+        return this.getDataAxies(scholar)
+        .catch((scholar: Scholar) => {
           this.axiesRetry.push(scholar);
           return
         });
@@ -214,6 +218,19 @@ export class AxiesComponent implements OnInit {
       this.getAxieData(this.axiesRetry);
     }
   }
+
+  async getDataAxies(scholar: Scholar){
+    return await this.getAxies.get(scholar).then((axies: AxiesData[]) => {
+      axies.forEach((DataAxie: AxiesData) => {
+        this.axiesData.push(DataAxie);
+        if (this.filter) {
+          this.startFilter();
+        }
+        return 
+      });
+    })
+  }
+
 
   setAllParts(): void {
     Object.entries(cards).forEach((key: any) => {
@@ -319,4 +336,11 @@ export class AxiesComponent implements OnInit {
     }
     this.arrowFilter = !this.arrowFilter;
   } 
+
+
+  addAxiesNewBecado(): void{
+    this.addNewBecado.getNewBecado().subscribe(scholar=>{
+      this.getDataAxies(scholar);
+    });
+  }
 }

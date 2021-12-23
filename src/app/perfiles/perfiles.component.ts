@@ -16,7 +16,7 @@ import { StorageService } from '../services/storage/storage.service';
 import { DatabaseService } from '../services/database/database.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalExitPlayerComponent } from '../components/modal-exit-player/modal-exit-player.component';
-
+import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
 @Component({
   selector: 'app-perfiles',
   templateUrl: './perfiles.component.html',
@@ -43,13 +43,16 @@ export class PerfilesComponent implements OnInit {
     private storage: StorageService,
     private sessions: SessionsService,
     private database: DatabaseService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private newBecado: AgregarNewBecadoService
     ) { }
 
   ngOnInit(): void {
     this.dark = this.sessions.dark;
     this.changeDarkMode();
     this.start();
+    this.changeCommunity();
+    this.addNewBecado();
   }
 
   async start(): Promise<void>{
@@ -85,12 +88,8 @@ export class PerfilesComponent implements OnInit {
     let retryAxie: Scholar[] = [];
     await Promise.all(
       scholars.map(scholar=>{
-        return this.getAxies.get(scholar).then((axies: AxiesData[])=>{
-          let imgAxie: string[] = [];
-          axies.forEach(axie=> imgAxie.push(axie.image));
-          this.roninAdress.push(scholar.roninAddress);
-          this.createPerfil(imgAxie, scholar.name, scholar.roninAddress);
-        }).catch((scholar: Scholar) =>{
+        return this.createPerfil(scholar)
+        .catch((scholar: Scholar) =>{
           retryAxie.push(scholar);
         });
       })
@@ -103,7 +102,17 @@ export class PerfilesComponent implements OnInit {
     }
   }
 
-  createPerfil(axiesData: string[], namePlayer: string, roninAddress: string): void{
+  async createPerfil(scholar: Scholar){
+    return await this.getAxies.get(scholar).then((axies: AxiesData[])=>{
+      let imgAxie: string[] = [];
+      axies.forEach(axie=> imgAxie.push(axie.image));
+      this.roninAdress.push(scholar.roninAddress);
+      this.setPerfil(imgAxie, scholar.name, scholar.roninAddress);
+    });
+  }
+
+
+  setPerfil(axiesData: string[], namePlayer: string, roninAddress: string): void{
     this.perfiles.push({
       name: namePlayer,
       axies: axiesData,
@@ -116,16 +125,20 @@ export class PerfilesComponent implements OnInit {
 
   loadBalancePerfil(): void{
     this.perfiles.forEach((perfil, index)=>{
-      this.getRoninCryto(this.roninAdress[index], this.roninWalet.SLP_CONTRACT).then(Balance =>{
-        perfil.slp = Balance;
-      });
-      this.getRoninCryto(this.roninAdress[index], this.roninWalet.AXS_CONTRACT).then(Balance =>{
-        perfil.axs = this.parseWeth(Balance);
-      });
-      this.getRoninCryto(this.roninAdress[index], this.roninWalet.WETH_CONTRACT).then(Balance =>{
-        perfil.weth = this.parseWeth(Balance);
-      });
-    })
+      this.getCrytoRonin(perfil, index);
+    });
+  }
+
+  getCrytoRonin(perfil: Perfiles ,index: number): void{
+    this.getRoninCryto(this.roninAdress[index], this.roninWalet.SLP_CONTRACT).then(Balance =>{
+      perfil.slp = Balance;
+    });
+    this.getRoninCryto(this.roninAdress[index], this.roninWalet.AXS_CONTRACT).then(Balance =>{
+      perfil.axs = this.parseWeth(Balance);
+    });
+    this.getRoninCryto(this.roninAdress[index], this.roninWalet.WETH_CONTRACT).then(Balance =>{
+      perfil.weth = this.parseWeth(Balance);
+    });
   }
 
   async getRoninCryto(ronin: string, contract: string): Promise<string>{
@@ -157,4 +170,30 @@ export class PerfilesComponent implements OnInit {
       };
     });
   }
+
+  filterName(event: Event): void{
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  changeCommunity(): void{
+    this.sessions.getScholar().subscribe(scholar=>{
+      this.perfiles = [];
+      this.start();
+    });
+  }
+
+
+  addNewBecado(){
+    this.newBecado.getNewBecado().subscribe(async scholar=>{
+      await this.createPerfil(scholar);
+      let lastPerfil: number = this.perfiles.length - 1;
+      this.getCrytoRonin(this.perfiles[lastPerfil], lastPerfil);
+    })
+  }
+
 }

@@ -1,4 +1,9 @@
 <div class="container-table">
+    <mat-form-field appearance="outline" class="container-table__filter" [class.container-table__filter-dark]="dark">
+        <mat-label [class.container-table__text-dark]="dark">{{ idiom.searh }}</mat-label>
+        <input matInput (keyup)="filterName($event)" placeholder="Nombre de un becado" #input>
+    </mat-form-field>
+
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" [class.container-table__dark-table]="dark">  
         <ng-container matColumnDef="name" sticky>
             <th mat-header-cell *matHeaderCellDef [class.container-table__text-dark]="dark"> {{ idiom.name }} </th>

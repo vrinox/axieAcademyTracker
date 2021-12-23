@@ -1,0 +1,100 @@
+<div class="title">
+    <h2 mat-dialog-title class="title__h2">{{ idiom.title }}</h2>
+    <button mat-button (click)="changePassword = !changePassword"><mat-icon>settings</mat-icon> </button>
+</div>
+<mat-dialog-content class="mat-typography">
+    <div class="menu">
+        <button class="menu__btn" mat-raised-button [matMenuTriggerFor]="menu">{{ idiom.changeComunities }}</button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item *ngFor="let community of comunities" (click)="changeCommunities(community)">
+                {{ community.name }}
+            </button>
+        </mat-menu>
+        <button class="menu__btn" (click)="createCommunities = !createCommunities" mat-raised-button>
+            {{ idiom.addComunities }}
+        </button>
+        <button class="menu__btn" 
+            *ngIf="communitiesName.length !== 0"
+            mat-raised-button 
+            [matMenuTriggerFor]="menu2">{{ idiom.deleteComunities }}</button>
+        <mat-menu #menu2="matMenu">
+            <button mat-menu-item *ngFor="let community of communitiesName; index as i"
+                (click)="deleteCommunities(community, i)">
+                {{ community.name }}</button>
+        </mat-menu>
+    </div>
+    
+    <div *ngIf="createCommunities">
+        <form [formGroup]="FormCommunity" class="form-community">
+            <mat-form-field appearance="outline" class="form-community__contenedor-inputs">
+                <mat-label>{{ idiom.nameComunities }}</mat-label>
+                <input formControlName="name" matInput placeholder="Victor">
+                <mat-icon matSuffix class="form-community__check"
+                            *ngIf="FormCommunity.controls.name.valid">check_circle_outline</mat-icon>
+                <mat-icon matSuffix class="form-community__off" 
+                            *ngIf="!FormCommunity.controls.name.valid">highlight_off</mat-icon>
+                <mat-error *ngIf="FormCommunity.controls.name.hasError('required')">{{ idiom.nameRequired }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-community__contenedor-inputs">
+                <mat-label>{{ idiom.discordName }}</mat-label>
+                <input formControlName="discord" matInput placeholder="Victor">
+                <mat-icon matSuffix class="form-community__check"
+                            *ngIf="FormCommunity.controls.discord.valid">check_circle_outline</mat-icon>
+                <mat-icon matSuffix class="form-community__off" 
+                            *ngIf="!FormCommunity.controls.discord.valid">highlight_off</mat-icon>
+                <mat-error *ngIf="FormCommunity.controls.discord.hasError('required')">{{ idiom.discordRequired }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-community__contenedor-inputs">
+                <mat-label>{{ idiom.type }}</mat-label>
+                <input formControlName="type" matInput placeholder="Victor">
+                <mat-icon matSuffix class="form-community__check"
+                            *ngIf="FormCommunity.controls.type.valid">check_circle_outline</mat-icon>
+                <mat-icon matSuffix class="form-community__off" 
+                            *ngIf="!FormCommunity.controls.type.valid">highlight_off</mat-icon>
+                <mat-error *ngIf="FormCommunity.controls.type.hasError('required')">{{ idiom.typeRequired }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-community__contenedor-inputs">
+                <mat-label>{{ idiom.typeRank }}</mat-label>
+                <input formControlName="rankType" matInput placeholder="Victor">
+                <mat-icon matSuffix class="form-community__check"
+                            *ngIf="FormCommunity.controls.rankType.valid">check_circle_outline</mat-icon>
+                <mat-icon matSuffix class="form-community__off" 
+                            *ngIf="!FormCommunity.controls.rankType.valid">highlight_off</mat-icon>
+                <mat-error *ngIf="FormCommunity.controls.rankType.hasError('required')">{{ idiom.rankTypeRequired }}</mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+
+    <div class="changePassword" *ngIf="changePassword">
+        <form [formGroup]="FormChangePass">
+            <mat-form-field appearance="outline" class="changePassword__contenedor-inputs">
+                <mat-label>{{ idiom.newPassword }}</mat-label>
+                <input formControlName="password" (keyup)="confirmPassWord()" matInput placeholder="123456789">
+                <mat-icon matSuffix class="form-community__check"
+                            *ngIf="FormChangePass.controls.password.valid">check_circle_outline</mat-icon>
+                <mat-icon matSuffix class="form-community__off" 
+                            *ngIf="!FormChangePass.controls.password.valid">highlight_off</mat-icon>
+                <mat-error *ngIf="FormChangePass.controls.password.hasError('required')">{{ idiom.passRequired }}</mat-error>
+                <mat-error *ngIf="!FormChangePass.controls.password.valid && !passwordIncorrect">{{ idiom.min }}</mat-error>
+                <mat-error *ngIf="passwordIncorrect">{{ idiom.noMatch }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="changePassword__contenedor-inputs">
+                <mat-label>{{ idiom.passwordConfirm }}</mat-label>
+                <input formControlName="confirmPassword" (keyup)="confirmPassWord()" matInput placeholder="123456789">
+                <mat-icon matSuffix class="form-community__check"
+                            *ngIf="FormChangePass.controls.confirmPassword.valid">check_circle_outline</mat-icon>
+                <mat-icon matSuffix class="form-community__off" 
+                            *ngIf="!FormChangePass.controls.confirmPassword.valid">highlight_off</mat-icon>
+                <mat-error *ngIf="FormChangePass.controls.confirmPassword.hasError('required')">confirme la clave</mat-error>
+                <mat-error *ngIf="!FormChangePass.controls.confirmPassword.valid && !passwordIncorrect">{{ idiom.min }}</mat-error>
+                <mat-error *ngIf="passwordIncorrect">{{ idiom.noMatch }}</mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button *ngIf="changePassword" mat-button (click)="setChangePassword()" cdkFocusInitial>{{ idiom.changePassword }}</button>
+    <button *ngIf="createCommunities" mat-button (click)="createCommunity()" cdkFocusInitial>{{ idiom.createComunities }}</button>
+    <button mat-button mat-dialog-close>{{ idiom.cancel }}</button>
+</mat-dialog-actions>

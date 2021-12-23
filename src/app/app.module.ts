@@ -59,6 +59,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule  } from '@angular/forms';
 import { ModalExitPlayerComponent } from './components/modal-exit-player/modal-exit-player.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ModalDoanteComponent } from './components/modal-doante/modal-doante.component';
+import { CommunityPerfilComponent } from './community-perfil/community-perfil.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,7 +82,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     GenesComponent,
     InputAutoCompletComponent,
     PerfilesComponent,
-    ModalExitPlayerComponent
+    ModalExitPlayerComponent,
+    ModalDoanteComponent,
+    CommunityPerfilComponent
   ],
   imports: [
     BrowserModule,

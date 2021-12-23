@@ -4,7 +4,10 @@ import { SessionsService } from './services/sessions/sessions.service';
 import { StorageService } from './services/storage/storage.service';
 import english from '../assets/json/lenguaje/englishLanguage.json';
 import spanish from '../assets/json/lenguaje/spanishLanguaje.json';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ModalDoanteComponent } from './components/modal-doante/modal-doante.component';
+import { GetPriceService } from '../app/services/getPriceCripto/get-price.service';
+import { CommunityPerfilComponent } from './community-perfil/community-perfil.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,7 +27,15 @@ export class AppComponent implements OnInit{
 
   dark: boolean = false;
 
-  constructor(public sesion: SessionsService, private storage: StorageService){}
+  slp: number = 0;
+  eth: number = 0;
+
+  constructor(
+    public sesion: SessionsService,
+    private storage: StorageService,
+    public dialog: MatDialog,
+    private cryto: GetPriceService
+    ){}
 
   ngOnInit(){
     this.darkStorage();
@@ -39,6 +50,7 @@ export class AppComponent implements OnInit{
         this.communityName = community.name;
       }
     });
+    this.getCryto();
   }
 
   getLengueaje(): void{
@@ -76,7 +88,6 @@ export class AppComponent implements OnInit{
   }
 
   setDarkMode(): void{
-    this.dark = !this.DarkMode.checked;
     this.sesion.setDarkMode(!this.DarkMode.checked);
     this.storage.setItem('darkMode', `${!this.DarkMode.checked}`);
   }
@@ -92,5 +103,24 @@ export class AppComponent implements OnInit{
   logOut(){
     this.sesion.close();
     this.sidenav.toggle();
+  }
+
+  doanteModal(): void{
+    const dialogRef = this.dialog.open(ModalDoanteComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  communityModal(): void{
+    const dialogRef = this.dialog.open(CommunityPerfilComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  async getCryto(): Promise<void>{
+    this.slp = await this.cryto.get('smooth-love-potion');
+    this.eth = await this.cryto.get('ethereum');
   }
 }
