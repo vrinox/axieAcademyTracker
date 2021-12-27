@@ -10,6 +10,10 @@
         background: $difBack-dark
     &__community
         font-size: 18px
+    &__router
+        height: calc( 100vh - 64px )
+        overflow: auto
+        box-sizing: border-box
 
 .container
     background: #dedede
@@ -26,6 +30,10 @@
         height: 100vh
         background: #28364b
         z-index: 50
+    &__list
+        display: flex
+        flex-direction: column
+        justify-content: space-between
     &__footer
         padding: 5px 16px
     &__img-cryto
