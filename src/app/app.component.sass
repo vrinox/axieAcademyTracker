@@ -8,6 +8,14 @@
     justify-content: space-between
     &__dark
         background: $difBack-dark
+    &__community
+        font-size: 18px
+    &__router
+        height: calc( 100vh - 64px )
+        overflow: auto
+        box-sizing: border-box
+    &__movil
+        display: none
 
 .container
     background: #dedede
@@ -24,6 +32,25 @@
         height: 100vh
         background: #28364b
         z-index: 50
+    &__list
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+    &__footer
+        padding: 5px 16px
+    &__img-cryto
+        width: 20px
+        position: relative
+        top: 4px
+    &__text-dark
+        color: $color-dark
+    &__img-weth
+        font-size: 20px
+        position: relative
+        top: 4px
+    &__footer-cryto
+        display: flex
+        justify-content: space-between
 
 .container-dark
     background: $back-dark
@@ -47,3 +74,23 @@
         &__btn
             width: 100%
             margin: 10px
+    .menu-tool
+        &__btn-zone
+            position: relative
+        &__movil
+            display: block
+        &__sub-menu
+            display: none
+            position: absolute
+        &__sub-menu-view
+            display: flex
+            flex-direction: column
+            align-items: center
+            background: #fff
+            color: #000
+            padding: 10px
+            right: 0px
+            z-index: 50
+        &__dark
+            background: $difBack-dark
+            color: #fff

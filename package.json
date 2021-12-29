@@ -34,6 +34,7 @@
     "events": "^3.3.0",
     "firebase": "^9.0.1",
     "https-browserify": "^1.0.0",
+    "instal": "^0.0.1-security",
     "jspdf": "^2.4.0",
     "moment": "^2.29.1",
     "ngx-build-plus": "^12.2.0",

@@ -11,61 +11,91 @@
     <button mat-icon-button mat-button (click)="close()">
       <mat-icon>menu</mat-icon>
     </button>
-    <label> {{ communityName }} </label>
-  </div>
-  <div>
-    <button mat-button>
-      <label>{{ idiom.donate }}</label> <mat-icon>favorite</mat-icon>
+    <button mat-button class="menu-tool__community" (click)="communityModal()">
+      <label> {{ communityName }} </label>
     </button>
-    <button mat-button [matMenuTriggerFor]="menu">{{ browserIdiom }}</button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="changeLanguage('es')">es</button>
-      <button mat-menu-item (click)="changeLanguage('en')">en</button>
-    </mat-menu>
-    <mat-slide-toggle #darkMode (click)="setDarkMode()">
-      <mat-icon>{{ dark ? 'dark_mode' : 'brightness_5' }}</mat-icon>
-    </mat-slide-toggle>
+  </div>
+
+  <div class="menu-tool__btn-zone">
+    <button mat-button class="menu-tool__movil" (click)="subMenuView = !subMenuView">
+      <mat-icon>{{subMenuView ? 'expand_less' : 'keyboard_arrow_down' }}</mat-icon>
+    </button>
+    <div class="menu-tool__sub-menu" [class.menu-tool__sub-menu-view]="subMenuView" [class.menu-tool__dark]="dark">
+      <button mat-button (click)="doanteModal()">
+        <label>{{ idiom.donate }}</label> <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-button [matMenuTriggerFor]="menu">{{ browserIdiom }}</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="changeLanguage('es')">es</button>
+        <button mat-menu-item (click)="changeLanguage('en')">en</button>
+      </mat-menu>
+      <mat-slide-toggle #darkMode [(ngModel)]="dark" (click)="setDarkMode()">
+        <mat-icon>{{ dark ? 'dark_mode' : 'brightness_5' }}</mat-icon>
+      </mat-slide-toggle>
+    </div>
   </div>
 </mat-toolbar>
   
   <mat-sidenav-container class="container" [class.container-dark]="dark" [hasBackdrop]="false">
     <mat-sidenav #sidenav (keydown.escape)="close()" disableClose [mode]="'side'">
-      <mat-list role="list"  [class.container-dark__menu]="dark">
-        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/scholars">
-          <mat-icon>groups</mat-icon>
-          <span>{{ idiom.home }}</span>
-        </mat-list-item>
-        <mat-list-item [class.container-dark__span]="dark" role="listitem" (click)="showFiller = !showFiller; viewModal = !viewModal">
-          <mat-icon>add</mat-icon>
-          <span>{{ idiom.addBecado }}</span>
-        </mat-list-item>
-        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/story">
-          <mat-icon>history</mat-icon>
-          <span>{{ idiom.historicUser }}</span>
-        </mat-list-item>
-        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/storyDay">
-          <mat-icon>today</mat-icon>
-          <span>{{ idiom.historicDay }}</span>
-        </mat-list-item>
-        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/reportDailyGeneral">
-          <mat-icon>event</mat-icon>
-          <span>{{ idiom.generalReport }}</span>
-        </mat-list-item>
-        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/axies">
-          <mat-icon>pets</mat-icon>
-          <span>Axies</span>
-        </mat-list-item>
-        <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/prefiles">
-          <mat-icon>account_balance_wallet</mat-icon>
-          <span>{{ idiom.profiles }}</span>
-        </mat-list-item>
-        <mat-list-item [class.container-dark__span]="dark" role="listitem" (click)="logOut()">
-          <mat-icon>logout</mat-icon>
-          <span> {{ idiom.logOut }} </span>
-        </mat-list-item>
+      <mat-list role="list" class="container__list"  [class.container-dark__menu]="dark">
+        <div>
+          <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/scholars">
+            <mat-icon>groups</mat-icon>
+            <span>{{ idiom.home }}</span>
+          </mat-list-item>
+          <mat-list-item [class.container-dark__span]="dark" role="listitem" (click)="showFiller = !showFiller; viewModal = !viewModal">
+            <mat-icon>add</mat-icon>
+            <span>{{ idiom.addBecado }}</span>
+          </mat-list-item>
+          <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/story">
+            <mat-icon>history</mat-icon>
+            <span>{{ idiom.historicUser }}</span>
+          </mat-list-item>
+          <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/storyDay">
+            <mat-icon>today</mat-icon>
+            <span>{{ idiom.historicDay }}</span>
+          </mat-list-item>
+          <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/reportDailyGeneral">
+            <mat-icon>event</mat-icon>
+            <span>{{ idiom.generalReport }}</span>
+          </mat-list-item>
+          <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/axies">
+            <mat-icon>pets</mat-icon>
+            <span>Axies</span>
+          </mat-list-item>
+          <mat-list-item [class.container-dark__span]="dark" role="listitem" routerLink="/prefiles">
+            <mat-icon>account_balance_wallet</mat-icon>
+            <span>{{ idiom.profiles }}</span>
+          </mat-list-item>
+          <mat-list-item [class.container-dark__span]="dark" role="listitem" (click)="logOut()">
+            <mat-icon>logout</mat-icon>
+            <span> {{ idiom.logOut }} </span>
+          </mat-list-item>   
+        </div>
+
+        <div class="container__footer">
+          <div class="container__footer-cryto">
+            <p [class.container__text-dark]="dark">
+              <img class="container__img-cryto" src="assets/img/SLP.png" alt=""> 
+              {{ slp }}
+            </p>
+            <p [class.container__text-dark]="dark">
+              <i class="cf cf-eth container__img-weth" 
+              [class.container__text-dark]="dark"></i> 
+              {{ eth }}
+            </p>
+          </div>
+          <div [class.container__text-dark]="dark">
+            <p>Desarrollado Por</p>
+            <p>Victor Leon</p>
+            <p>Albino Rodriguez</p>
+          </div>
+        </div>
+
       </mat-list>
     </mat-sidenav>
-    <div>
+    <div class="menu-tool__router">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-container>

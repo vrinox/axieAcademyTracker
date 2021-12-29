@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, signOut, updatePassword } from '@angular/fire/auth';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +16,7 @@ export class AuthService {
         resolve(value.user.uid);
       })
       .catch(async err => {
-        console.log(err);
+        reject(err.code) 
       });
     })
   }
@@ -50,5 +51,9 @@ export class AuthService {
       roninAddress = "0x"+roninAddress.split(':')[1];
     }
     return roninAddress;
+  }
+
+  setUpdatePassword(password: string){
+    updatePassword(this.afAuth.currentUser!, password);
   }
 }

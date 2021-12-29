@@ -41,7 +41,7 @@ import { StoryComponent } from './pages/story/story.component';
 import { MatSelectModule } from '@angular/material/select';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { LoginComponent } from './pages/login/login.component';
-import { Auth, provideAuth } from '@angular/fire/auth';
+import { provideAuth } from '@angular/fire/auth';
 import { getAuth } from '@firebase/auth';
 import { StoryDayComponent } from './pages/story-day/story-day.component';
 import { TotalsComponent } from './components/totals/totals.component';
@@ -56,7 +56,11 @@ import { InputAutoCompletComponent } from './components/input-auto-complet/input
 import Web3 from 'web3';
 import { PerfilesComponent } from './perfiles/perfiles.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
+import { FormsModule  } from '@angular/forms';
+import { ModalExitPlayerComponent } from './components/modal-exit-player/modal-exit-player.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ModalDoanteComponent } from './components/modal-doante/modal-doante.component';
+import { CommunityPerfilComponent } from './community-perfil/community-perfil.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +81,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     DonwloadPdfComponent,
     GenesComponent,
     InputAutoCompletComponent,
-    PerfilesComponent
+    PerfilesComponent,
+    ModalExitPlayerComponent,
+    ModalDoanteComponent,
+    CommunityPerfilComponent
   ],
   imports: [
     BrowserModule,
@@ -110,6 +117,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatBadgeModule,
     MatDividerModule,
     MatSlideToggleModule,
+    FormsModule,
+    MatDialogModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),    
     provideAuth(() => getAuth()),

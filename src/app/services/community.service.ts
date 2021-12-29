@@ -33,7 +33,7 @@ export class ComunityService {
     discord: string,
     type: string,
     rankType: string
-  }):Promise<community> {
+  }): Promise<community> {
     const newCommunity: any = form;
     const docRef: DocumentReference = await addDoc(collection(this.db, "communities"), newCommunity);
     await addDoc(collection(this.db, "scholar-communities"), {

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Scholar } from '../models/scholar';
 import { ScholarDataService } from 'src/app/services/scholarData/scholar-data.service';
-import { DatabaseService } from '../services/database/database.service';
 import { scholarOfficialData, community } from '../models/interfaces';
 import { Observable, Subject } from 'rxjs';
 import { AgregarNewBecadoService } from '../services/agregarNewBecado/agregar-new-becado.service';
@@ -14,6 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
 import english from '../../assets/json/lenguaje/englishLanguage.json';
 import { StorageService } from '../services/storage/storage.service';
+
 @Component({
   selector: 'app-scholars',
   templateUrl: './scholars.component.html',
@@ -31,7 +31,6 @@ export class ScholarsComponent implements OnInit {
 
   constructor(
     private schDataService: ScholarDataService,
-    private dbService: DatabaseService,
     private addNewBecado: AgregarNewBecadoService,
     private router: Router,
     private sessions: SessionsService,
@@ -39,11 +38,13 @@ export class ScholarsComponent implements OnInit {
     private storage: StorageService
   ) { }
   
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.changeScholar();
     this.dark = this.sessions.dark;
     this.changeDarkMode();
     this.getLangueaje();
     this.changeIdiom();
+    await this.sessions.obtainDataFromDB();
     this.cargarDatos();
     this.newBecado();
   }
@@ -71,24 +72,22 @@ export class ScholarsComponent implements OnInit {
     })
   }
 
+  changeScholar():void{
+    this.sessions.getScholar().subscribe(scholars=>{
+      this.cargarDatos();
+    })
+  }
+
   async cargarDatos() {
-    let scholars = await this.obtainDataFromDB();
-    this.scholars = scholars;
+    this.scholars = [... this.sessions.scholar];
     this.scholars.sort((a: Scholar, b: Scholar) => {
       return b.monthSLP - a.monthSLP
     });
-    this.scholars$.next(this.scholars);
-    this.sessions.setScholar(this.scholars);
     this.dataSource = new MatTableDataSource(this.scholars);
     this.dataSource.sort = this.sort!;
     this.dataSource.paginator = this.paginator;
     this.sessions.setLoading(false);
-    this.obtenerDatos(scholars);
-  }
-
-  async obtainDataFromDB() {
-    const memberAddressList = await this.communityService.getMembersAddressList(this.communityService.activeCommunity.id);
-    return await this.dbService.getScholarsByAddressList(memberAddressList);
+    this.obtenerDatos(this.scholars);
   }
 
   calcularRankMensual() {
@@ -124,12 +123,7 @@ export class ScholarsComponent implements OnInit {
 
   newBecado(): void {
     this.addNewBecado.getNewBecado().subscribe((scholar: Scholar) => {
-      let tempScholars = this.scholars
-      tempScholars.push(scholar);
-      this.scholars = [];
-      this.scholars = tempScholars.map((scholar) => {
-        return scholar;
-      });
+      this.scholars.push(scholar)
       this.dataSource = new MatTableDataSource(this.scholars);
     })
   }
@@ -143,7 +137,7 @@ export class ScholarsComponent implements OnInit {
     this.router.navigate(['/axies']);
   }
 
-  filterName(event: Event){
+  filterName(event: Event): void{
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -151,6 +145,5 @@ export class ScholarsComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
 }
 
