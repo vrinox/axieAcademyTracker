@@ -41,7 +41,7 @@ import { StoryComponent } from './pages/story/story.component';
 import { MatSelectModule } from '@angular/material/select';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { LoginComponent } from './pages/login/login.component';
-import { Auth, provideAuth } from '@angular/fire/auth';
+import { provideAuth } from '@angular/fire/auth';
 import { getAuth } from '@firebase/auth';
 import { StoryDayComponent } from './pages/story-day/story-day.component';
 import { TotalsComponent } from './components/totals/totals.component';

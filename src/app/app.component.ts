@@ -25,6 +25,8 @@ export class AppComponent implements OnInit{
   browserIdiom: string = ''
   idiom: any = {};
 
+  subMenuView: boolean = false;
+
   dark: boolean = false;
 
   slp: number = 0;
