@@ -20,10 +20,12 @@ export class Scholar {
   weekSLP: number = 0;
   lastWeekSLP: number = 0;
   ganancia: number = 50;
+  personalAddress: string = "";
 
   constructor(values: any = {}) {
     Object.assign(this, values);
     this.roninAddress = this.parseRonin(this.roninAddress);
+    this.personalAddress = this.parseRonin(values.personalAdress);
   }
 
   parse(unParsedData: scholarOfficialData) {
@@ -51,7 +53,8 @@ export class Scholar {
       mounthlyRank: this.mounthlyRank || 0,
       monthSLP: this.monthSLP || 0,
       lastMonthSLP: this.lastMonthSLP || 0,
-      PVPRank: this.PVPRank || 0
+      PVPRank: this.PVPRank || 0,
+      personalAddress: this.personalAddress || ''
     }
   }
 

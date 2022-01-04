@@ -3,7 +3,9 @@
         <mat-label [class.container-table__text-dark]="dark">{{ idiom.searh }}</mat-label>
         <input matInput (keyup)="filterName($event)" placeholder="Nombre de un becado" #input>
     </mat-form-field>
-
+    <button mat-button class="menu-tool__movil" (click)="createJSONFile()" [class.container-table__dark-table]="dark" [class.container-table__text-dark]="dark">
+        genarar secrets file
+      </button>
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" [class.container-table__dark-table]="dark">  
         <ng-container matColumnDef="name" sticky>
             <th mat-header-cell *matHeaderCellDef [class.container-table__text-dark]="dark"> {{ idiom.name }} </th>

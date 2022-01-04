@@ -9,7 +9,7 @@ import { Perfiles } from '../models/interfaces';
 import { AxiesData } from '../models/interfaces';
 import { RoninWeb3 } from '../models/RoninWeb3';
 import { AutoClaimService } from '../services/autoClaim/auto-claim.service';
-import secrets  from '../../assets/json/secrets.json';
+import secrets from '../../assets/json/secrets.json';
 import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
 import english from '../../assets/json/lenguaje/englishLanguage.json';
 import { StorageService } from '../services/storage/storage.service';
@@ -37,7 +37,7 @@ export class PerfilesComponent implements OnInit {
   dark: boolean = false;
 
   constructor(
-    private session: SessionsService, 
+    private session: SessionsService,
     private getAxies: GetAxiesService,
     private autoClaim: AutoClaimService,
     private storage: StorageService,
@@ -45,7 +45,7 @@ export class PerfilesComponent implements OnInit {
     private database: DatabaseService,
     public dialog: MatDialog,
     private newBecado: AgregarNewBecadoService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.dark = this.sessions.dark;
@@ -55,123 +55,124 @@ export class PerfilesComponent implements OnInit {
     this.addNewBecado();
   }
 
-  async start(): Promise<void>{
+  async start(): Promise<void> {
     this.getLangueaje();
     this.changeIdiom();
     await this.getAxiesData(this.session.scholar);
   }
 
-  changeDarkMode(): void{
-    this.sessions.getDarkMode().subscribe(mode=>{
+  changeDarkMode(): void {
+    this.sessions.getDarkMode().subscribe(mode => {
       this.dark = mode;
     });
   }
 
-  getLangueaje(): void{
+  getLangueaje(): void {
     let lenguage: string | null = this.storage.getItem('language');
-    if(lenguage === 'es-419' || lenguage === 'es'){
+    if (lenguage === 'es-419' || lenguage === 'es') {
       this.idiom = spanish.perfiles;
-    }else{
+    } else {
       this.idiom = english.perfiles;
     };
   }
 
-  changeIdiom():void{
-    this.sessions.getIdiom().subscribe(change=>{
-      if(change){
+  changeIdiom(): void {
+    this.sessions.getIdiom().subscribe(change => {
+      if (change) {
         this.getLangueaje();
       }
     })
   }
 
-  async getAxiesData(scholars: Scholar[]): Promise<void>{
+  async getAxiesData(scholars: Scholar[]): Promise<void> {
     let retryAxie: Scholar[] = [];
     await Promise.all(
-      scholars.map(scholar=>{
+      scholars.map(scholar => {
         return this.createPerfil(scholar)
-        .catch((scholar: Scholar) =>{
-          retryAxie.push(scholar);
-        });
+          .catch((scholar: Scholar) => {
+            retryAxie.push(scholar);
+          });
       })
     );
-    if(retryAxie.length !== 0){
+    if (retryAxie.length !== 0) {
       this.getAxiesData(retryAxie);
-    }else{
+    } else {
       this.loadBalancePerfil();
       this.loadTable();
     }
   }
 
-  async createPerfil(scholar: Scholar){
-    return await this.getAxies.get(scholar).then((axies: AxiesData[])=>{
+  async createPerfil(scholar: Scholar) {
+    return await this.getAxies.get(scholar).then((axies: AxiesData[]) => {
       let imgAxie: string[] = [];
-      axies.forEach(axie=> imgAxie.push(axie.image));
+      axies.forEach(axie => imgAxie.push(axie.image));
       this.roninAdress.push(scholar.roninAddress);
-      this.setPerfil(imgAxie, scholar.name, scholar.roninAddress);
+      this.setPerfil(imgAxie, scholar.name, scholar.roninAddress, scholar.personalAddress);
     });
   }
 
 
-  setPerfil(axiesData: string[], namePlayer: string, roninAddress: string): void{
+  setPerfil(axiesData: string[], namePlayer: string, roninAddress: string, personalAddress: string): void {
     this.perfiles.push({
       name: namePlayer,
       axies: axiesData,
       ronin: roninAddress,
       axs: 'load',
       slp: 'load',
-      weth: 'load'
+      weth: 'load',
+      personalAddress: personalAddress
     })
   }
 
-  loadBalancePerfil(): void{
-    this.perfiles.forEach((perfil, index)=>{
+  loadBalancePerfil(): void {
+    this.perfiles.forEach((perfil, index) => {
       this.getCrytoRonin(perfil, index);
     });
   }
 
-  getCrytoRonin(perfil: Perfiles ,index: number): void{
-    this.getRoninCryto(this.roninAdress[index], this.roninWalet.SLP_CONTRACT).then(Balance =>{
+  getCrytoRonin(perfil: Perfiles, index: number): void {
+    this.getRoninCryto(this.roninAdress[index], this.roninWalet.SLP_CONTRACT).then(Balance => {
       perfil.slp = Balance;
     });
-    this.getRoninCryto(this.roninAdress[index], this.roninWalet.AXS_CONTRACT).then(Balance =>{
+    this.getRoninCryto(this.roninAdress[index], this.roninWalet.AXS_CONTRACT).then(Balance => {
       perfil.axs = this.parseWeth(Balance);
     });
-    this.getRoninCryto(this.roninAdress[index], this.roninWalet.WETH_CONTRACT).then(Balance =>{
+    this.getRoninCryto(this.roninAdress[index], this.roninWalet.WETH_CONTRACT).then(Balance => {
       perfil.weth = this.parseWeth(Balance);
     });
   }
 
-  async getRoninCryto(ronin: string, contract: string): Promise<string>{
+  async getRoninCryto(ronin: string, contract: string): Promise<string> {
     return await this.roninWalet.getBalance(contract, ronin);
   }
 
-  parseWeth(weth: string): string{
+  parseWeth(weth: string): string {
     return parseFloat(this.roninWalet.web3.utils.fromWei(weth)).toFixed(5);
   }
 
-  loadTable():void {
+  loadTable(): void {
     this.dataSource = new MatTableDataSource(this.perfiles);
     this.dataSource.sort = this.sort!;
     this.dataSource.paginator = this.paginator;
   }
 
-  async claimSlp(): Promise<void>{
+  async claimSlp(): Promise<void> {
     // secrets.forEach(scholar => {
     //   this.autoClaim.startClaimSlp(scholar.ronin, scholar.secret);
     // });
   }
 
-  deleteScholar(perfiles: Perfiles): void{
+  deleteScholar(perfiles: Perfiles): void {
     this.session.modalScholarName = perfiles.name;
     const dialogRef = this.dialog.open(ModalExitPlayerComponent);
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.database.deleteScholar(perfiles.ronin);
       };
     });
   }
 
-  filterName(event: Event): void{
+  filterName(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -180,16 +181,45 @@ export class PerfilesComponent implements OnInit {
     }
   }
 
-  changeCommunity(): void{
-    this.sessions.getScholar().subscribe(scholar=>{
+  createCsvFile() {
+    let csv = "";
+    this.perfiles.map((p) => {
+      csv += `${p.name};${p.ronin};${p.slp}\r\n`;
+    })
+    console.log(csv);
+  }
+
+  createJSONFile() {
+    let json = "[";
+    this.perfiles.map((p) => {
+      if(json.length !== 1){
+        json += ',';
+      }
+      json += `{
+        "name":"${p.name}",
+        "ronin":"${p.ronin}",
+        "roninPersonal":"${p.personalAddress || ''}",
+        "secret":""
+      }`;
+    })
+    json += "]";
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8, ' + encodeURIComponent(json));
+    element.setAttribute('download', "secrets.json");
+    document.body.appendChild(element);
+    element.click();
+  }
+
+  changeCommunity(): void {
+    this.sessions.getScholar().subscribe(scholar => {
       this.perfiles = [];
       this.start();
     });
   }
 
 
-  addNewBecado(){
-    this.newBecado.getNewBecado().subscribe(async scholar=>{
+  addNewBecado() {
+    this.newBecado.getNewBecado().subscribe(async scholar => {
       await this.createPerfil(scholar);
       let lastPerfil: number = this.perfiles.length - 1;
       this.getCrytoRonin(this.perfiles[lastPerfil], lastPerfil);

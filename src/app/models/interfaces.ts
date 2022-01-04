@@ -288,7 +288,8 @@ export interface Perfiles{
     ronin: string,
     slp: string,
     axs: string, 
-    weth: string
+    weth: string,
+    personalAddress?: string; 
 }
 export interface RandomMessaje{
     data: {
