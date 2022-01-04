@@ -62,12 +62,12 @@ export class AutoClaimService {
   }
 
   async transferSlp(
-    front: string, 
+    from: string, 
     to: string,
     privatekey: string, 
     amount: number){
       const transaction = await this.roninWalet.getTransaccionTransfer(to, amount);
-      this.signAndSendTransaction(front, this.roninWalet.SLP_CONTRACT, privatekey, 100000, transaction);
+      return this.signAndSendTransaction(from, this.roninWalet.SLP_CONTRACT, privatekey, 100000, transaction);
   }
 
   private async claim(
@@ -79,10 +79,10 @@ export class AutoClaimService {
       const transaction = await this.roninWalet.getContracChekpoint(ronin, amount, timestamp, signature);
       this.signAndSendTransaction(ronin, this.roninWalet.SLP_CONTRACT, privatekey, 100000, 
         transaction
-      );
+      ).then((data)=>{console.log(data)});
   }
 
-  private async signAndSendTransaction(from: string, to: string, privateKey: string, gas: number, transaction: any){
+  private async signAndSendTransaction(from: string, to: string, privateKey: string, gas: number, transaction: any):Promise<any>{
     let signTransaction  = this.roninWalet.getRoningProvier();
     let sing: any = await signTransaction.eth.accounts.signTransaction({
       chainId: this.CHAIN_ID,
@@ -93,7 +93,7 @@ export class AutoClaimService {
       nonce: await this.getTransactionCount(from),
       to: to,
     }, privateKey);
-    await signTransaction.eth.sendSignedTransaction(
+    return await signTransaction.eth.sendSignedTransaction(
       sing.rawTransaction
     );
   }

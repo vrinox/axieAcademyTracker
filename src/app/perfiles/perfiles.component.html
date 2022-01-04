@@ -3,7 +3,15 @@
         <mat-label [class.container-table__text-dark]="dark">{{ idiom.searh }}</mat-label>
         <input matInput (keyup)="filterName($event)" placeholder="Nombre de un becado" #input>
     </mat-form-field>
-
+    <button mat-button class="menu-tool__movil" [class.container-table__dark-table]="dark" (click)="claimSlp()">
+        claimSlp
+    </button>
+    <button mat-button class="menu-tool__movil" [class.container-table__dark-table]="dark" (click)="createFile()">        
+       createFile
+    </button>
+    <button mat-button class="menu-tool__movil" [class.container-table__dark-table]="dark" (click)="payments()">
+        payments
+    </button>
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" [class.container-table__dark-table]="dark">  
         <ng-container matColumnDef="name" sticky>
             <th mat-header-cell *matHeaderCellDef [class.container-table__text-dark]="dark"> {{ idiom.name }} </th>

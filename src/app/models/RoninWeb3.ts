@@ -24,7 +24,7 @@ export class RoninWeb3{
 
     async getTransaccionTransfer(to: string, amount: number){
         let contract = this.getContract();
-        return await contract.methods.transferSlp(to, amount);
+        return await contract.methods.transfer(to, amount);
     }
 
     getContract(){

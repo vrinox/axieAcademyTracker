@@ -10,6 +10,7 @@ import { AxiesData } from '../models/interfaces';
 import { RoninWeb3 } from '../models/RoninWeb3';
 import { AutoClaimService } from '../services/autoClaim/auto-claim.service';
 import secrets  from '../../assets/json/secrets.json';
+import transfer  from '../../assets/json/transfer.json';
 import spanish from '../../assets/json/lenguaje/spanishLanguaje.json';
 import english from '../../assets/json/lenguaje/englishLanguage.json';
 import { StorageService } from '../services/storage/storage.service';
@@ -156,9 +157,27 @@ export class PerfilesComponent implements OnInit {
   }
 
   async claimSlp(): Promise<void>{
-    // secrets.forEach(scholar => {
-    //   this.autoClaim.startClaimSlp(scholar.ronin, scholar.secret);
-    // });
+    secrets.forEach((scholar:any) => {
+      this.autoClaim.startClaimSlp(scholar.ronin, scholar.secret);
+    });
+  }
+  async payments(): Promise<void>{
+    await Promise.all(transfer.map((scholar)=>{
+      return this.autoClaim.transferSlp(scholar.origen, scholar.roninAcademia, scholar.secret, scholar.academia)
+    }))
+    console.log("completado academia");
+    await Promise.all(transfer.map((scholar)=>{
+      return this.autoClaim.transferSlp(scholar.origen, scholar.roninPersonal, scholar.secret, scholar.becado)
+    }))
+    console.log("completado becados");
+  }
+
+  createFile(){
+    let csv = "";
+    this.perfiles.map((p)=>{
+      csv +=`${p.name};${p.ronin};${p.slp}\r\n`;
+    })
+    console.log(csv);
   }
 
   deleteScholar(perfiles: Perfiles): void{
