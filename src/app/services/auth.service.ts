@@ -28,7 +28,7 @@ export class AuthService {
     return new Promise((resolve, reject)=>{
       createUserWithEmailAndPassword(this.afAuth, form.email, form.password)
       .then((value) => {
-        console.log('userCreated',value);
+        console.log('userCreated',value.user);
         resolve({
           uid: value.user.uid
         });
