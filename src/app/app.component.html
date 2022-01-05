@@ -95,7 +95,7 @@
 
       </mat-list>
     </mat-sidenav>
-    <div class="menu-tool__router">
+    <div class="menu-tool__router" [class.menu-tool__router--init]="!sesion.init">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-container>
