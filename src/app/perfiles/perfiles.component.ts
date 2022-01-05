@@ -107,12 +107,12 @@ export class PerfilesComponent implements OnInit {
       let imgAxie: string[] = [];
       axies.forEach(axie => imgAxie.push(axie.image));
       this.roninAdress.push(scholar.roninAddress);
-      this.setPerfil(imgAxie, scholar.name, scholar.roninAddress, scholar.personalAddress);
+      this.setPerfil(imgAxie, scholar.name, scholar.roninAddress, scholar.personalAddress, scholar.ganancia);
     });
   }
 
 
-  setPerfil(axiesData: string[], namePlayer: string, roninAddress: string, personalAddress: string): void {
+  setPerfil(axiesData: string[], namePlayer: string, roninAddress: string, personalAddress: string, ganancia: number): void {
     this.perfiles.push({
       name: namePlayer,
       axies: axiesData,
@@ -120,7 +120,8 @@ export class PerfilesComponent implements OnInit {
       axs: 'load',
       slp: 'load',
       weth: 'load',
-      personalAddress: personalAddress
+      personalAddress: personalAddress,
+      ganancia: ganancia
     })
   }
 
@@ -199,6 +200,7 @@ export class PerfilesComponent implements OnInit {
         "name":"${p.name}",
         "ronin":"${p.ronin}",
         "roninPersonal":"${p.personalAddress || ''}",
+        "ganancia":${p.ganancia},
         "secret":""
       }`;
     })

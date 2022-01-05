@@ -289,7 +289,8 @@ export interface Perfiles{
     slp: string,
     axs: string, 
     weth: string,
-    personalAddress?: string; 
+    personalAddress?: string;
+    ganancia?: number;
 }
 export interface RandomMessaje{
     data: {
