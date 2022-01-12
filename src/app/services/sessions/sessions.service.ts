@@ -50,12 +50,16 @@ export class SessionsService {
     return this.scholar$;
   }
 
-  appStart(){
-    const cachedSesion = this.getActiveSesionFromLocalStorage();
-    if(cachedSesion){
-      this.start(cachedSesion.user, cachedSesion.infinity, cachedSesion.communities) 
-    } else {
-      this.setLoading(false);
+  async appStart(){
+    if(await this.dbService.tryConection()) {      
+      const cachedSesion = this.getActiveSesionFromLocalStorage();
+      if(cachedSesion){
+        this.start(cachedSesion.user, cachedSesion.infinity, cachedSesion.communities) 
+      } else {
+        this.setLoading(false);
+        this.router.navigate(['/login'], {replaceUrl:true});
+      }
+    } else{
       this.router.navigate(['/login'], {replaceUrl:true});
     }
   }
