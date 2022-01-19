@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'story', component: StoryComponent },
   { path: 'storyDay', component: StoryDayComponent },
   { path: 'reportDailyGeneral', component: ReportDailyGeneralComponent },
-  { path: 'login', component: LandingPageComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'prefiles', component: PerfilesComponent }
 ];
 

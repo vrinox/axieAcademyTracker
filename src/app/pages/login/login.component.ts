@@ -106,7 +106,6 @@ export class LoginComponent implements OnInit {
         this.store.setItem('community', community.name);
         this.sesion.start(userLink, scholar, communities.filter( c=> c.admin === identificator));
         this.communityService.activeCommunity = community;
-        this.sesion.setLoading(true);
       }else{
         console.log('debes ser admin de una comunidad para entrar en esta herramienta');
       }

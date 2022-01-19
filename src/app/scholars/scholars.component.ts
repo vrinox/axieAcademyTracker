@@ -39,6 +39,7 @@ export class ScholarsComponent implements OnInit {
   ) { }
   
   async ngOnInit(): Promise<void> {
+    this.sessions.setLoading(true);
     this.changeScholar();
     this.dark = this.sessions.dark;
     this.changeDarkMode();

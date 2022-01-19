@@ -118,7 +118,7 @@
       </div>
     </div>
     
-    <div class="axie-list" [class.view-portafolio]="valuePortafolio" *ngIf="list">
+    <div class="axie-list" [class.view-portafolio]="valuePortafolio" *ngIf="list && exitsAxies">
       <mat-accordion class="container-axies__acordion" multi>
         <app-axies-list [axie]="axie" [viewMenu]="viewMenu" *ngFor="let axie of axiesData"></app-axies-list>
       </mat-accordion>
@@ -127,10 +127,17 @@
       </div>
     </div>
     
-    <div class="axies-module" [class.view-portafolio]="valuePortafolio" *ngIf="!list">
+    <div class="axies-module" [class.view-portafolio]="valuePortafolio" *ngIf="!list && exitsAxies">
       <app-axies-module class="axies-module__axie" [axie]="axie" [viewMenu]="viewMenu" (refresh)="refreshNa($event)" *ngFor="let axie of axiesData"></app-axies-module>
       <div class="loading" *ngIf="loading">
         <app-loading></app-loading>
+      </div>
+    </div>
+
+    <div class="axies-not-found" *ngIf="!exitsAxies">
+      <div class="axies-not-found__message">
+        <h1 class="axies-not-found__title" [class.axies-not-found__title-dark]="dark">{{ idiom.notfoundaxies }}</h1>
+        <img class="axies-not-found__img" src="assets/img/axie.png" alt="">
       </div>
     </div>
   </div>

@@ -41,7 +41,8 @@
         "higherPrice": "Higher price",
         "lowerPrice": "Lower price",
         "higherId": "Higher id",
-        "lowerId": "Lower id"
+        "lowerId": "Lower id",
+        "notfoundaxies": "Axies not found"
     }, 
     "donwloadPdf": {
         "allAxies": "All Axies",
