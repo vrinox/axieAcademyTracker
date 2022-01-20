@@ -39,14 +39,18 @@ export class ScholarsComponent implements OnInit {
   ) { }
   
   async ngOnInit(): Promise<void> {
-    this.changeScholar();
-    this.dark = this.sessions.dark;
-    this.changeDarkMode();
-    this.getLangueaje();
-    this.changeIdiom();
-    await this.sessions.obtainDataFromDB();
-    this.cargarDatos();
-    this.newBecado();
+    this.sessions.start$.subscribe(async (isStart:boolean)=>{
+      if(isStart){
+        this.changeScholar();
+        this.dark = this.sessions.dark;
+        this.changeDarkMode();
+        this.getLangueaje();
+        this.changeIdiom();
+        await this.sessions.obtainDataFromDB();
+        this.cargarDatos();
+        this.newBecado();
+      }
+    })
   }
 
   changeDarkMode(): void{

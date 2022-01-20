@@ -35,7 +35,7 @@ export class Scholar {
     this.inGameSLP = (isNaN(unParsedData.in_game_slp)) ? 0 : unParsedData.in_game_slp;
     this.PVPRank = (isNaN(unParsedData.rank)) ? 0 : unParsedData.rank;
     this.MMR = (isNaN(unParsedData.mmr)) ? 0 : unParsedData.mmr;
-    this.name = (this.name)? this.name : unParsedData.name;
+    this.name = unParsedData.ign;
     return this;
   }
   
@@ -69,6 +69,7 @@ export class Scholar {
     this.inGameSLP = newData.inGameSLP;
     this.inRoninSLP = newData.inRoninSLP;
     this.totalSLP = newData.totalSLP;
+    this.name = newData.name;
   }
 
   getDaysDiffStartOf(valor:any):number {
