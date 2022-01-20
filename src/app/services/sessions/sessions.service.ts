@@ -33,6 +33,7 @@ export class SessionsService {
   modalScholarName: string = '';
 
   start$: Subject<boolean> = new Subject;
+  isStart: boolean = false;
 
   constructor(
     public storage: StorageService,
@@ -87,7 +88,8 @@ export class SessionsService {
     this.setSesionToLocalStorage();
     this.init = true;
     this.router.navigate(['/scholars'], {replaceUrl:true});
-    this.start$.next(true);
+    this.isStart = true;
+    this.start$.next(this.isStart);
   }
 
 

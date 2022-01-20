@@ -120,7 +120,7 @@ import { CommunityPerfilComponent } from './community-perfil/community-perfil.co
     FormsModule,
     MatDialogModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),    
+    provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
   ],
   providers: [
