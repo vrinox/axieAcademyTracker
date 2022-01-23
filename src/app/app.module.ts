@@ -122,7 +122,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     FormsModule,
     MatDialogModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideFirestore(() => getFirestore()),    
+    provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
   ],
   providers: [

@@ -39,13 +39,13 @@ export class AppComponent implements OnInit{
     private cryto: GetPriceService
     ){}
 
-  ngOnInit(){
+  async ngOnInit(){
     this.darkStorage();
     this.getLengueaje();
     this.sesion.getLoading().subscribe(viewLoading=>{
       this.loading = viewLoading;
     })
-    this.sesion.appStart();
+    await this.sesion.appStart();
     this.communityName = this.storage.getItem('community')!;
     this.sesion.communityChange.subscribe((community)=>{
       if(community){

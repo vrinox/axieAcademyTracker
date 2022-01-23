@@ -20,10 +20,12 @@ export class Scholar {
   weekSLP: number = 0;
   lastWeekSLP: number = 0;
   ganancia: number = 50;
+  personalAddress: string = "";
 
   constructor(values: any = {}) {
     Object.assign(this, values);
     this.roninAddress = this.parseRonin(this.roninAddress);
+    this.personalAddress = this.parseRonin(values.personalAdress);
   }
 
   parse(unParsedData: scholarOfficialData) {
@@ -33,7 +35,7 @@ export class Scholar {
     this.inGameSLP = (isNaN(unParsedData.in_game_slp)) ? 0 : unParsedData.in_game_slp;
     this.PVPRank = (isNaN(unParsedData.rank)) ? 0 : unParsedData.rank;
     this.MMR = (isNaN(unParsedData.mmr)) ? 0 : unParsedData.mmr;
-    this.name = (this.name)? this.name : unParsedData.name;
+    this.name = unParsedData.ign;
     return this;
   }
   
@@ -51,7 +53,8 @@ export class Scholar {
       mounthlyRank: this.mounthlyRank || 0,
       monthSLP: this.monthSLP || 0,
       lastMonthSLP: this.lastMonthSLP || 0,
-      PVPRank: this.PVPRank || 0
+      PVPRank: this.PVPRank || 0,
+      personalAddress: this.personalAddress || ''
     }
   }
 
@@ -66,6 +69,7 @@ export class Scholar {
     this.inGameSLP = newData.inGameSLP;
     this.inRoninSLP = newData.inRoninSLP;
     this.totalSLP = newData.totalSLP;
+    this.name = newData.name;
   }
 
   getDaysDiffStartOf(valor:any):number {

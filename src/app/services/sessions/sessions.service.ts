@@ -25,14 +25,15 @@ export class SessionsService {
   private loadingHome: Subject<boolean> = new Subject;
 
   clear: Subject<string> = new Subject;
-
-
   idiom: Subject<boolean> = new Subject;
 
   private darkMode: Subject<boolean> = new Subject;
   dark: boolean = false;
 
   modalScholarName: string = '';
+
+  start$: Subject<boolean> = new Subject;
+  isStart: boolean = false;
 
   constructor(
     public storage: StorageService,
@@ -50,12 +51,18 @@ export class SessionsService {
     return this.scholar$;
   }
 
-  appStart(){
-    const cachedSesion = this.getActiveSesionFromLocalStorage();
-    if(cachedSesion){
-      this.start(cachedSesion.user, cachedSesion.infinity, cachedSesion.communities) 
-    } else {
-      this.setLoading(false);
+  async appStart(){
+    this.start$.next(false);
+    if(await this.dbService.tryConection()) {
+      console.log("arranco");
+      const cachedSesion = this.getActiveSesionFromLocalStorage();
+      if(cachedSesion){
+        this.start(cachedSesion.user, cachedSesion.infinity, cachedSesion.communities);
+      } else {
+        this.setLoading(false);
+        this.router.navigate(['/login'], {replaceUrl:true});
+      }
+    } else{
       this.router.navigate(['/login'], {replaceUrl:true});
     }
   }
@@ -81,6 +88,8 @@ export class SessionsService {
     this.setSesionToLocalStorage();
     this.init = true;
     this.router.navigate(['/scholars'], {replaceUrl:true});
+    this.isStart = true;
+    this.start$.next(this.isStart);
   }
 
 
@@ -100,6 +109,7 @@ export class SessionsService {
     const user = this.storage.getItem('user');
     const scholar = this.storage.getItem('scholar');
     const commnunities = this.storage.getItem('communities');
+    console.log('entro',commnunities);
     if(user !== null && scholar !== null && commnunities !== null){
       return {
         user: JSON.parse(user),

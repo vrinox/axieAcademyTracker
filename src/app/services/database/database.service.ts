@@ -19,6 +19,14 @@ export class DatabaseService {
   constructor() {
 
   }
+  async tryConection(){
+    try{
+      const querySnapshot = await getDocs(collection(this.db, 'scholars'));
+      return true;
+    } catch(err) {
+      return false
+    }
+  }
   async getAllData(): Promise<any[]> {
     const querySnapshot = await getDocs(collection(this.db, 'scholars'))
     return querySnapshot.docs.map((doc) => {
