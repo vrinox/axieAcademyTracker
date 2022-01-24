@@ -14,7 +14,7 @@ export class TotalsComponent implements OnInit {
   historial: Historial[] = [];
   imageSrc: string = 'assets/img/SLP.png';
   imageAlt: string = 'SLP';
-  trofeoImgSrc: string = 'assets/img/trofeo.jpg';
+  trofeoImgSrc: string = 'assets/img/mvp.png';
   trofeoAlt: string = 'copas axie infinity';
   slpPrice: number = 0;
   @Input() scholars: Scholar[] = [];
