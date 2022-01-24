@@ -35,7 +35,7 @@ export class Scholar {
     this.inGameSLP = (isNaN(unParsedData.in_game_slp)) ? 0 : unParsedData.in_game_slp;
     this.PVPRank = (isNaN(unParsedData.rank)) ? 0 : unParsedData.rank;
     this.MMR = (isNaN(unParsedData.mmr)) ? 0 : unParsedData.mmr;
-    this.name = unParsedData.ign;
+    this.name = (unParsedData.ign) ? unParsedData.ign : this.name;
     return this;
   }
   
