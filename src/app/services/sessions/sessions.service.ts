@@ -54,7 +54,6 @@ export class SessionsService {
   async appStart(){
     this.start$.next(false);
     if(await this.dbService.tryConection()) {
-      console.log("arranco");
       const cachedSesion = this.getActiveSesionFromLocalStorage();
       if(cachedSesion){
         this.start(cachedSesion.user, cachedSesion.infinity, cachedSesion.communities);

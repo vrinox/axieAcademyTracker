@@ -25,7 +25,7 @@ export class TotalsComponent implements OnInit {
   ngOnInit(): void {
     const scholars$ = from(this.scholars);
     scholars$.subscribe((value)=>{
-      console.log(value);
+      
     })
     this.historial  = [];
     totals.setHistorial(this.scholars, this.historial, this.slpPrice);

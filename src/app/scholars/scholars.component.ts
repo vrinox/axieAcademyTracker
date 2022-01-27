@@ -51,7 +51,11 @@ export class ScholarsComponent implements OnInit {
         this.newBecado();
       }
     })
-    if(this.sessions.isStart){
+    if(this.sessions.isStart){   
+      this.changeScholar();
+      this.changeDarkMode();
+      this.getLangueaje();
+      this.changeIdiom();
       await this.sessions.obtainDataFromDB();
       this.dark = this.sessions.dark;
       this.cargarDatos();
