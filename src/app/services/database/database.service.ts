@@ -115,6 +115,7 @@ export class DatabaseService {
   };
   
   async addScholar(scholar:Scholar) {
+    console.log('scholar', scholar);
     const dbRef = await addDoc(collection(this.db,"scholars"), scholar.getValues());
     return dbRef.id;
   }
