@@ -7,6 +7,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { StoryDayComponent } from './pages/story-day/story-day.component';
 import { ReportDailyGeneralComponent } from './pages/report-daily-general/report-daily-general.component';
 import { PerfilesComponent } from './perfiles/perfiles.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },

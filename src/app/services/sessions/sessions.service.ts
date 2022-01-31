@@ -108,6 +108,7 @@ export class SessionsService {
     const user = this.storage.getItem('user');
     const scholar = this.storage.getItem('scholar');
     const commnunities = this.storage.getItem('communities');
+    console.log('entro',commnunities);
     if(user !== null && scholar !== null && commnunities !== null){
       return {
         user: JSON.parse(user),

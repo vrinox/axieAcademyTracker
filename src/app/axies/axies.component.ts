@@ -76,6 +76,8 @@ export class AxiesComponent implements OnInit {
 
   dark: boolean = false;
 
+  exitsAxies: boolean = true;
+
   constructor(
     private getAxies: GetAxiesService,
     private sessions: SessionsService,
@@ -213,6 +215,7 @@ export class AxiesComponent implements OnInit {
     if(this.axiesRetry.length === 0){
       this.loading = false;
       this.sessions.oneScholar = [];
+      this.hasAxiesData();
       this.totalPortafolio();
     }else{
       this.getAxieData(this.axiesRetry);
@@ -221,16 +224,25 @@ export class AxiesComponent implements OnInit {
 
   async getDataAxies(scholar: Scholar){
     return await this.getAxies.get(scholar).then((axies: AxiesData[]) => {
-      axies.forEach((DataAxie: AxiesData) => {
-        this.axiesData.push(DataAxie);
-        if (this.filter) {
-          this.startFilter();
-        }
-        return 
-      });
+      if(axies.length !== 0){
+        axies.forEach((DataAxie: AxiesData) => {
+          this.axiesData.push(DataAxie);
+          if (this.filter) {
+            this.startFilter();
+          }
+          return 
+        });
+      }else{
+        return
+      }
     })
   }
 
+  hasAxiesData():void{
+    if(this.axiesData.length === 0){
+      this.exitsAxies = false;
+    };
+  }
 
   setAllParts(): void {
     Object.entries(cards).forEach((key: any) => {

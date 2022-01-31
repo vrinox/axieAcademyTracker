@@ -104,14 +104,14 @@
     flex-wrap: wrap
     justify-content: center
     padding: 10px
-    overflow-y: scroll
+    overflow-y: auto
     align-content: flex-start
     box-sizing: border-box
 
 .axie-list
     width: 100% 
     height: calc(100vh - 121px)
-    overflow-y: scroll
+    overflow-y: auto
     box-sizing: border-box
 
 .view-portafolio
@@ -138,6 +138,39 @@
         border-color: $hover-dark
         background: $difBack-dark
 
+.axies-not-found
+    width: 100% 
+    height: calc(100vh - 121px)
+    display: flex
+    justify-content: center
+    align-items: center
+    box-sizing: border-box
+    &__message
+        display: flex
+    &__title
+        color: #000
+        opacity: 0.5
+        position: relative
+        top: 25px
+        font-size: 45px
+        margin: 0
+    &__title-dark
+        color: $color-dark
+    &__img
+        width: 70px
+        margin-left: 10px
+        filter: grayscale(100%)
+
+@media screen and (max-width: 850px)
+    .axies-not-found
+        &__message
+            display: flex
+            flex-direction: column
+            align-items: center
+        &__title
+            margin-bottom: 35px
+            line-height: 1
+            text-align: center
 
 @media screen and (max-width: 700px)
     .menu-axies

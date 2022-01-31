@@ -61,6 +61,7 @@ import { ModalExitPlayerComponent } from './components/modal-exit-player/modal-e
 import { MatDialogModule } from '@angular/material/dialog';
 import { ModalDoanteComponent } from './components/modal-doante/modal-doante.component';
 import { CommunityPerfilComponent } from './community-perfil/community-perfil.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,7 +85,8 @@ import { CommunityPerfilComponent } from './community-perfil/community-perfil.co
     PerfilesComponent,
     ModalExitPlayerComponent,
     ModalDoanteComponent,
-    CommunityPerfilComponent
+    CommunityPerfilComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
