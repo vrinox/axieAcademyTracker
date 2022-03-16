@@ -69,7 +69,7 @@ export class Scholar {
     this.inGameSLP = newData.inGameSLP;
     this.inRoninSLP = newData.inRoninSLP;
     this.totalSLP = newData.totalSLP;
-    this.name = newData.name;
+    this.name = newData.name === undefined ? this.name : newData.name;
   }
 
   getDaysDiffStartOf(valor:any):number {
