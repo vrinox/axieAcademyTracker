@@ -1,13 +1,13 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyD-ZTONH0mNWzNT1-IHBOqdBf4qiYUYfQ8",
+    apiKey: "",
     authDomain: "axieacademytracker.firebaseapp.com",
     databaseURL: "https://axieacademytracker-default-rtdb.firebaseio.com",
     projectId: "axieacademytracker",
     storageBucket: "axieacademytracker.appspot.com",
-    messagingSenderId: "337378328440",
-    appId: "1:337378328440:web:e4b18e8b2afc0af62ed28d",
+    messagingSenderId: "",
+    appId: "",
     measurementId: "G-FP3K84QLWF"
   }
 };
